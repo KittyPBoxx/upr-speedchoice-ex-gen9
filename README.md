@@ -151,5 +151,5 @@ You can find a tracker to use with the map randomizer here: https://sekii.gitlab
 - Fixed glitch weather in caves
 - Fixed 'Ghost Rayquaza' 
 - Fixed bug where you sometimes walked on water going to aqua hideout enterance or scorched slab
-
+- Algorithm tweaks to mitigate the 'flag dump' issue. This was mostly an issue an issue when requiring gyms in order. An extreme example is if the starting area gets walled by surf gyms 1-5 would all have appear early on to make the seed possible. There was some mitigation for this before, but two gyms in a town still happened a statistically improbable amount.
 
