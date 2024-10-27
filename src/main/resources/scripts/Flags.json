@@ -1,0 +1,223 @@
+{
+  "compositeFlags": {
+    "GO_GOGGLES": {
+      "flag": "GO_GOGGLES",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_LAVARIDGE_TOWN"
+      ]
+    },
+    "MAGMA_EMBLEM": {
+      "flag": "MAGMA_EMBLEM",
+      "condition": [
+        "L_MT_PYRE_SUMMIT"
+      ]
+    },
+    "STOREAGE_KEY": {
+      "flag": "STOREAGE_KEY",
+      "condition": [
+        "L_ABANDONED_SHIP_KEY_ROOM"
+      ]
+    },
+    "BASEMENT_KEY": {
+      "flag": "BASEMENT_KEY",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_PETALBURG_GYM",
+        "L_MAUVILLE_CITY"
+      ]
+    },
+    "HOENN_CUT_1": {
+      "flag": "HOENN_CUT",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_CUTTERS_HOUSE"
+      ]
+    },
+    "HOENN_FLASH_1": {
+      "flag": "HOENN_FLASH",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_GRANITE_CAVE_F1"
+      ]
+    },
+    "HOENN_ROCK_SMASH_1": {
+      "flag": "HOENN_ROCK_SMASH",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_MAUVILLE_CITY_ROCK_SMASH"
+      ]
+    },
+    "HOENN_STRENGTH_1": {
+      "flag": "HOENN_STRENGTH",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_RUSTURF_TUNNEL",
+        "HOENN_ROCK_SMASH"
+      ]
+    },
+    "HOENN_SURF": {
+      "flag": "HOENN_SURF",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_PETALBURG_GYM"
+      ]
+    },
+    "HOENN_WATERFALL": {
+      "flag": "HOENN_WATERFALL",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_PETALBURG_GYM",
+        "L_FORTREE_CITY_GYM",
+        "L_MOSSDEEP_CITY_GYM",
+        "L_SOOTOPOLIS_CITY_GYM",
+        "L_SOOTOPOLIS_OUTSIDE_GYM"
+      ]
+    },
+    "HOENN_CATCH_TUTORIAL": {
+      "flag": "HOENN_CATCH_TUTORIAL",
+      "condition": [
+        "L_PETALBURG_GYM"
+      ]
+    },
+    "UNLOCK_SLATEPORT": {
+      "flag": "UNLOCK_SLATEPORT",
+      "condition": [
+        "L_GRANITE_STEVEN"
+      ]
+    },
+    "SPEAK_TO_WALLACE": {
+      "flag": "SPEAK_TO_WALLACE",
+      "condition": [
+        "L_CAVE_OF_ORIGIN_WALLACE"
+      ]
+    },
+    "ALL_BADGES": {
+      "flag": "ALL_BADGES",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_DEWFORD_TOWN_GYM",
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_PETALBURG_GYM",
+        "L_FORTREE_CITY_GYM",
+        "L_MOSSDEEP_CITY_GYM",
+        "L_SOOTOPOLIS_CITY_GYM"
+      ]
+    }
+  },
+  "compositeFlagsOutOfSeq": {
+    "GO_GOGGLES": {
+      "flag": "GO_GOGGLES",
+      "condition": [
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_LAVARIDGE_TOWN"
+      ]
+    },
+    "MAGMA_EMBLEM": {
+      "flag": "MAGMA_EMBLEM",
+      "condition": [
+        "L_MT_PYRE_SUMMIT"
+      ]
+    },
+    "STOREAGE_KEY": {
+      "flag": "STOREAGE_KEY",
+      "condition": [
+        "L_ABANDONED_SHIP_KEY_ROOM"
+      ]
+    },
+    "BASEMENT_KEY": {
+      "flag": "BASEMENT_KEY",
+      "condition": [
+        "L_MAUVILLE_CITY_GYM",
+        "L_PETALBURG_GYM",
+        "L_MAUVILLE_CITY"
+      ]
+    },
+    "HOENN_CUT_1": {
+      "flag": "HOENN_CUT",
+      "condition": [
+        "L_RUSTBORO_CITY_GYM",
+        "L_CUTTERS_HOUSE"
+      ]
+    },
+    "HOENN_FLASH_1": {
+      "flag": "HOENN_FLASH",
+      "condition": [
+        "L_DEWFORD_TOWN_GYM",
+        "L_GRANITE_CAVE_F1"
+      ]
+    },
+    "HOENN_ROCK_SMASH_1": {
+      "flag": "HOENN_ROCK_SMASH",
+      "condition": [
+        "L_MAUVILLE_CITY_GYM",
+        "L_MAUVILLE_CITY_ROCK_SMASH"
+      ]
+    },
+    "HOENN_STRENGTH_1": {
+      "flag": "HOENN_STRENGTH",
+      "condition": [
+        "L_MAUVILLE_CITY_GYM",
+        "L_LAVARIDGE_TOWN_GYM",
+        "L_RUSTURF_TUNNEL",
+        "HOENN_ROCK_SMASH"
+      ]
+    },
+    "HOENN_SURF": {
+      "flag": "HOENN_SURF",
+      "condition": [
+        "L_PETALBURG_GYM"
+      ]
+    },
+    "HOENN_WATERFALL": {
+      "flag": "HOENN_WATERFALL",
+      "condition": [
+        "L_SOOTOPOLIS_CITY_GYM",
+        "L_SOOTOPOLIS_OUTSIDE_GYM"
+      ]
+    },
+    "HOENN_CATCH_TUTORIAL": {
+      "flag": "HOENN_CATCH_TUTORIAL",
+      "condition": [
+        "L_PETALBURG_GYM"
+      ]
+    },
+    "UNLOCK_SLATEPORT": {
+      "flag": "UNLOCK_SLATEPORT",
+      "condition": [
+        "L_GRANITE_STEVEN"
+      ]
+    },
+    "SPEAK_TO_WALLACE": {
+      "flag": "SPEAK_TO_WALLACE",
+      "condition": [
+        "L_CAVE_OF_ORIGIN_WALLACE"
+      ]
+    },
+    "ALL_BADGES": {
+      "flag": "ALL_BADGES",
+      "condition": [
+        "L_FORTREE_CITY_GYM"
+      ]
+    }
+  }
+}

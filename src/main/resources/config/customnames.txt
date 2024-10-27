@@ -1,0 +1,309 @@
+# Trainers
+Jett
+Kari
+Axel
+Quinn
+Zara
+Finn
+Milo
+Skye
+Vera
+Seth
+Faye
+Juno
+Zane
+Tyra
+Cole
+Jude
+Elle
+Rory
+Hugo
+Rio
+Remy
+Colt
+Trix
+Nia
+Dane
+Vira
+Lyra
+Flint
+Ashur
+Mira
+Sven
+Lyle
+Mira
+Cade
+Lina
+Bryn
+Levi
+Cal
+Dirk
+Ace
+Fawn
+Enzo
+Liza
+Neo
+Rune
+Lora
+Dex
+Zara
+Gwen
+Rina
+Vale
+Mika
+Ari
+Cass
+Nova
+Cleo
+Joss
+Tess
+Kai
+Beau
+
+# Trainer Classes
+Ranger
+Fisher
+Bug Catcher
+Swimmer
+Psychic
+Scientist
+Artist
+Biker
+Camper
+Bird Keeper
+Sailor
+Skier
+Ninja
+Black Belt
+Cooltrainer
+Beauty
+Lass
+Super Nerd
+Veteran
+Idol
+Engineer
+Gardener
+Poke Maniac
+Pilot
+Cook
+Juggler
+Firebreather
+Chef
+Farmer
+Diver
+Breeder
+Miner
+Dancer
+Baker
+Clown
+Tamer
+Tracker
+Wrestler
+Sailor
+Hunter
+Martial
+Battle Girl
+Alchemist
+Mechanic
+Skater
+Treasure
+Skier
+Acrobat
+Acrobat
+Tamer
+Waiter
+Waitress
+Butler
+Pilot
+Chef
+Poet
+Artist
+Wrestler
+Fisher
+Diver
+
+# Doubles Trainer Names
+Jay & Max
+Ray & May
+Finn & Ben
+Leo & Mia
+Sam & Eve
+Ava & Zoe
+Dan & Liz
+Kai & Liv
+Tom & Joy
+Roy & Meg
+Zac & Ivy
+Ash & Cal
+Jen & Tim
+Rex & Eve
+Amy & Joe
+Eli & Ann
+Ken & May
+Lou & Mia
+Vin & Kay
+Dee & Lou
+Al & Vic
+Gus & Kim
+Ben & Mia
+Pam & Jim
+Sid & Mel
+Jim & Lea
+Leo & Sue
+Hal & Zoe
+Ted & Joy
+Lou & Tim
+Ned & Ali
+Dom & Lex
+Max & Ava
+Jay & Liv
+Ray & Zo
+Zak & Jen
+Liz & Cal
+Joe & Pam
+Tim & Meg
+Sam & Zoe
+Leo & Rae
+Mia & Rex
+Vin & Amy
+Gus & Joy
+Ray & Ken
+Dan & Zoe
+Tim & Fay
+Sid & Mia
+Ben & Kay
+Joy & Roy
+Tom & Amy
+Cal & Jen
+Dee & Sam
+Rex & Liv
+Max & Liz
+Jay & Eve
+Leo & Kay
+Gus & Ali
+Roy & Lou
+Vin & Cal
+
+# Doubles Trainer Class Names
+Duo
+Battlers
+Power Pair
+Dynamic Duo
+Twins
+Ace Team
+Tag Team
+Combo Duo
+Rivals
+Colleagues
+Partners
+Stars
+Study Buds
+Twin Team
+Tag Duo
+Elite Duo
+Twin Aces
+Double Team
+Fighters
+Sync Team
+Dual Pair
+Fusion Duo
+Bonded Mates
+Siblings
+Victors
+Masters
+Rival Twins
+Friends
+Gym Duo
+Twin Force
+Ex Lovers
+Twin Rivals
+Dual Champs
+Aces
+Strikers
+Duo Experts
+Combo Twins
+Twin Leaders
+Speed Twins
+Power Duo
+Brawlers
+Ace Partners
+Warriors
+Sync Pair
+Fusion Pair
+Power Twins
+Tag Fighters
+Speed Pair
+Ace Fighters
+Elite Twins
+Duo Rivals
+Tag Strikers
+Roommates
+Bonded Twins
+Ace Team
+Lovers
+Tag Leaders
+Duo Aces
+Speed Team
+Power Pair
+
+# Pokemon
+Sparky
+Blaze
+Frosty
+Zephyr
+Luna
+Bolt
+Draco
+Flare
+Hydro
+Nova
+Pippin
+Jet
+Ember
+Terra
+Cloud
+Zippy
+Fang
+Rumble
+Twirl
+Skye
+Buzz
+Shade
+Spike
+Glint
+Orbit
+Pebble
+Star
+Flash
+Pebs
+Aqua
+Pudge
+Echo
+Munch
+Dart
+Slash
+Ivy
+Ringo
+Quake
+Tiki
+Sparx
+Misty
+Blaze
+Zoom
+Sparx
+Groot
+Tails
+Crash
+Jolt
+Skip
+Bugsy
+Nibble
+Dewey
+Twix
+Puff
+Whisk
+Frost
+Glimmer
+Fizz
+Sprout
+Koda

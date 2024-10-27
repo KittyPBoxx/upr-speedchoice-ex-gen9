@@ -1,0 +1,34 @@
+{
+  "locationsTrigger": {
+    "E,24,7,0": "L_GRANITE_CAVE_F1",
+    "E,0,2,0": "L_MAUVILLE_CITY",
+    "E,11,11,0": "L_CUTTERS_HOUSE",
+    "E,24,10,0": "L_GRANITE_STEVEN",
+    "E,0,12,1": "L_LAVARIDGE_TOWN",
+    "E,10,2,0": "L_MAUVILLE_CITY_ROCK_SMASH",
+    "E,24,4,0": "L_RUSTURF_TUNNEL",
+    "E,24,63,0": "L_ABANDONED_SHIP_KEY_ROOM",
+    "E,24,22,1": "L_MT_PYRE_SUMMIT",
+    "E,0,7,2": "L_SOOTOPOLIS_OUTSIDE_GYM",
+    "E,24,42,0": "L_CAVE_OF_ORIGIN_WALLACE",
+    "E,15,0,0": "L_SOOTOPOLIS_CITY_GYM",
+    "E,11,3,0": "L_RUSTBORO_CITY_GYM",
+    "E,3,3,0": "L_DEWFORD_TOWN_GYM",
+    "E,10,0,0": "L_MAUVILLE_CITY_GYM",
+    "E,4,1,0": "L_LAVARIDGE_TOWN_GYM",
+    "E,8,1,0": "L_PETALBURG_GYM",
+    "E,12,1,0": "L_FORTREE_CITY_GYM",
+    "E,14,0,0": "L_MOSSDEEP_CITY_GYM"
+  },
+  "keyLocations": {
+    "E,16,0,0": "L_HOENN_LEAGUE_1",
+    "E,16,1,0": "L_HOENN_LEAGUE_2",
+    "E,16,2,0": "L_HOENN_LEAGUE_3",
+    "E,16,3,0": "L_HOENN_LEAGUE_4",
+    "E,16,4,0": "L_HOENN_LEAGUE_CHAMP",
+    "E,24,107,0": "L_STEVEN_FINAL_BOSS"
+  },
+  "rootCandidates": ["E,0,10,2", "E,0,10,1", "E,0,10,0", "E,0,10,3", "E,0,0,0", "E,0,0,4", "E,0,0,5", "E,0,0,3", "E,0,0,2"],
+  "oddOnOutWarps": ["E,24,83,0", "E,26,10,0", "E,26,55,0", "E,24,98,0", "E,24,72,0", "E,25,43,11", "E,25,42,0"],
+  "oddOnOutWithDeadendsRemovedWarps": ["E,24,83,0", "E,26,10,0", "E,26,55,0", "E,24,98,0", "E,24,72,0", "E,25,43,11", "E,25,42,0", "E,10,3,0", "E,11,4,0", "E,12,0,0", "E,9,5,0", "E,13,13,0", "E,13,21,0", "E,15,5,0", "E,2,4,0", "E,3,5,0", "E,4,3,0", "E,5,7,0", "E,17,1,0", "E,0,31,2", "E,24,9,4", "E,28,0,0", "E,18,1,0", "E,26,60,0", "E,31,0,0"]
+}

@@ -34,5 +34,8 @@ build/*
 *.dsm
 *.dsv
 build_eclipse.xml
-/customnames.rncn
 !.github/*
+/target/*
+.idea/*
+*.rnqs.json
+*.iml
