@@ -171,19 +171,24 @@ public class EmeraldExWarpRandomizer {
     public static void doNextMapping(WarpRandomizationState state) throws ImpossibleMapException {
 
         List<Warp> reachableNodes = findUnmappedReachableNodes(state);
+        Collections.shuffle(reachableNodes, state.getRandom());
 
         List<Warp> unreachableNodes = state.getMapGraph().vertexSet().stream().filter(w -> !w.isMapped()).collect(Collectors.toList());
         unreachableNodes.removeAll(reachableNodes);
+        Collections.shuffle(unreachableNodes, state.getRandom());
 
         List<Warp> unreachableFlagLocations = unreachableNodes.stream()
                 .filter(w -> state.getRemainingFlagLocations().containsKey(w.getId())).collect(Collectors.toList());
+        Collections.shuffle(unreachableFlagLocations, state.getRandom());
 
         List<Warp> unreachableKeyLocations = unreachableNodes.stream()
                 .filter(w -> state.getRemainingKeyLocations().containsKey(w.getId())).collect(Collectors.toList());
+        Collections.shuffle(unreachableKeyLocations, state.getRandom());
 
         List<Warp> unreachableHubs = unreachableNodes.stream()
                 .filter(w -> state.getMapGraph().degreeOf(w) > 1)
                 .collect(Collectors.toList());
+        Collections.shuffle(unreachableHubs, state.getRandom());
 
         // Make sure there are still warps to map, and we have not run out of mappings to add all the locations that need to be added
         if (reachableNodes.isEmpty() && unreachableNodes.isEmpty()) {
@@ -209,7 +214,7 @@ public class EmeraldExWarpRandomizer {
             }
         }
 
-        WarpPair warpPair = new WarpPair(null, null);
+        WarpPair warpPair;
 
         if (!state.getUnconnectedComponents().isEmpty()) {
 
@@ -224,7 +229,7 @@ public class EmeraldExWarpRandomizer {
         } else if (!unreachableFlagLocations.isEmpty()) {
 
             System.out.println("Mapping FLAG LOCATION");
-            Warp sourceWarp = reachableNodes.get(state.getRandom().nextInt(reachableNodes.size()));
+            Warp sourceWarp = state.getWellSpreadNode(reachableNodes);
             reachableNodes.remove(sourceWarp);
             Warp targetWarp = state.getRandomUnmappedWarpForWarp(sourceWarp, unreachableFlagLocations);
             warpPair = new WarpPair(sourceWarp, targetWarp);
@@ -243,7 +248,7 @@ public class EmeraldExWarpRandomizer {
         } else if (!unreachableKeyLocations.isEmpty()) {
 
             System.out.println("Mapping KEY LOCATIONS");
-            Warp sourceWarp = reachableNodes.get(state.getRandom().nextInt(reachableNodes.size()));
+            Warp sourceWarp = state.getWellSpreadNode(reachableNodes);
             reachableNodes.remove(sourceWarp);
             Warp targetWarp = state.getRandomUnmappedWarpForWarp(sourceWarp, unreachableKeyLocations);
             warpPair = new WarpPair(sourceWarp, targetWarp);

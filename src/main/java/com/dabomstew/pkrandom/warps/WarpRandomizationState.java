@@ -52,6 +52,8 @@ public class WarpRandomizationState {
 
     private List<Warp> homePaths = null;
 
+    private Map<String, Integer> areaKeyLocationCount = new HashMap<>();
+
     private List<Set<Warp>> unconnectedComponents;
 
     private Warp oddOnOutWarp;
@@ -408,5 +410,65 @@ public class WarpRandomizationState {
         homeEscapesList.forEach(node -> remainingMustLinkHomeWarps.remove(node.getId()));
 
         homePaths = homeEscapesList;
+    }
+
+    /**
+     * To artificially improve distribution of goals we're going to keep track of where goal are
+     * placed and try and force it to choose better spread locations if they're available
+     */
+    public Warp getWellSpreadNode(List<Warp> reachableNodes) {
+
+        List<Warp> preferredNodes = reachableNodes;
+
+        List<String> lowPopulatedAreas = areaKeyLocationCount.entrySet()
+                                                             .stream()
+                                                             .filter(e -> e.getValue() >= 1)
+                                                             .map(Map.Entry::getKey)
+                                                             .collect(Collectors.toList());
+        List<Warp> firstPreference = reachableNodes.stream()
+                                                   .filter(w -> !lowPopulatedAreas.contains(getAreaKey(w)))
+                                                   .collect(Collectors.toList());
+
+        if (!firstPreference.isEmpty()) {
+            preferredNodes = firstPreference;
+        } else {
+            List<String> midPopulatedAreas = areaKeyLocationCount.entrySet()
+                    .stream()
+                    .filter(e -> e.getValue() >= 2)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+            List<Warp> secondPreference = reachableNodes.stream()
+                    .filter(w -> !midPopulatedAreas.contains(getAreaKey(w)))
+                    .collect(Collectors.toList());
+
+            if (!secondPreference.isEmpty()) {
+                preferredNodes = secondPreference;
+            } else {
+                List<String> wellPopulatedAreas = areaKeyLocationCount.entrySet()
+                        .stream()
+                        .filter(e -> e.getValue() >= 3)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList());
+                List<Warp> thirdPreference = reachableNodes.stream()
+                        .filter(w -> !wellPopulatedAreas.contains(getAreaKey(w)))
+                        .collect(Collectors.toList());
+
+                if (!thirdPreference.isEmpty()) {
+                    preferredNodes = thirdPreference;
+                }
+            }
+        }
+
+        Warp result = preferredNodes.get(random.nextInt(preferredNodes.size()));
+        String areaKey = getAreaKey(result);
+        Integer newCount = areaKeyLocationCount.getOrDefault(areaKey, 0) + 1;
+        areaKeyLocationCount.put(areaKey, newCount);
+
+        return result;
+    }
+
+    private String getAreaKey(Warp warp) {
+        String[] warpIdParts = warp.getId().split(",");
+        return warpIdParts[1] + "," + warpIdParts[2];
     }
 }
