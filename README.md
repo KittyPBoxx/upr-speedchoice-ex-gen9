@@ -1,9 +1,15 @@
 # Emerald Ex Speedchoice UPR + Map Randomizer
 
-This is a version of UPR specifically designed to be used with a Gen 9 version of emerald ex speedchoice. 
-It also supports map randomization. 
+This is a version of UPR that works with Emerald and will add in Gen 9 pokemon.
+Specifically it was made to work with a version of Emerald Ex Speedchoice that uses Gen 9 pokemon. It also supports map randomization. 
 
 You can find a tracker to use with the map randomizer here: https://sekii.gitlab.io/pokemon-tracker/
+
+# How to use
+
+- Download and extract the zip from the Releases. https://github.com/KittyPBoxx/upr-speedchoice-ex-gen9/releases/
+- Run the Jar with java 11 or higher
+- Open a vanilla copy of Emerald (USA) and it will be automatically patched and ready for randomization. (or pre-patch the rom yourself with the patch file supplied).
 
 # ChangeList
 <sub>Changes from the gen 8 ex speedchoice map rando</sub>
@@ -63,6 +69,7 @@ You can find a tracker to use with the map randomizer here: https://sekii.gitlab
 - Debug menus can be enabled/disabled from speedchoice menu, by talking to birches computer, or from the options menu (Hold START + Press SELECT)
 - Debug flags 'Always Obey'. This means pokemon always obey you and is default in map rando (because obedience is now gen 9 and otherwise high level catches won't obey you)
 - Current debug flags (All Fly Flags, Pokedex, National Dex, All Badges, Pokenav, Match Call, Frontier Pass, All Pokedex Mons)
+- Random Warps (Can be used to disable/enable random warps at any time)
 - Inverse Battles (Inverse type effectiveness in battle)
 - Level Scaling (Opponents pokemon will be scaled to your highest level pokemon, this is before applying upr level boost)
 - Level Cap (Stops you leveling up higher than the next boss)
@@ -151,5 +158,5 @@ You can find a tracker to use with the map randomizer here: https://sekii.gitlab
 - Fixed glitch weather in caves
 - Fixed 'Ghost Rayquaza' 
 - Fixed bug where you sometimes walked on water going to aqua hideout enterance or scorched slab
-
+- Algorithm tweaks to mitigate the 'flag dump' issue. This was mostly an issue an issue when requiring gyms in order. An extreme example is if the starting area gets walled by surf gyms 1-5 would all have appear early on to make the seed possible. There was some mitigation for this before, but two gyms in a town still happened a statistically improbable amount.
 
