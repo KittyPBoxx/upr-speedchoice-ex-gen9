@@ -1,7 +1,7 @@
 # Emerald Ex Speedchoice UPR + Map Randomizer
 
-This is a version of UPR specifically designed to be used with a Gen 9 version of emerald ex speedchoice. 
-It also supports map randomization. 
+This is a version of UPR that works with Emerald and will add in Gen 9 pokemon.
+Specifically it was made to work with a version of Emerald Ex Speedchoice that uses Gen 9 pokemon. It also supports map randomization. 
 
 You can find a tracker to use with the map randomizer here: https://sekii.gitlab.io/pokemon-tracker/
 
