@@ -68,9 +68,11 @@ public class ItemList {
     }
 
     public int randomNonTM(Random random) {
+        int group = random.nextInt(groups.size());
+        int[] groupRange = groups.get(group);
         int chosen = 0;
         while (!items[chosen] || tms[chosen]) {
-            chosen = random.nextInt(items.length);
+            chosen = groupRange[0] + random.nextInt(groupRange[1] - groupRange[0]);
         }
         return chosen;
     }
@@ -89,6 +91,14 @@ public class ItemList {
 
     public int randomRepel(Random random) {
         return random.nextInt((MAX_REPEL + 1) - REPEL_START) + REPEL_START;
+    }
+
+    public int randomMedicine(Random random) {
+        return random.nextInt((MEDICINE_END + 1) - MEDICINE_START) + MEDICINE_START;
+    }
+
+    public int randomXItem(Random random) {
+        return random.nextInt((X_ITEMS_END + 1) - X_ITEMS_START) + X_ITEMS_START;
     }
 
     public ItemList copy() {

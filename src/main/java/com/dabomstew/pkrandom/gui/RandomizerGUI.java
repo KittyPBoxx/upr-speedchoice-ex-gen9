@@ -2669,8 +2669,20 @@ public class RandomizerGUI extends javax.swing.JFrame {
             }
 
             if (bulkSaveCounter <= 0) {
+
+                Window[] windows = getWindows();
+
+                for (Window window : windows)
+                {
+                    if (window instanceof JDialog)
+                    {
+                        window.dispose();
+                    }
+                }
+
                 JOptionPane.showMessageDialog(this,
                         String.format(bundle.getString("RandomizerGUI.settingsLoaded"), fh.getName()));
+
             } else {
 
                 // Get a seed

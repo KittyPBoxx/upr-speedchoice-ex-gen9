@@ -321,7 +321,7 @@ public class EmeraldEXConstants {
         nonBadItems.banRange(ItemConstants.MAIL_START, (ItemConstants.MAIL_END - ItemConstants.MAIL_START) + 1);
         nonBadItems.banRange(ItemConstants.NECTARS_START, (ItemConstants.NECTARS_END - ItemConstants.NECTARS_START) + 1);
         nonBadItems.banRange(ItemConstants.CONTEST_SCARVES_START, (ItemConstants.CONTEST_SCARVES_END - ItemConstants.CONTEST_SCARVES_START) + 1);
-        nonBadItems.banRange(ItemConstants.BERRIES_START, (ItemConstants.BERRIES_END - ItemConstants.BERRIES_START) + 1);
+        // nonBadItems.banRange(ItemConstants.BERRIES_START, (ItemConstants.BERRIES_END - ItemConstants.BERRIES_START) + 1);
         // Berries that have no effect in battle
         nonBadItems.banSingles(ItemConstants.CORNN_BERRY, ItemConstants.WEPEAR_BERRY, ItemConstants.MAGOST_BERRY,
                 ItemConstants.RABUTA_BERRY, ItemConstants.NOMEL_BERRY, ItemConstants.SPELON_BERRY,

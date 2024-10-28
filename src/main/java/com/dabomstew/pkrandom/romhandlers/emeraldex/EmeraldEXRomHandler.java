@@ -1889,8 +1889,27 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
             if (allMartsHaveBallAndRepel) {
                 newItems.set(0, possibleItems.randomRepel(this.random));
-                newItems.set(1, possibleItems.randomBall(this.random));
+                newItems.set(1,  possibleItems.randomBall(this.random));
+            } else {
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    newItems.set(0, possibleItems.randomRepel(this.random));
+                }
+                if (random.nextBoolean()) {
+                    newItems.set(1, possibleItems.randomBall(this.random));
+                }
             }
+
+            if (newItems.size() >= 4) {
+                if (random.nextBoolean()) {
+                    newItems.set(2, possibleItems.randomMedicine(this.random));
+                }
+
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    newItems.set(3, possibleItems.randomXItem(this.random));
+                }
+            }
+            Collections.shuffle(newItems, this.random);
+
 
             List<Integer> itemsChosenForThisMart = new ArrayList<>();
 
@@ -1900,7 +1919,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
                 // Try and make sure the same item isn't listed twice for a mart
                 int maxRerolls = 10;
-                for (int j = 0; j < maxRerolls && itemsChosenForThisMart.contains(randomItem); j ++) {
+                for (int j = 0; j < maxRerolls && itemsChosenForThisMart.contains(randomItem); j++) {
                     randomItem += 1;
                 }
                 itemsChosenForThisMart.add(randomItem);
@@ -1982,6 +2001,15 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             if (allMartsHaveBallAndRepel && itemPrice >= 1000) {
                 if ((i < (BALLS_END + 1)) || (i >= REPEL_START && i < (MAX_REPEL + 1))) {
                     itemPrice = random.nextInt(100 + 1) * 10;
+                }
+            }
+
+            // Reduce free candy odds
+            if (itemPrice <= 250) {
+                if  ((i >= CANDY_START && i < (CANDY_END + 1))) {
+                    if (random.nextInt() % 10 != 0) {
+                        itemPrice += 1000;
+                    }
                 }
             }
 
