@@ -63,6 +63,7 @@ You can find a tracker to use with the map randomizer here: https://sekii.gitlab
 - Debug menus can be enabled/disabled from speedchoice menu, by talking to birches computer, or from the options menu (Hold START + Press SELECT)
 - Debug flags 'Always Obey'. This means pokemon always obey you and is default in map rando (because obedience is now gen 9 and otherwise high level catches won't obey you)
 - Current debug flags (All Fly Flags, Pokedex, National Dex, All Badges, Pokenav, Match Call, Frontier Pass, All Pokedex Mons)
+- Random Warps (Can be used to disable/enable random warps at any time)
 - Inverse Battles (Inverse type effectiveness in battle)
 - Level Scaling (Opponents pokemon will be scaled to your highest level pokemon, this is before applying upr level boost)
 - Level Cap (Stops you leveling up higher than the next boss)
