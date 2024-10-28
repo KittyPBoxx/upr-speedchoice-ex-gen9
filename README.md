@@ -5,6 +5,12 @@ Specifically it was made to work with a version of Emerald Ex Speedchoice that u
 
 You can find a tracker to use with the map randomizer here: https://sekii.gitlab.io/pokemon-tracker/
 
+# How to use
+
+- Download and extract the zip from the Releases. https://github.com/KittyPBoxx/upr-speedchoice-ex-gen9/releases/
+- Run the Jar with java 11 or higher
+- Open a vanilla copy of Emerald (USA) and it will be automatically patched and ready for randomization. (or pre-patch the rom yourself with the patch file supplied).
+
 # ChangeList
 <sub>Changes from the gen 8 ex speedchoice map rando</sub>
 
