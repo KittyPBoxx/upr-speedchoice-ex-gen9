@@ -94,7 +94,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
     // Settings
     private boolean autoUpdateEnabled;
     private boolean haveCheckedCustomNames;
-    private boolean useScrollPaneMode;
     private final ImageIcon emptyIcon;
     {
         URL resource = getClass().getResource("/emptyIcon.png");
@@ -132,21 +131,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
         }
         final boolean au = autoupdate;
         boolean onWindowsNativeLAF = false;
-        try {
-            String lafName = javax.swing.UIManager.getSystemLookAndFeelClassName();
-            // NEW: Only set Native LaF on windows.
-            if (lafName.equalsIgnoreCase("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")) {
-                javax.swing.UIManager.setLookAndFeel(lafName);
-                onWindowsNativeLAF = true;
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RandomizerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        final boolean wn = onWindowsNativeLAF;
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RandomizerGUI(au, wn));
+        java.awt.EventQueue.invokeLater(() -> new RandomizerGUI(au, false));
     }
 
     // constructor
@@ -163,7 +150,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
         checkHandlers = new RomHandler.Factory[] { new EmeraldExRomHandlerFactory() };
         autoUpdateEnabled = false;
         haveCheckedCustomNames = false;
-        useScrollPaneMode = !onWindowsLAF;
         attemptReadConfig();
         if (!autoupdate) {
             // override autoupdate
@@ -172,9 +158,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
         initComponents();
         initTweaksPanel();
         guiCleanup();
-        if (useScrollPaneMode) {
-            scrollPaneSetup();
-        }
+        scrollPaneSetup();
         noTweaksLayout = miscTweaksPanel.getLayout();
         initialiseState();
 
@@ -652,7 +636,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
                         } else if (key.equalsIgnoreCase("checkedcustomnames172")) {
                             haveCheckedCustomNames = Boolean.parseBoolean(tokens[1].trim());
                         } else if (key.equalsIgnoreCase("usescrollpane")) {
-                            useScrollPaneMode = Boolean.parseBoolean(tokens[1].trim());
                         }
                     }
                 }
@@ -674,7 +657,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
             ps.println("autoupdate=" + autoUpdateEnabled);
             ps.println("checkedcustomnames=true");
             ps.println("checkedcustomnames172=" + haveCheckedCustomNames);
-            ps.println("usescrollpane=" + useScrollPaneMode);
             ps.close();
             return true;
         } catch (IOException e) {
@@ -2597,11 +2579,11 @@ public class RandomizerGUI extends javax.swing.JFrame {
             toggleAutoUpdatesMenuItem.setText(bundle.getString("RandomizerGUI.enableAutoUpdate"));
         }
 
-        if (useScrollPaneMode) {
-            toggleScrollPaneMenuItem.setText(bundle.getString("RandomizerGUI.changeToTabbedPane"));
-        } else {
-            toggleScrollPaneMenuItem.setText(bundle.getString("RandomizerGUI.changeToScrollPane"));
-        }
+//        if (useScrollPaneMode) {
+//            toggleScrollPaneMenuItem.setText(bundle.getString("RandomizerGUI.changeToTabbedPane"));
+//        } else {
+//            toggleScrollPaneMenuItem.setText(bundle.getString("RandomizerGUI.changeToScrollPane"));
+//        }
         updateSettingsMenu.show(settingsButton, 0, settingsButton.getHeight());
     }// GEN-LAST:event_updateSettingsButtonActionPerformed
 
@@ -2625,7 +2607,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
                 bundle.getString("RandomizerGUI.displayModeChangeDialog.text"),
                 bundle.getString("RandomizerGUI.displayModeChangeDialog.title"), JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
-            useScrollPaneMode = !useScrollPaneMode;
             JOptionPane.showMessageDialog(this, bundle.getString("RandomizerGUI.displayModeChanged"));
             attemptWriteConfig();
             System.exit(0);
