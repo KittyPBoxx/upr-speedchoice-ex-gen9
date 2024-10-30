@@ -716,7 +716,7 @@
     "level":"3"
   },
   "E,10,7,1":{
-    "name":"MAUVILLE CITY - INSIDE - Rock Smash - 4,7",
+    "name":"MAUVILLE CITY - INSIDE - Mart - 4,7",
     "to":"E,0,2,3",
     "grouped":[
       "E,10,7,0"
@@ -1656,7 +1656,7 @@
     }
   },
   "E,13,4,1":{
-    "name":"LILYCOVE CITY - INSIDE - Contest Hall Door - E,B",
+    "name":"LILYCOVE CITY - INSIDE - Contest Hall Door - F,B",
     "to":"E,0,5,4",
     "level":"7",
     "grouped":[
@@ -1664,7 +1664,7 @@
     ]
   },
   "E,13,4,2":{
-    "name":"LILYCOVE CITY - INSIDE - Contest Hall Left - 15,1",
+    "name":"LILYCOVE CITY - INSIDE - Contest Hall Left - 15,2",
     "to":"E,13,5,0",
     "level":"7",
     "connections":{
@@ -1751,7 +1751,7 @@
     }
   },
   "E,13,7,0":{
-    "name":"LILYCOVE CITY - INSIDE - PkCenter Stairs - 1,6",
+    "name":"LILYCOVE CITY - INSIDE - F2 PkCenter Stairs - 1,6",
     "to":"E,13,6,2",
     "level":"7",
     "ignore":true
@@ -1769,7 +1769,7 @@
     ]
   },
   "E,13,9,1":{
-    "name":"LILYCOVE CITY - INSIDE - Right of PkCenter - 5,D",
+    "name":"LILYCOVE CITY - INSIDE - Right of PkCenter - 6,D",
     "to":"E,0,5,5",
     "level":"7",
     "grouped":[
@@ -2570,7 +2570,7 @@
     ]
   },
   "E,15,6,0":{
-    "name":"SOOTOPOLIS CITY - INSIDE - Left side top - 3,6",
+    "name":"SOOTOPOLIS CITY - INSIDE - Left side top top - 3,6",
     "level":"8",
     "to":"E,0,7,5",
     "grouped":[
@@ -3598,7 +3598,7 @@
     "groupMain":true
   },
   "E,5,0,1":{
-    "name":"FALLARBOR TOWN - INSIDE - Mart - 3,7",
+    "name":"FALLARBOR TOWN - INSIDE - Mart - 4,7",
     "level":"4",
     "to":"E,0,13,0",
     "grouped":[
@@ -3975,7 +3975,7 @@
     }
   },
   "E,7,0,1":{
-    "name":"PACIFIDLOG TOWN - INSIDE - PkCenter Enterance - 7,8",
+    "name":"PACIFIDLOG TOWN - INSIDE - PkCenter Enterance - 6,8",
     "level":"8",
     "to":"E,0,15,0",
     "grouped":[
@@ -6274,7 +6274,7 @@
     ]
   },
   "E,32,2,1":{
-    "name":"ROUTE 119 - INSIDE - Wingull House - 3,8",
+    "name":"ROUTE 119 - INSIDE - Wingull House - 4,8",
     "to":"E,0,34,1",
     "level":"6",
     "grouped":[
@@ -7939,7 +7939,7 @@
     "ignore":true
   },
   "E,26,56,1":{
-    "name":"FAR AWAY ISLAND - OUTSIDE - Trees Enterance - 16,7",
+    "name":"FAR AWAY ISLAND - OUTSIDE - Trees Enterance - 17,7",
     "to":"E,26,57,1",
     "level":"9",
     "grouped":[

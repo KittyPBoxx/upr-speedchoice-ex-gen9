@@ -1050,9 +1050,26 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (int i = 0; i < staticsHere.size(); i++) {
             int value = staticPokemon.get(i).getSpeciesNumber();
+
+            int existingSpecies = 0;
             for (int offset : staticsHere.get(i).getOffsets()) {
-                writeWord(offset, value);
+
+                int speciesAtOffset = readWord(offset);
+                if (existingSpecies == 0) {
+                    existingSpecies = speciesAtOffset;
+                }
+
+                if (speciesAtOffset == existingSpecies) {
+                    writeWord(offset, value);
+                } else {
+                    int finalExistingSpecies = existingSpecies;
+                    String speciesName = pokemonList.stream().filter(Objects::nonNull).filter(p -> p.getSpeciesNumber() == finalExistingSpecies).map(p -> p.getName()).findFirst().orElse("UNKNOWN MON");
+                    System.out.printf("Trying of overwrite wrong value for %s species %s at index %s offset %x%n", speciesName, existingSpecies, i, offset);
+                }
+
             }
+
+
         }
         return true;
     }
@@ -2024,7 +2041,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
     @Override
     public List<IngameTrade> getIngameTrades() {
-        List<IngameTrade> trades = new ArrayList<IngameTrade>();
+        List<IngameTrade> trades = new ArrayList<>();
 
         // info
         int tableOffset = romEntry.getValue("TradeTableOffset");
