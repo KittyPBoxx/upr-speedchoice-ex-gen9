@@ -4,8 +4,6 @@ import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
 import org.jgrapht.traverse.BreadthFirstIterator;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -97,9 +95,11 @@ public class WarpRandomizationState {
 
         if (config.isExtraDeadendRemoval()) {
             List<String> candidates = new ArrayList<>(warpData.getKeyLocations().getOddOnOutWithDeadendsRemovedWarps());
+            Collections.sort(candidates);
             oddOnOutWarp = warpData.getWarps().get(candidates.get(random.nextInt(candidates.size())));
         } else {
             List<String> candidates = new ArrayList<>(warpData.getKeyLocations().getOddOnOutWarps());
+            Collections.sort(candidates);
             oddOnOutWarp = warpData.getWarps().get(candidates.get(random.nextInt(candidates.size())));
         }
 
@@ -310,7 +310,7 @@ public class WarpRandomizationState {
             candidateStream = candidateStream.filter(w -> !w.getTags().contains(NEEDS_RETURN_TAG));
         }
 
-        List<Warp> candidatesList = candidateStream.collect(Collectors.toList());
+        List<Warp> candidatesList = candidateStream.sorted(Comparator.comparing(Warp::getId)).collect(Collectors.toList());
 
         if (candidatesList.isEmpty()) {
             throw new ImpossibleMapException("Failed to find a matching warp for " + source.getId());
@@ -459,6 +459,7 @@ public class WarpRandomizationState {
             }
         }
 
+        preferredNodes.sort(Comparator.comparing(Warp::getId));
         Warp result = preferredNodes.get(random.nextInt(preferredNodes.size()));
         String areaKey = getAreaKey(result);
         Integer newCount = areaKeyLocationCount.getOrDefault(areaKey, 0) + 1;

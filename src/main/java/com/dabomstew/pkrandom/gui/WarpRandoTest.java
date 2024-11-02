@@ -14,8 +14,16 @@ public class WarpRandoTest {
 
         int hoennLevel = 10;
         boolean extraDeadendRemoval = true;
-        int seed = 12345;
-        boolean inGymOrder = true;
+        long seed = 147914221764327L;
+        boolean inGymOrder = false;
+
+//        for (long i = 0; i < 100; i++)
+//        {
+//            WarpData warpData = EmeraldExWarpRandomizer.loadRandomWarpData();
+//            WarpConfig warpConfig = new WarpConfig(hoennLevel, extraDeadendRemoval, seed + 1, inGymOrder);
+//            List<WarpRemapping> remappings = EmeraldExWarpRandomizer.getRandomWarps(warpConfig, warpData);
+//            System.out.println("Finished for seed " + i);
+//        }
 
         WarpData warpData = EmeraldExWarpRandomizer.loadRandomWarpData();
         WarpConfig warpConfig = new WarpConfig(hoennLevel, extraDeadendRemoval, seed, inGymOrder);

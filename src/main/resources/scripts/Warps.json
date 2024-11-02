@@ -143,8 +143,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,8,4,2":true,
-      "E,0,0,3":"WHITEOUT"
+      "E,8,4,2":true
     }
   },
   "E,8,4,1":{
@@ -465,8 +464,7 @@
     "groupMain":true,
     "level":"3",
     "connections":{
-      "E,9,11,2":true,
-      "E,0,1,0":"WHITEOUT"
+      "E,9,11,2":true
     }
   },
   "E,9,11,1":{
@@ -680,8 +678,7 @@
     "groupMain":true,
     "level":"3",
     "connections":{
-      "E,10,5,2":true,
-      "E,0,2,1":"WHITEOUT"
+      "E,10,5,2":true
     }
   },
   "E,10,5,1":{
@@ -936,8 +933,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,11,5,2":true,
-      "E,0,3,3":"WHITEOUT"
+      "E,11,5,2":true
     }
   },
   "E,11,5,1":{
@@ -1284,8 +1280,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,12,2,2":true,
-      "E,0,4,0":"WHITEOUT"
+      "E,12,2,2":true
     }
   },
   "E,12,2,1":{
@@ -1382,7 +1377,11 @@
     "grouped":[
       "E,12,7,1"
     ],
-    "groupMain":true
+    "groupMain":true,
+    "tags":[
+      "low_priority",
+      "extraDeadend"
+    ]
   },
   "E,12,7,1":{
     "name":"FORTREE CITY - INSIDE - Right Side Top - 4,5",
@@ -1390,6 +1389,10 @@
     "level":"6",
     "grouped":[
       "E,12,7,0"
+    ],
+    "tags":[
+      "low_priority",
+      "extraDeadend"
     ]
   },
   "E,12,8,0":{
@@ -1730,8 +1733,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,13,6,2":true,
-      "E,0,5,2":"WHITEOUT"
+      "E,13,6,2":true
     }
   },
   "E,13,6,1":{
@@ -2190,8 +2192,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,14,3,2":true,
-      "E,0,6,2":"WHITEOUT"
+      "E,14,3,2":true
     }
   },
   "E,14,3,1":{
@@ -2501,8 +2502,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,15,2,2":true,
-      "E,0,7,0":"WHITEOUT"
+      "E,15,2,2":true
     }
   },
   "E,15,2,1":{
@@ -2551,11 +2551,7 @@
     "grouped":[
       "E,15,5,1"
     ],
-    "groupMain":true,
-    "tags":[
-      "low_priority",
-      "extraDeadend"
-    ]
+    "groupMain":true
   },
   "E,15,5,1":{
     "name":"SOOTOPOLIS CITY - INSIDE - Left side top - 4,6",
@@ -2563,10 +2559,6 @@
     "to":"E,0,7,4",
     "grouped":[
       "E,15,5,0"
-    ],
-    "tags":[
-      "low_priority",
-      "extraDeadend"
     ]
   },
   "E,15,6,0":{
@@ -2714,7 +2706,11 @@
     "grouped":[
       "E,15,12,1"
     ],
-    "groupMain":true
+    "groupMain":true,
+    "tags":[
+      "low_priority",
+      "extraDeadend"
+    ]
   },
   "E,15,12,1":{
     "name":"SOOTOPOLIS CITY - INSIDE - Right Side Middle Left - 4,6",
@@ -2722,6 +2718,10 @@
     "to":"E,0,7,11",
     "grouped":[
       "E,15,12,0"
+    ],
+    "tags":[
+      "low_priority",
+      "extraDeadend"
     ]
   },
   "E,15,13,0":{
@@ -2824,8 +2824,7 @@
     "groupMain":true,
     "connections":{
       "E,16,10,4":true,
-      "E,16,10,2":"ALL_BADGES",
-      "E,0,8,0":"WHITEOUT"
+      "E,16,10,2":"ALL_BADGES"
     }
   },
   "E,16,10,1":{
@@ -3153,8 +3152,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,2,2,2":true,
-      "E,0,10,2":"WHITEOUT"
+      "E,2,2,2":true
     }
   },
   "E,2,2,1":{
@@ -3281,8 +3279,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,3,1,2":true,
-      "E,0,11,1":"WHITEOUT"
+      "E,3,1,2":true
     }
   },
   "E,3,1,1":{
@@ -3503,8 +3500,7 @@
     "groupMain":true,
     "connections":{
       "E,4,5,2":true,
-      "E,4,5,3":true,
-      "E,0,12,3":"WHITEOUT"
+      "E,4,5,3":true
     }
   },
   "E,4,5,1":{
@@ -3633,8 +3629,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,5,4,2":true,
-      "E,0,13,2":"WHITEOUT"
+      "E,5,4,2":true
     }
   },
   "E,5,4,1":{
@@ -3813,8 +3808,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,6,4,2":true,
-      "E,0,14,2":"WHITEOUT"
+      "E,6,4,2":true
     }
   },
   "E,6,4,1":{
@@ -3970,8 +3964,7 @@
     ],
     "groupMain":true,
     "connections":{
-      "E,7,0,2":true,
-      "E,0,15,0":"WHITEOUT"
+      "E,7,0,2":true
     }
   },
   "E,7,0,1":{

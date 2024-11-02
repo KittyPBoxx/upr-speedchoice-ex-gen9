@@ -47,6 +47,10 @@ public class WarpRemapping implements Comparable<WarpRemapping> {
         return targetWarpNo;
     }
 
+    public String triggerString() {
+        return String.format("%s,%s,%s",triggerMapGroup, triggerMapNo, triggerWarpNo);
+    }
+
     @Override
     public int compareTo(WarpRemapping other) {
         if (this.triggerMapGroup != other.triggerMapGroup) {

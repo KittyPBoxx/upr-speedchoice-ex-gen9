@@ -2275,8 +2275,6 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             WarpRemapping warpRemapping = warpRemappings.get(i);
             int remapIndex = (i + offsetIndexInWarpTable);
 
-
-
             rom[warpRandoOffset + (entrySize * remapIndex) + 0] = (byte) (warpRemapping.getTriggerMapGroup() & 0xFF);
             rom[warpRandoOffset + (entrySize * remapIndex) + 1] = (byte) (warpRemapping.getTriggerMapNo() & 0xFF);
             rom[warpRandoOffset + (entrySize * remapIndex) + 2] = (byte) (warpRemapping.getTriggerWarpNo() & 0xFF);
