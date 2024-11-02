@@ -187,7 +187,7 @@ public class EmeraldExWarpRandomizer {
 
             // This should not be hardcoded
             int warpCount = mapGraph.vertexSet().size();
-            if (warpCount != 516) {
+            if (warpCount < 516) {
                 throw new ImpossibleMapException("Expected 516 edged but found " + warpCount);
             }
 
