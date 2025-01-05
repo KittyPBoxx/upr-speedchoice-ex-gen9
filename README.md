@@ -160,3 +160,186 @@ You can find a tracker to use with the map randomizer here: https://sekii.gitlab
 - Fixed bug where you sometimes walked on water going to aqua hideout enterance or scorched slab
 - Algorithm tweaks to mitigate the 'flag dump' issue. This was mostly an issue an issue when requiring gyms in order. An extreme example is if the starting area gets walled by surf gyms 1-5 would all have appear early on to make the seed possible. There was some mitigation for this before, but two gyms in a town still happened a statistically improbable amount.
 
+### Speedchoice and Setting Explainations
+
+You can press select over any of the speedchoice options to get more of an explaination. If new to emerald speedchoice it's also importaint to know that terra shards, evo/form change items are available in slateport outdoor mart. Mega ans Z move items are available from the league mart.  
+
+ Preset - Will set options to random presets.
+
+    Vanilla: keeps all the options like they are in the normal game.
+
+    MapRando: without this setting random warps will not be enabled. This will change the EXP to BW, remove plot, changes the menu to something more convenient, turns on Fast Catch, Gen 7 X Items, and Auto Save, allows Debug Menus, and changes the Battle Speed to Instant.
+
+    Bingo: will change the EXP to BW, remove plot, gives early Fly and Surf, changes the menu to something more convenient, False Swipe is tutorable, turns on Gen 7 X Items and Autosave, and changes the Battle Speed to Fast.
+
+    CEA: will change the EXP to BW, remove plot, remove spinners, gives early Fly and Surf, changes the menu to something more convenient, False Swipe is tutorable, turns on Fast Catch, Gen 7 X Items, and Autosave, and changes Battle Speed to Fast.
+
+    Race: will change the EXP to BW, remove plot, remove spinners, gives early Fly and Surf, gives good early-game Pokémon, changes the menu to something more convenient, False Swipe is tutorable, turns on Gen 7 X Items, and changes Battle Speed to Instant.
+
+    Meme: will change the EXP to none, remove plot, make spinners spin wildly, makes all trainers have maximum vision and walk through walls to battle you, gives a chance of fully evolved Pokémon, evolves a Pokémon every level they gain, turns on Autosave, randomizes music every music change, allows Debug Menus, and changes the Battle Speed to Fast.
+
+EXP - allows normal Pokémon Emerald experience gain (KEEP), Pokémon Black/White experience gain (BW), or to gain no experience (NONE). Keep uses the newest gens formula (without modern exp share). Black and White used a formula where level difference has a large effect on exp gain, so it's quicker to train up new mons to the current level but harder to overlevel. 
+
+Plotless - allows you to decide on some of the plot (SEMI), all the plot (KEEP), or not have any plot (FULL). Semi stops the plot after mt. chimney. Full removes all the magma aqa plot lines.
+
+Spinners - effect how spinning trainers function. You can make it so they can't spin (PURGE), spin normally (KEEP), spin fast (HELL), or spin wildly each frame (WHY). 
+ 
+Max Vision - impacts if trainers can see the maximum distance. It can be normal vision (OFF), maximum distance (SANE), or maximum distance with the ability to walk through anything to reach you (HELL). 
+
+Early Fly - allows you to get Fly earlier (YES) or get Fly normally (NO). In early mode Fly is given by the rival fight under the cycle pass, then they item finder will be give in the battle before Fortree 
+
+Good Early Wilds - allows you to find fully evolve Pokémon in earlier routes. You can have normal encounters (OFF), fully-evolved encounters (SAME), or have it up to luck whether get fully evolved encounters or not (RAND)
+
+Early Surf - allows you to get Surf earlier (YES) or get Surf normally (NO). This switches where you get the tms for Strength and Surf.
+
+Nice Menu Order - organizes the menu better (YES) or keeps the menu the same (NO). This is supposed to swap the order of summary/field moves + check tag/use for berries. I say supposed to because, unless I'm missing something in the code, this options been ignored for several versions...
+
+Easy False Swipe - makes it easier to get False Swipe. It can either be obtained normally (OFF), taught through a tutor (TUTOR), or replace HM05 Flash (HM05). When the setting is TUTOR it will replace the Slateport swagger tutor
+
+Fast Catch - makes the catch normal (OFF) or fast (ON). Fast catch makes the catch rate 100% and removes shaking.
+
+Gen 7 X Items - allows either +1 boosts (OFF) or +2 boosts (ON) from their respective X Item. 
+
+Evo Every Level - either lets Pokémon evolve normally (OFF) or evolve every single level into something random (ON). 
+
+AutoSave - either allows saves to be done normally (OFF) or save after healing at a Pokémon Center (ON). Autosaving at a center skips the animation so no time is lost.
+
+Shuffle Music - allows the music and jingles to stay unshuffled (OFF), be shuffled with other music tracks or jingles (ON), or allows the music to be shuffled all over the place (EXP). Exp adds music from HGSS, DPPt and some other games as well.
+
+Debug Menus - allow you to either not have them (OFF) or allow you to access them through R+ Start (ON). Debug menus are incredibly useful as they allow access to other options through Settings, like the Map Randomizer or Trainer Level Scaling. It can also be turned on and off through Professor Birth's computer in his lab in Littleroot Town. 
+
+Battle Speed - allows you to adjust how fast battle text and animations. It can be slow (SLOW), normal (MID), fast (FAST), or instantaneous (INST). 
+
+Speedup - allows you to double the speed of the game inside the game if you don't have an emulator. It can be inaccessible (OFF), set to R (R), or always on (ON). 
+
+Mach Assist - can either let the Mach Bike be normal (OFF) or automatically takes the best path without bumping into anything while holding B (B). 
+
+## Debug menu options
+
+FLAGS
+
+    Always obey (pokemon always obey you, otherwise gen 9 obedience is used)
+
+    Fly Flags (enables all the fly points on the map
+
+    Pokedex, National Dex, PokeNav, Match Call and Frontier Pass (all toggle if the flag for those is set in game)
+
+    All badges (toggles if you have all/no badges
+
+    Pokedex Flags All (marks all pokemon in the pokedex as caught)
+
+SETTINGS
+
+    Inverse Battles (Type effectiveness is inverted in battles)
+
+    Level Scaling (All trainers will be scaled so their highest level pokemon matches yours, their other pokemon will be scaled up by the same number of levels, upr level boost is applied after level scaling)
+
+    Level Cap (This stops your pokemon being leveled above the next gyms highest level pokemon)
+
+    Map Rando (toggles whether random warps are enabled)
+
+    Bag Use OFF (toggle if you can use ag in battle)
+
+    Catching OFF (toggle if you can catch pokemon)
+
+    AI vs AI (AI will control you're pokemon as well as the opponents)
+
+    Encounter off (turns of wild encounters, except with sweetscent, fishing, rocksmash or headbutt trees)
+
+    Trainer see (trainers will not fight you unless you talk to them)
+
+    Collision off (walk through walls)
+
+    Catch EXP Off (you will not get exp from catching pokemon)
+
+SCRIPTS
+
+    Speedchoice Menu (edit the speedchoice options in the middle of a game)
+
+    Slow Mo (Runs the game at half speed until 'R' is pressed)
+
+    Force Gym Battle (Immediately start the gym battle for whatever Town/Gym you are in)
+
+    Unlock Doors (Unlocks any doors/Blocking tiles you can see on the current map)
+
+    Unexist NPCS (Removes any NPCs that are currently in your vision)
+
+    Find broken warps (Checks in engine that every expected random warp is mapped and has exactly 1 remapping)
+
+
+PC/BAG
+
+    Access PC (access the pc from anywhere)
+
+    Fill (fills all your boxes with pokemon)
+
+    Clear bag (deletes all your items)
+
+    Clear Storeage Boxes (deletes all your boxed pokemon
+
+    GIVE X
+
+    Give Item (give yourself any item)
+
+    Pokemon basic (Give yourself any pokemon at any level)
+
+    Pokemon Complex (give yourself any pokemon at any level with any EV's and IV's)
+
+    Max Money (Gives you max money)
+
+    Max Coins (Gives you max coins in your coin case)
+
+    Max Battle Points (Gives you max battle points for the battle frontier)
+
+    Daycare Egg (Causes the pokemon in the daycare to produce an egg)
+
+PARTY
+
+    Move Reminder (use the move reminder at any point)
+
+    Mon Nickname (change a pokemons name at any point)
+
+    Headbutt Tutor (teaches a pokemon headbutt. The tutor is normally found in petalburg woods in the cut tree section)
+
+    Hatch egg (hatches an egg that is in your party)
+
+    Heal Party (fully heal your party from anywhere)
+
+    Inflict status (Choose a status for one of your pokemon to have)
+
+    Check EVs/IVs (Shows those values a pokemon in your party)
+
+    Clear party (deletes all the pokemon in your party)
+
+UTILITIES
+
+    Fly to map (opens the fly menu, can be used even if you don't have fly)
+
+    Warp to map (Lets you warp to any warp point in game, you must specify it's 3 byte code)
+
+    Warp to goal (Lets you warp to key locations, such as gyms, legendaries e.t.c)
+
+    Player Name (lets you change the player name)
+
+    Toggle Gender (Lets you change the players gender)
+
+    Set Weather (Sets the weather effect on the current map)
+
+    Check Clock/Set Clock (use/set your bedroom clock from anywhere)
+
+    New Trainer (randomly assigns you a new trainer id)
+
+    Cheat start (Gives you all badges, fly locations, some start pokemon e.t.c)
+
+    Berry functions (control berry tree growth without waiting)
+
+    SOUND
+
+    BGM OFF (Keeps all the game sound effects but stops all the songs from playing, for if you want to play your own music but still here the game effects)
+
+    TY Safe OFF (Prevents any Champion Themes playing, as these often get copywright strikes on youtube)
+
+    SFX/MUSIC (Play any sound effects or music tracks)
+
+
+
