@@ -37,6 +37,7 @@ public class GlobalConstants {
         bannedForDamagingMove[90] = true; // Fissure
         bannedForDamagingMove[329] = true; // Sheer Cold
 
+        bannedForDamagingMove[621] = true; // Hyperspace Fury, fails is anything other than hoopa uses it
     }
     
     /* @formatter:on */
