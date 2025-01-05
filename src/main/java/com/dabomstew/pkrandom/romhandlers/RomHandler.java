@@ -29,7 +29,6 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.Consumer;
 
 import com.dabomstew.pkrandom.CustomNamesSet;
 import com.dabomstew.pkrandom.MiscTweak;
@@ -235,7 +234,12 @@ public interface RomHandler {
 
     boolean canChangeStaticPokemon();
 
+    boolean hasFrontier();
+
     List<Pokemon> bannedForStaticPokemon();
+
+    // Randomizer: Frontier
+    void randomizeFrontier(boolean randomMoves);
 
     // Randomizer: TMs/HMs
 

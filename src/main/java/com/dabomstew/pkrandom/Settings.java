@@ -179,6 +179,8 @@ public class Settings {
 
     private StaticPokemonMod staticPokemonMod = StaticPokemonMod.UNCHANGED;
 
+    private boolean randomizeFrontier;
+
     public enum TMsMod {
         UNCHANGED, RANDOM
     }
@@ -338,6 +340,10 @@ public class Settings {
 
         if (!rh.canChangeStaticPokemon()) {
             this.setStaticPokemonMod(StaticPokemonMod.UNCHANGED);
+        }
+
+        if (!rh.hasFrontier()) {
+            this.setRandomizeFrontier(false);
         }
 
         if (!rh.hasMoveTutors()) {
@@ -1000,6 +1006,15 @@ public class Settings {
         return setStaticPokemonMod(getEnum(StaticPokemonMod.class, bools));
     }
 
+    public Settings setRandomizeFrontier(boolean value) {
+        this.randomizeFrontier = value;
+        return this;
+    }
+
+    public boolean isRandomizeFrontier() {
+        return randomizeFrontier;
+    }
+
     public TMsMod getTmsMod() {
         return tmsMod;
     }
@@ -1321,60 +1336,6 @@ public class Settings {
         return removeOrderedGymLogic;
     }
 
-    private static int makeByteSelected(boolean... bools) {
-        if (bools.length > 8) {
-            throw new IllegalArgumentException("Can't set more than 8 bits in a byte!");
-        }
-
-        int initial = 0;
-        int state = 1;
-        for (boolean b : bools) {
-            initial |= b ? state : 0;
-            state *= 2;
-        }
-        return initial;
-    }
-
-    private static boolean restoreState(byte b, int index) {
-        if (index >= 8) {
-            throw new IllegalArgumentException("Can't read more than 8 bits from a byte!");
-        }
-
-        int value = b & 0xFF;
-        return ((value >> index) & 0x01) == 0x01;
-    }
-
-    private static void writeFullInt(ByteArrayOutputStream out, int value) throws IOException {
-        byte[] crc = ByteBuffer.allocate(4).putInt(value).array();
-        out.write(crc);
-    }
-
-    private static void write2ByteInt(ByteArrayOutputStream out, int value) {
-        out.write(value & 0xFF);
-        out.write((value >> 8) & 0xFF);
-    }
-
-    public static <E extends Enum<E>> E restoreEnum(Class<E> clazz, byte b, int... indices) {
-        boolean[] bools = new boolean[indices.length];
-        int i = 0;
-        for (int idx : indices) {
-            bools[i] = restoreState(b, idx);
-            i++;
-        }
-        return getEnum(clazz, bools);
-    }
-    
-    public static <E extends Enum<E>> E restoreEnumByOrdinal(Class<E> clazz, byte b, int offset, int bits) {
-        int mask = ((1 << bits) - 1) << offset;
-        int value = (b & mask) >>> offset;
-        try {
-            return ((E[]) clazz.getMethod("values").invoke(null))[value];
-        } catch (Exception e) {
-            throw new IllegalArgumentException(String.format("Unable to parse enum of type %s", clazz.getSimpleName()),
-                    e);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public static <E extends Enum<E>> E getEnum(Class<E> clazz, boolean... bools) {
         int index = getSetEnum(clazz.getSimpleName(), bools);
@@ -1398,20 +1359,6 @@ public class Settings {
         }
         // We have to return something, so return the default
         return Math.max(index, 0);
-    }
-
-    private static void checkChecksum(byte[] data) {
-        // Check the checksum
-        ByteBuffer buf = ByteBuffer.allocate(4).put(data, data.length - 8, 4);
-        buf.rewind();
-        int crc = buf.getInt();
-
-        CRC32 checksum = new CRC32();
-        checksum.update(data, 0, data.length - 8);
-
-        if ((int) checksum.getValue() != crc) {
-            throw new IllegalArgumentException("Malformed input string");
-        }
     }
 
 }

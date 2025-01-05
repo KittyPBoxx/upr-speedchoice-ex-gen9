@@ -84,6 +84,10 @@ public abstract class AbstractGBRomHandler extends AbstractRomHandler {
     public boolean canChangeStaticPokemon() {
         return true;
     }
+    @Override
+    public boolean hasFrontier() {
+        return false;
+    }
 
     @Override
     public boolean hasPhysicalSpecialSplit() {

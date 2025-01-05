@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1075,6 +1074,121 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
+    public void randomizeFrontier(boolean randomMoves) {
+
+        int baseOffset = romEntry.getValue("FrontierPokemon");
+        int numPokes = romEntry.getValue("FrontierPokemonCount");
+
+        int trainerMonSize = 0x20;
+        int trainerMonIvOffset = 0x08;
+        int trainerMonLevelOffset = 0x1A;
+        int trainerMonSpeciesOffset = 0x14;
+        int trainerMonHeldItemOffset = 0x16;
+        int trainerMonMove1Offset = 0x0C;
+
+        List<TrainerPokemon> frontierMons = new ArrayList<>();
+
+        for (int poke = 0; poke < numPokes; poke++) {
+            TrainerPokemon thisPoke = new TrainerPokemon();
+            thisPoke.setAILevel(readWord(baseOffset + poke * trainerMonSize + trainerMonIvOffset));
+            thisPoke.setLevel(readWord(baseOffset + poke * trainerMonSize + trainerMonLevelOffset));
+            thisPoke.setPokemon(pokesInternal[readWord(baseOffset + poke * trainerMonSize + trainerMonSpeciesOffset)]);
+            thisPoke.setHeldItem(readWord(baseOffset + poke * trainerMonSize + trainerMonHeldItemOffset));
+            thisPoke.setMove1(readWord(baseOffset + poke * trainerMonSize + trainerMonMove1Offset));
+            thisPoke.setMove2(readWord(baseOffset + poke * trainerMonSize + trainerMonMove1Offset + 2));
+            thisPoke.setMove3(readWord(baseOffset + poke * trainerMonSize + trainerMonMove1Offset + 4));
+            thisPoke.setMove4(readWord(baseOffset + poke * trainerMonSize + trainerMonMove1Offset + 6));
+            frontierMons.add(thisPoke);
+        }
+
+        for (TrainerPokemon tp : frontierMons) {
+            tp.setPokemon(pickReplacement(tp.getPokemon(), false, null, false, true));
+
+
+            List<Integer> battleItems = EmeraldEXConstants.getBattleItems();
+            tp.setHeldItem(battleItems.get(random.nextInt(battleItems.size())));
+
+            if (randomMoves) {
+
+                // Set moves
+                List<Move> usableMoves = new ArrayList<>(this.getMoves());
+                usableMoves.remove(0); // remove null entry
+                Set<Move> unusableMoves = new HashSet<>();
+                Set<Move> unusableDamagingMoves = new HashSet<>();
+
+                for (Move mv : usableMoves) {
+                    int moveNumber = mv.getNumber();
+                    if (GlobalConstants.bannedRandomMoves[moveNumber]) {
+                        unusableMoves.add(mv);
+                    } else if (GlobalConstants.bannedForDamagingMove[moveNumber]
+                            || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
+                        unusableDamagingMoves.add(mv);
+                    }
+                }
+
+                usableMoves.removeAll(unusableMoves);
+                List<Move> usableDamagingMoves = new ArrayList<>(usableMoves);
+                usableDamagingMoves.removeAll(unusableDamagingMoves);
+
+                Move move1Damaging = usableDamagingMoves.get(random.nextInt(usableDamagingMoves.size()));
+                usableMoves.remove(move1Damaging);
+                usableDamagingMoves.remove(move1Damaging);
+
+                Move move2Damaging = usableDamagingMoves.get(random.nextInt(usableDamagingMoves.size()));;
+                usableMoves.remove(move2Damaging);
+                usableDamagingMoves.remove(move2Damaging);
+
+                Move move3 = usableMoves.get(random.nextInt(usableMoves.size()));;
+                usableMoves.remove(move3);
+
+                Move move4 = usableMoves.get(random.nextInt(usableMoves.size()));;
+                usableMoves.remove(move4);
+
+                tp.setMove1(move1Damaging.getNumber());
+                tp.setMove2(move2Damaging.getNumber());
+                tp.setMove3(move3.getNumber());
+                tp.setMove4(move4.getNumber());
+
+                tp.setResetMoves(false);
+
+            } else {
+
+                tp.setResetMoves(true);
+
+            }
+        }
+
+        Iterator<TrainerPokemon> pokes = frontierMons.iterator();
+
+        // Write out Pokemon data!
+        for (int poke = 0; poke < numPokes; poke++) {
+            TrainerPokemon tp = pokes.next();
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonIvOffset, tp.getLevel());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonLevelOffset, tp.getLevel());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonSpeciesOffset, tp.getPokemon().getSpeciesNumber());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonHeldItemOffset, tp.getHeldItem());
+
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset, tp.getMove1());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 2, tp.getMove2());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 4, tp.getMove3());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 6, tp.getMove4());
+
+            if (tp.isResetMoves()) {
+                int[] pokeMoves = RomFunctions.getMovesAtLevel(tp.getPokemon(), 100);
+                for (int m = 0; m < 4; m++) {
+                    writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + m * 2, pokeMoves[m]);
+                }
+            } else {
+                writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset, tp.getMove1());
+                writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 2, tp.getMove2());
+                writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 4, tp.getMove3());
+                writeWord(baseOffset + (poke * trainerMonSize) + trainerMonMove1Offset + 6, tp.getMove4());
+            }
+        }
+
+    }
+
+    @Override
     public List<Integer> getTMMoves() {
         List<Integer> tms = new ArrayList<>();
         int itemsOffset = romEntry.getValue("ItemData");
@@ -1501,6 +1615,11 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     @Override
     public boolean canChangeStaticPokemon() {
         return (romEntry.getValue("StaticPokemonSupport") > 0);
+    }
+
+    @Override
+    public boolean hasFrontier() {
+        return true;
     }
 
     @Override

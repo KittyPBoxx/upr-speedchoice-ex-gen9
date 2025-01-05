@@ -2997,7 +2997,7 @@ public abstract class AbstractRomHandler implements RomHandler {
     private Map<Type, List<Pokemon>> cachedReplacementLists;
     private List<Pokemon> cachedAllList;
 
-    private Pokemon pickReplacement(Pokemon current, boolean usePowerLevels, Type type, boolean noLegendaries,
+    protected Pokemon pickReplacement(Pokemon current, boolean usePowerLevels, Type type, boolean noLegendaries,
                                     boolean wonderGuardAllowed) {
         List<Pokemon> pickFrom = cachedAllList;
         if (type != null && type != Type.NONE && type != Type.MYSTERY && type != Type.STELLAR) {

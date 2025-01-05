@@ -388,6 +388,11 @@ public class Randomizer {
             }
         }
 
+        // Frontier Pokemon
+        if (settings.isRandomizeFrontier()) {
+            romHandler.randomizeFrontier(settings.getMovesetsMod() == Settings.MovesetsMod.COMPLETELY_RANDOM);
+        }
+
         // TMs
         if (!(settings.getMovesetsMod() == Settings.MovesetsMod.METRONOME_ONLY)
                 && settings.getTmsMod() == Settings.TMsMod.RANDOM) {
