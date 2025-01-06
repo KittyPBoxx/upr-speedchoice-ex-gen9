@@ -1493,7 +1493,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             Collections.shuffle(damagingMoves, random);
 
             // Sort the damaging oldLearnset by power
-            damagingMoves.sort(Comparator.comparingDouble(Move::getPower));
+            damagingMoves.sort(Comparator.comparingDouble(m -> m.getPower() * Math.max(1, m.getHitCount())));
 
             // Reassign damaging oldLearnset in the ordered positions
             for (int i = 0; i < damagingMoves.size(); i++) {
