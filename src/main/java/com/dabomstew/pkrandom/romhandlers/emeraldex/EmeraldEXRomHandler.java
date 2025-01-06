@@ -38,7 +38,6 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.dabomstew.pkrandom.constants.EmeraldEXConstants.ItemConstants.*;
 
@@ -164,7 +163,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     @Override
     public byte[] patchRomIfNeeded(byte[] rom) throws IOException {
         if (rom.length == 16 * 1024 * 1024) {
-            return FileFunctions.applyPatch(rom, "SPDX-0.5.0a.xdelta");
+            return FileFunctions.applyPatch(rom, "SPDX-0.5.1a.xdelta");
         }
 
         return rom;
@@ -2429,13 +2428,17 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         }
         else if (mode == Settings.TypeChartMod.SHUFFLE_ROW) {
 
-            List<Map<Type, Float>> interactions = new ArrayList<>();
+            List<TypeInteractions> interactions = new ArrayList<>();
             for (TypeInteractions interaction : typeEffectivenessTable.values()) {
 
                 if (interaction.getAttackerType() != Type.NONE &&
                     interaction.getAttackerType() != Type.STELLAR &&
                     interaction.getAttackerType() != Type.MYSTERY) {
-                    interactions.add(interaction.getDefenderMultiplier());
+
+                    TypeInteractions newInteraction = new TypeInteractions(interaction.getAttackerType());
+                    newInteraction.setDefenderMultiplier(new HashMap<>(interaction.getDefenderMultiplier()));
+
+                    interactions.add(newInteraction);
                 }
 
             }
@@ -2448,7 +2451,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                     interaction.getAttackerType() != Type.STELLAR &&
                     interaction.getAttackerType() != Type.MYSTERY) {
 
-                    interaction.setDefenderMultiplier(interactions.get(0));
+                    interaction.setDefenderMultiplier(interactions.get(0).getDefenderMultiplier());
+                    interaction.setOriginalType(interactions.get(0).getAttackerType());
                     interactions.remove(0);
 
                 }
@@ -2542,15 +2546,30 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
-    public String getTypeInteractionsLog() {
-        Stream<Type> typesToLog = Arrays.stream(Type.values());
-//                                        .filter(t -> t != Type.MYSTERY)
-//                                        .filter(t -> t != Type.NONE)
-//                                        .filter(t -> t != Type.STELLAR);
-        String result = "|        " + typesToLog.map(t -> "|" + String.format("%-" + 8 + "s", t.displayName()))
-                                            .collect(Collectors.joining(""));
+    public String getTypeInteractionsLog(Settings.TypeChartMod typeChartMod) {
+        String result = "|        " + typeEffectivenessTable.keySet()
+                                                            .stream()
+                                                            .map(t -> "|" + String.format("%-" + 8 + "s", t.displayName()))
+                                                            .collect(Collectors.joining(""));
         result += "\n";
         result += typeEffectivenessTable.values().stream().map(Objects::toString).collect(Collectors.joining("\n"));
+
+        if (typeChartMod == Settings.TypeChartMod.SHUFFLE_ROW) {
+            result += "\n\n";
+            result += "TYPE     | NOW HAS THE VANILLA EFFECTIVENESS OF\n";
+            result += typeEffectivenessTable.values()
+                                            .stream()
+                                            .filter(t -> t.getAttackerType() != Type.STELLAR)
+                                            .filter(t -> t.getAttackerType() != Type.NONE)
+                                            .filter(t -> t.getAttackerType() != Type.MYSTERY)
+                                            .map(t -> String.format("%-" + 8 + "s", t.getAttackerType().displayName()) +
+                                                    " | " +
+                                                    String.format("%-" + 8 + "s", t.getOriginalType().displayName()))
+                                            .collect(Collectors.joining("\n"));
+
+        }
+
+        result += "\n";
         return result;
     }
 }

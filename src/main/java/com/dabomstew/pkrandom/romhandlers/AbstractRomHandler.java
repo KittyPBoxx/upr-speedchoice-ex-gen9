@@ -704,13 +704,13 @@ public abstract class AbstractRomHandler implements RomHandler {
                 }
             }
         } else if (usePowerLevels) {
-            List<Pokemon> allowedPokes = noLegendaries ? new ArrayList<Pokemon>(noLegendaryList)
+            List<Pokemon> allowedPokes = noLegendaries ? new ArrayList<>(noLegendaryList)
                     : new ArrayList<>(mainPokemonList);
             allowedPokes.removeAll(banned);
             for (EncounterSet area : scrambledEncounters) {
                 List<Pokemon> localAllowed = allowedPokes;
                 if (!area.getBannedPokemon().isEmpty()) {
-                    localAllowed = new ArrayList<Pokemon>(allowedPokes);
+                    localAllowed = new ArrayList<>(allowedPokes);
                     localAllowed.removeAll(area.getBannedPokemon());
                 }
                 for (Encounter enc : area.getEncounters()) {
@@ -855,7 +855,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             }
         } else if (usePowerLevels) {
             List<Pokemon> allowedPokes = noLegendaries ? new ArrayList<Pokemon>(noLegendaryList)
-                    : new ArrayList<Pokemon>(mainPokemonList);
+                    : new ArrayList<>(mainPokemonList);
             allowedPokes.removeAll(banned);
             for (EncounterSet area : scrambledEncounters) {
                 // Poke-set

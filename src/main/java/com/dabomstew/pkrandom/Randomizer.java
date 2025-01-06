@@ -472,7 +472,7 @@ public class Randomizer {
         if (settings.getTypeChartMod() != Settings.TypeChartMod.UNCHANGED) {
             log.println("--Type Chart--");
             romHandler.randomizeTypeCharts(settings.getTypeChartMod());
-            log.println(romHandler.getTypeInteractionsLog());
+            log.println(romHandler.getTypeInteractionsLog(settings.getTypeChartMod()));
             log.println();
         }
 

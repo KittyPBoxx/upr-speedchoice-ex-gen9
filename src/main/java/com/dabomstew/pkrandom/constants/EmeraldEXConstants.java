@@ -331,6 +331,9 @@ public class EmeraldEXConstants {
         nonBadItems.banSingles(ItemConstants.AUX_EVASION, ItemConstants.AUX_GUARD, ItemConstants.AUX_POWER,
                 ItemConstants.POWERGUARD, ItemConstants.CHOICE_DUMPLING, ItemConstants.SWAP_SNACK, ItemConstants.SPICED_RADISH);
 
+        // I'm not sure that cap pikachu will even be generated
+        nonBadItems.banSingles(ItemConstants.PIKASHUNIUM_Z);
+
         // Some items (like z items or berries) are super common which means randomly selecting from the items list
         // will usually return those, By dividing items into categories we can get a better distrobution
         List<int[]> itemTypeRanges = new ArrayList<>();
@@ -756,6 +759,8 @@ public class EmeraldEXConstants {
 
         public static final int Z_CRYSTALS_START = 357;
         public static final int Z_CRYSTALS_END = 391;
+
+        public static final int PIKASHUNIUM_Z = 390;
 
         public static final int MON_SPECIFIC_HELD_ITEMS_START = 392;
         public static final int MON_SPECIFIC_HELD_ITEMS_END = 403;

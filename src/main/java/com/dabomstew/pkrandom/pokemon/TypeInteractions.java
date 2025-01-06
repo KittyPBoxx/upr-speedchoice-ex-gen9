@@ -13,6 +13,8 @@ public class TypeInteractions {
 
     private Map<Type, Float> defenderMultiplier;
 
+    private Type originalType = null;
+
     public TypeInteractions(Type attackerType) {
         this.attackerType = attackerType;
         defenderMultiplier = new HashMap<>();
@@ -36,6 +38,14 @@ public class TypeInteractions {
 
     public void setDefenderMultiplier(Map<Type, Float> defenderMultiplier) {
         this.defenderMultiplier = defenderMultiplier;
+    }
+
+    public void setOriginalType(Type originalType) {
+        this.originalType = originalType;
+    }
+
+    public Type getOriginalType() {
+        return originalType == null ? Type.NONE : originalType;
     }
 
     @Override

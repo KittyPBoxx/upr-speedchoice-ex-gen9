@@ -451,7 +451,7 @@ public interface RomHandler {
 
     void randomizeTypeCharts(Settings.TypeChartMod mode);
 
-    String getTypeInteractionsLog();
+    String getTypeInteractionsLog(Settings.TypeChartMod typeChartMod);
 
     void saveGenRestrictionsToRom(GenRestrictions currentRestrictions);
 
