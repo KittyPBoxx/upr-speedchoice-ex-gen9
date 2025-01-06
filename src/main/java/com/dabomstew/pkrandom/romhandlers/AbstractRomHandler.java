@@ -1474,13 +1474,13 @@ public abstract class AbstractRomHandler implements RomHandler {
 
         List<Move> allMoves = this.getMoves();
         for (Pokemon pkmn : getPokemon()) {
-            List<MoveLearnt> moves = pkmn.getLearnset();
+            List<MoveLearnt> oldLearnset = new ArrayList<>(pkmn.getLearnset());
 
-            // Build up a list of damaging moves and their positions
+            // Build up a list of damaging oldLearnset and their positions
             List<Integer> damagingMoveIndices = new ArrayList<>();
             List<Move> damagingMoves = new ArrayList<>();
-            for (int i = 1; i < moves.size(); i++) {
-                MoveLearnt moveLearnt = moves.get(i - 1);
+            for (int i = 1; i < oldLearnset.size(); i++) {
+                MoveLearnt moveLearnt = oldLearnset.get(i - 1);
                 Move mv = allMoves.get(moveLearnt.getMove() - 1);
                 if (mv.getPower() > 1) {
                     // considered a damaging move for this purpose
@@ -1492,19 +1492,14 @@ public abstract class AbstractRomHandler implements RomHandler {
             // Ties should be sorted randomly, so shuffle the list first.
             Collections.shuffle(damagingMoves, random);
 
-            // Sort the damaging moves by power
-            damagingMoves.sort(new Comparator<Move>() {
+            // Sort the damaging oldLearnset by power
+            damagingMoves.sort(Comparator.comparingDouble(Move::getPower));
 
-                @Override
-                public int compare(Move m1, Move m2) {
-                    // stay with the random order
-                    return Double.compare(m1.getPower() * m1.getHitCount(), m2.getPower() * m2.getHitCount());
-                }
-            });
-
-            // Reassign damaging moves in the ordered positions
+            // Reassign damaging oldLearnset in the ordered positions
             for (int i = 0; i < damagingMoves.size(); i++) {
-                moves.get(damagingMoveIndices.get(i)).setMove(damagingMoves.get(i).getNumber());
+                Integer damagingMoveIndex = damagingMoveIndices.get(i);
+                MoveLearnt moveLearnt = oldLearnset.get(damagingMoveIndex);
+                pkmn.getLearnset().get(damagingMoveIndex).setMove(moveLearnt.getMove());
             }
         }
 
