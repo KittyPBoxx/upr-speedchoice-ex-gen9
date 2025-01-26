@@ -73,12 +73,15 @@ public class Pokemon implements Comparable<Pokemon> {
 
     private List<MoveLearnt> learnset = new ArrayList<>();
 
+    private List<Integer> customLegendaryList;
+
     // A flag to use for things like recursive stats copying.
     // Must not rely on the state of this flag being preserved between calls.
     private boolean temporaryFlag;
 
-    public Pokemon() {
+    public Pokemon(List<Integer> customLegendaryList) {
         shuffledStatsOrder = Arrays.asList(0, 1, 2, 3, 4, 5);
+        this.customLegendaryList = customLegendaryList;
     }
 
     public void shuffleStats(Random random) {
@@ -385,7 +388,14 @@ public class Pokemon implements Comparable<Pokemon> {
         int fromDepth = this.evosFromDepth();
         int toDepth = this.evosToDepth();
         // pick new bst based on observed ranges for different poke types
-        if (isLegendary()) {
+
+        if (isMegaLegendary()) {
+            minBST = 640;
+            maxBST = 720;
+        } else if (isUnevolvedLegendary()) {
+            minBST = 435;
+            maxBST = 580;
+        } else if (isLegendary() || isMega() || isGigantamax()) {
             minBST = 580;
             maxBST = 720;
         } else if (fromDepth == 0 && toDepth == 0) {
@@ -614,8 +624,29 @@ public class Pokemon implements Comparable<Pokemon> {
         return (number == o.number) ? speciesNumber - o.speciesNumber : number - o.number;
     }
 
+    public boolean isUnevolvedLegendary() {
+        return Legendaries.unevolvedLegendaries().contains(this.speciesNumber);
+    }
+
     public boolean isLegendary() {
+
+        if (customLegendaryList != null) {
+            return customLegendaryList.contains(this.speciesNumber);
+        }
+
         return Legendaries.getLegendarySpecies().contains(this.speciesNumber);
+    }
+
+    public boolean isMegaLegendary() {
+        return EmeraldEXConstants.isMegaLegendary(this.speciesNumber);
+    }
+
+    public boolean isGigantamax() {
+        return EmeraldEXConstants.isGigantamax(this.speciesNumber);
+    }
+
+    public boolean isMega() {
+        return EmeraldEXConstants.isMega(this.speciesNumber);
     }
 
     public int evosFromDepth() {

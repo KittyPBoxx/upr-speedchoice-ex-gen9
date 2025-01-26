@@ -5,40 +5,36 @@ import java.util.List;
 
 public class GlobalConstants {
 
-    public static final boolean[] bannedRandomMoves = new boolean[2000], bannedForDamagingMove = new boolean[2000];
-    static {
-        bannedRandomMoves[144] = true; // Transform, glitched in RBY
-        bannedRandomMoves[165] = true; // Struggle, self explanatory
+    public static final List<Integer> bannedRandomMoves = Arrays.asList(
+            144,   // Transform, glitched in RBY
+            165  // Struggle, self explanatory
+    );
 
-        bannedForDamagingMove[120] = true; // SelfDestruct
-        bannedForDamagingMove[138] = true; // Dream Eater
-        bannedForDamagingMove[153] = true; // Explosion
-        bannedForDamagingMove[173] = true; // Snore
-        bannedForDamagingMove[206] = true; // False Swipe
-        bannedForDamagingMove[248] = true; // Future Sight
-        bannedForDamagingMove[252] = true; // Fake Out
-        bannedForDamagingMove[264] = true; // Focus Punch
-        bannedForDamagingMove[353] = true; // Doom Desire
-        bannedForDamagingMove[364] = true; // Feint
-        bannedForDamagingMove[387] = true; // Last Resort
-        bannedForDamagingMove[389] = true; // Sucker Punch
-
-        // new 160
-        bannedForDamagingMove[132] = true; // Constrict, overly weak
-        bannedForDamagingMove[99] = true; // Rage, lock-in in gen1
-        bannedForDamagingMove[205] = true; // Rollout, lock-in
-        bannedForDamagingMove[301] = true; // Ice Ball, Rollout clone
-
-        // make sure these cant roll
-        bannedForDamagingMove[39] = true; // Sonicboom
-        bannedForDamagingMove[82] = true; // Dragon Rage
-        bannedForDamagingMove[32] = true; // Horn Drill
-        bannedForDamagingMove[12] = true; // Guillotine
-        bannedForDamagingMove[90] = true; // Fissure
-        bannedForDamagingMove[329] = true; // Sheer Cold
-
-        bannedForDamagingMove[621] = true; // Hyperspace Fury, fails is anything other than hoopa uses it
-    }
+    public static final List<Integer> bannedForDamagingMove = Arrays.asList(
+            120, // SelfDestruct
+            138, // Dream Eater
+            153, // Explosion
+            173, // Snore
+            206, // False Swipe
+            248, // Future Sight
+            252, // Fake Out
+            264, // Focus Punch
+            353, // Doom Desire
+            364, // Feint
+            387, // Last Resort
+            389, // Sucker Punch
+            132, // Constrict, overly weak
+            99,// Rage, lock-in in gen1
+            205, // Rollout, lock-in
+            301, // Ice Ball, Rollout clone
+            39,// Sonicboom
+            82,// Dragon Rage
+            32,// Horn Drill
+            12,// Guillotine
+            90,// Fissure
+            329, // Sheer Cold
+            621 // Hyperspace Fury, fails is anything other than hoopa uses it
+    );
     
     /* @formatter:on */
 

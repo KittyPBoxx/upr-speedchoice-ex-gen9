@@ -133,9 +133,12 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         populateEvolutions();
         loadMoves();
 
-        List<Integer> bannedMonNumbers = Arrays.stream(EmeraldEXConstants.BannedEncounterMons.values())
-                                               .map(EmeraldEXConstants.BannedEncounterMons::getInternalSpeciesValue)
-                                               .collect(Collectors.toList());
+        List<Integer> bannedMonNumbers = customConfig.getBannedPlayerMonNumbers() != null ?
+                customConfig.getBannedPlayerMonNumbers() :
+                Arrays.stream(EmeraldEXConstants.BannedEncounterMons.values())
+                        .map(EmeraldEXConstants.BannedEncounterMons::getInternalSpeciesValue)
+                        .collect(Collectors.toList());
+
         bannedForPlayer = pokemonList.stream()
                                      .filter(Objects::nonNull)
                                      .filter(p -> bannedMonNumbers.contains(p.getSpeciesNumber()))
@@ -156,14 +159,14 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         loadItemNames();
         loadTypeEffectivenessTable();
 
-        allowedItems = EmeraldEXConstants.allowedItems.copy();
-        nonBadItems = EmeraldEXConstants.nonBadItems.copy();
+        allowedItems = customConfig.getAllowedItems() != null ? customConfig.getAllowedItems() : EmeraldEXConstants.allowedItems.copy();
+        nonBadItems = customConfig.getNonBadItems() != null ? customConfig.getNonBadItems() : EmeraldEXConstants.nonBadItems.copy();
     }
 
     @Override
     public byte[] patchRomIfNeeded(byte[] rom) throws IOException {
         if (rom.length == 16 * 1024 * 1024) {
-            return FileFunctions.applyPatch(rom, "SPDX-0.5.1a.xdelta");
+            return FileFunctions.applyPatch(rom, "SPDX-0.5.2a.xdelta");
         }
 
         return rom;
@@ -209,7 +212,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         int numInternalPokes = romEntry.getValue("PokemonCount");
         pokesInternal = new Pokemon[numInternalPokes + 1];
         for (int i = 1; i <= numInternalPokes; i++) {
-            Pokemon pk = new Pokemon();
+            Pokemon pk = new Pokemon(customConfig.getLegendaries());
             pk.setName(pokeNames[i]);
             pk.setNumber(internalToPokedex[i]);
             pk.setSpeciesNumber(i);
@@ -1117,9 +1120,9 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
                 for (Move mv : usableMoves) {
                     int moveNumber = mv.getNumber();
-                    if (GlobalConstants.bannedRandomMoves[moveNumber]) {
+                    if (getBannedRandomMoves().contains(moveNumber)) {
                         unusableMoves.add(mv);
-                    } else if (GlobalConstants.bannedForDamagingMove[moveNumber]
+                    } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
                             || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                         unusableDamagingMoves.add(mv);
                     }
@@ -1878,7 +1881,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (ItemLocationInner il : itemOffs) {
             int itemHere = readWord(il.offset);
-            if (EmeraldEXConstants.allowedItems.isTM(itemHere)) {
+            if (getAllowedItems().isTM(itemHere)) {
                 int thisTM = itemHere - EmeraldEXConstants.tmItemOffset + 1;
                 // hack for repeat TMs
                 FieldTM tmObj = new FieldTM(il.toString(), thisTM);
@@ -1901,7 +1904,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (ItemLocationInner il : itemOffs) {
             int itemHere = readWord(il.offset);
-            if (EmeraldEXConstants.allowedItems.isTM(itemHere)) {
+            if (getAllowedItems().isTM(itemHere)) {
                 // Cache replaced TMs to duplicate repeats
                 if (givenTMs[itemHere] != 0) {
                     writeWord(il.offset, givenTMs[itemHere]);
@@ -1926,8 +1929,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (ItemLocationInner il : itemOffs) {
             int itemHere = readWord(il.offset);
-            if (il.mapBank == -1 /* is plotless key item */ || (EmeraldEXConstants.allowedItems.isAllowed(itemHere)
-                    && !(EmeraldEXConstants.allowedItems.isTM(itemHere)))) {
+            if (il.mapBank == -1 /* is plotless key item */ || (getAllowedItems().isAllowed(itemHere)
+                    && !(getAllowedItems().isTM(itemHere)))) {
                 fieldItems.add(new ItemLocation(il.toString(), itemHere));
             }
         }
@@ -1944,8 +1947,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (ItemLocationInner il : itemOffs) {
             int itemHere = readWord(il.offset);
-            if (EmeraldEXConstants.allowedItems.isAllowed(itemHere)
-                    && !(EmeraldEXConstants.allowedItems.isTM(itemHere))) {
+            if (getAllowedItems().isAllowed(itemHere)
+                    && !(getAllowedItems().isTM(itemHere))) {
                 // Replace it
                 writeWord(il.offset, iterItems.next());
             }
@@ -1972,8 +1975,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
 
         for (GivenItem givenItem : givenItems) {
             int itemHere = readWord(givenItem.getOffsets().get(0));
-            if (EmeraldEXConstants.allowedItems.isAllowed(itemHere)
-                    && !(EmeraldEXConstants.allowedItems.isTM(itemHere))) {
+            if (getAllowedItems().isAllowed(itemHere)
+                    && !(getAllowedItems().isTM(itemHere))) {
                 Integer randomItem = iterItems.next();
                 givenItem.getOffsets()
                          .forEach(offset -> writeWord(offset, randomItem));

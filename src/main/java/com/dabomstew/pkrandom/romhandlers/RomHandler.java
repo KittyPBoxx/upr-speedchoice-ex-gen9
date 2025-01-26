@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.dabomstew.pkrandom.CustomConfig;
 import com.dabomstew.pkrandom.CustomNamesSet;
 import com.dabomstew.pkrandom.MiscTweak;
 import com.dabomstew.pkrandom.Settings;
@@ -45,6 +46,7 @@ import com.dabomstew.pkrandom.pokemon.Trainer;
 import com.dabomstew.pkrandom.pokemon.Type;
 
 public interface RomHandler {
+
 
     abstract class Factory {
 
@@ -454,5 +456,7 @@ public interface RomHandler {
     String getTypeInteractionsLog(Settings.TypeChartMod typeChartMod);
 
     void saveGenRestrictionsToRom(GenRestrictions currentRestrictions);
+
+    void setCustomConfig(CustomConfig config);
 
 }

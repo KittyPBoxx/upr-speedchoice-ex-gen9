@@ -27,10 +27,7 @@ package com.dabomstew.pkrandom.romhandlers;
 /*--  along with this program. If not, see <http://www.gnu.org/licenses/>.  --*/
 /*----------------------------------------------------------------------------*/
 
-import com.dabomstew.pkrandom.CustomNamesSet;
-import com.dabomstew.pkrandom.MiscTweak;
-import com.dabomstew.pkrandom.RomFunctions;
-import com.dabomstew.pkrandom.Settings;
+import com.dabomstew.pkrandom.*;
 import com.dabomstew.pkrandom.constants.GlobalConstants;
 import com.dabomstew.pkrandom.exceptions.RandomizationException;
 import com.dabomstew.pkrandom.pokemon.*;
@@ -48,6 +45,7 @@ public abstract class AbstractRomHandler implements RomHandler {
     protected List<Pokemon> bannedForPlayer;
     protected final Random random;
     protected PrintStream logStream;
+    protected CustomConfig customConfig;
 
     /* Constructor */
 
@@ -108,6 +106,12 @@ public abstract class AbstractRomHandler implements RomHandler {
             }
         }
 
+        if (customConfig.getBannedMonNumbers() != null) {
+            mainPokemonList = mainPokemonList.stream().filter(p -> {
+                return !customConfig.getBannedMonNumbers().contains(p.getNumber());
+            }).collect(Collectors.toList());
+        }
+
         noLegendaryList = new ArrayList<>();
         onlyLegendaryList = new ArrayList<>();
 
@@ -120,6 +124,10 @@ public abstract class AbstractRomHandler implements RomHandler {
                 }
             }
         }
+    }
+
+    public void setCustomConfig(CustomConfig customConfig) {
+        this.customConfig = customConfig;
     }
 
     private void addPokemonGeneration(List<Pokemon> pokemonPool, List<Pokemon> allPokemon, int firstSpeciesNo, int lastSpeciesNo) {
@@ -174,15 +182,8 @@ public abstract class AbstractRomHandler implements RomHandler {
     @Override
     public void shufflePokemonStats(boolean evolutionSanity) {
         if (evolutionSanity) {
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    pk.shuffleStats(AbstractRomHandler.this.random);
-                }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.copyShuffledStatsUpEvolution(evFrom);
-                }
-            });
+            copyUpEvolutionsHelper(pk -> pk.shuffleStats(AbstractRomHandler.this.random),
+                    (evFrom, evTo, toMonIsFinalEvo) -> evTo.copyShuffledStatsUpEvolution(evFrom));
         } else {
             List<Pokemon> allPokes = this.getPokemon();
             for (Pokemon pk : allPokes) {
@@ -197,15 +198,8 @@ public abstract class AbstractRomHandler implements RomHandler {
     public void randomizePokemonStats(boolean evolutionSanity) {
 
         if (evolutionSanity) {
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    pk.randomizeStatsWithinBST(AbstractRomHandler.this.random);
-                }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.copyRandomizedStatsUpEvolution(evFrom);
-                }
-            });
+            copyUpEvolutionsHelper(pk -> pk.randomizeStatsWithinBST(AbstractRomHandler.this.random),
+                    (evFrom, evTo, toMonIsFinalEvo) -> evTo.copyRandomizedStatsUpEvolution(evFrom));
         } else {
             List<Pokemon> allPokes = this.getPokemon();
             for (Pokemon pk : allPokes) {
@@ -221,25 +215,11 @@ public abstract class AbstractRomHandler implements RomHandler {
     public void randomizePokemonBaseStats(final boolean evolutionSanity, final boolean dontRandomizeRatio, final boolean evosBuffStats) {
         if (evolutionSanity) {
             // ignore dontRandomizeRatio for evolutions - the two aren't compatible here
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    pk.randomizeBST(AbstractRomHandler.this.random, dontRandomizeRatio);
-                }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.copyRandomizedBSTUpEvolution(random, evFrom, evosBuffStats);
-                }
-            });
+            copyUpEvolutionsHelper(pk -> pk.randomizeBST(AbstractRomHandler.this.random, dontRandomizeRatio),
+                    (evFrom, evTo, toMonIsFinalEvo) -> evTo.copyRandomizedBSTUpEvolution(random, evFrom, evosBuffStats));
         } else if (evosBuffStats) {
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    pk.randomizeBST(AbstractRomHandler.this.random, dontRandomizeRatio);
-                }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.randomizeBSTSetAmountAbovePreevo(random, evFrom, dontRandomizeRatio);
-                }
-            });
+            copyUpEvolutionsHelper(pk -> pk.randomizeBST(AbstractRomHandler.this.random, dontRandomizeRatio),
+                    (evFrom, evTo, toMonIsFinalEvo) -> evTo.randomizeBSTSetAmountAbovePreevo(random, evFrom, dontRandomizeRatio));
         } else {
             // no evolution carrying at all
             List<Pokemon> allPokes = this.getPokemon();
@@ -254,15 +234,8 @@ public abstract class AbstractRomHandler implements RomHandler {
     @Override
     public void randomizePokemonBaseStatsPerc(boolean evolutionSanity, final int percent, final boolean dontRandomizeRatio) {
         if (evolutionSanity) {
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    pk.randomizeBSTPerc(AbstractRomHandler.this.random, percent, dontRandomizeRatio);
-                }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.percentRaiseStatFloorUpEvolution(random, dontRandomizeRatio, evFrom);
-                }
-            });
+            copyUpEvolutionsHelper(pk -> pk.randomizeBSTPerc(AbstractRomHandler.this.random, percent, dontRandomizeRatio),
+                    (evFrom, evTo, toMonIsFinalEvo) -> evTo.percentRaiseStatFloorUpEvolution(random, dontRandomizeRatio, evFrom));
         } else {
             List<Pokemon> allPokes = this.getPokemon();
             for (Pokemon pk : allPokes) {
@@ -1314,7 +1287,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         Map<Type, List<Move>> validTypeDamagingMoves = new HashMap<>();
 
         for (Move mv : allMoves) {
-            if (mv != null && !GlobalConstants.bannedRandomMoves[mv.getNumber()] && !allBanned.contains(mv.getNumber()) && mv.isValid()) {
+            if (mv != null && !getBannedRandomMoves().contains(mv.getNumber()) && !allBanned.contains(mv.getNumber()) && mv.isValid()) {
                 validMoves.add(mv);
                 Type moveType = mv.getType();
                 if (moveType != null) {
@@ -1324,7 +1297,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                     validTypeMoves.get(moveType).add(mv);
                 }
 
-                if (!GlobalConstants.bannedForDamagingMove[mv.getNumber()]) {
+                if (!GlobalConstants.bannedForDamagingMove.contains(mv.getNumber())) {
                     if (mv.getPower() >= 2 * GlobalConstants.MIN_DAMAGING_MOVE_POWER
                             || (mv.getPower() >= GlobalConstants.MIN_DAMAGING_MOVE_POWER && mv.getHitratio() >= 90)) {
                         validDamagingMoves.add(mv);
@@ -1645,9 +1618,9 @@ public abstract class AbstractRomHandler implements RomHandler {
 
         for (Move mv : usableMoves) {
             int moveNumber = mv.getNumber();
-            if (GlobalConstants.bannedRandomMoves[moveNumber] || hms.contains(moveNumber) || banned.contains(moveNumber)) {
+            if (getBannedRandomMoves().contains(moveNumber) || hms.contains(moveNumber) || banned.contains(moveNumber)) {
                 unusableMoves.add(mv);
-            } else if (GlobalConstants.bannedForDamagingMove[moveNumber]
+            } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
                     || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                 unusableDamagingMoves.add(mv);
             }
@@ -1748,10 +1721,10 @@ public abstract class AbstractRomHandler implements RomHandler {
 
         for (Move mv : usableMoves) {
             int moveNumber = mv.getNumber();
-            if (GlobalConstants.bannedRandomMoves[moveNumber] || tms.contains(moveNumber) || hms.contains(moveNumber)
+            if (getBannedRandomMoves().contains(moveNumber) || tms.contains(moveNumber) || hms.contains(moveNumber)
                     || banned.contains(moveNumber)) {
                 unusableMoves.add(mv);
-            } else if (GlobalConstants.bannedForDamagingMove[moveNumber]
+            } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
                     || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                 unusableDamagingMoves.add(mv);
             }
@@ -2935,7 +2908,7 @@ public abstract class AbstractRomHandler implements RomHandler {
     }
 
     private Pokemon fullyEvolve(Pokemon pokemon) {
-        Set<Pokemon> seenMons = new HashSet<Pokemon>();
+        Set<Pokemon> seenMons = new HashSet<>();
         seenMons.add(pokemon);
 
         while (true) {
@@ -3184,7 +3157,7 @@ public abstract class AbstractRomHandler implements RomHandler {
     @Override
     public List<Integer> getGameBreakingMoves() {
         // Sonicboom & drage
-        return Arrays.asList(49, 82);
+        return customConfig.getGameBreakingMoves() != null ? customConfig.getGameBreakingMoves() : Arrays.asList(49, 82);
     }
 
     @Override
@@ -3207,5 +3180,23 @@ public abstract class AbstractRomHandler implements RomHandler {
     public boolean canCondenseEncounterSlots() {
         // default: no
         return false;
+    }
+
+    protected List<Integer> getBannedRandomMoves() {
+        return customConfig.getBannedRandomMoves() != null ? customConfig.getBannedRandomMoves() : GlobalConstants.bannedRandomMoves;
+    }
+
+    protected List<Integer> getBannedForDamagingMove() {
+        return customConfig.getBannedForDamagingMoves() != null ? customConfig.getBannedForDamagingMoves() : GlobalConstants.bannedForDamagingMove;
+    }
+
+
+    protected List<Integer> battleTrappingAbilities() {
+        return customConfig.getBattleTrappingAbilities() != null ? customConfig.getBattleTrappingAbilities() : GlobalConstants.battleTrappingAbilities;
+    }
+
+
+    protected List<Integer> negativeAbilities() {
+        return customConfig.getNegativeAbilities() != null ? customConfig.getNegativeAbilities() : GlobalConstants.negativeAbilities;
     }
 }

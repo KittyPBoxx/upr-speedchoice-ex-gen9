@@ -34,6 +34,7 @@ import com.dabomstew.pkrandom.romhandlers.emeraldex.EmeraldExRomHandlerFactory;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.google.gson.Gson;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.ParallelGroup;
@@ -1085,6 +1086,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
                     boolean romLoaded = false;
                     SwingUtilities.invokeLater(() -> opDialog.setVisible(true));
                     try {
+                        tryLoadCustomConfig();
                         romLoaded = RandomizerGUI.this.romHandler.loadRom(absolutePath);
                         if(!romLoaded) {
                             JOptionPane.showMessageDialog(RandomizerGUI.this,
@@ -1180,6 +1182,47 @@ public class RandomizerGUI extends javax.swing.JFrame {
 
         System.out.println("No Settings (.rnqs) file found for rom code " + romHandler.getROMCode());
 
+    }
+
+    private void tryLoadCustomConfig() {
+        try {
+            FileFilter configExtFilter = file -> file.getName().toLowerCase().trim().endsWith("_custom_config.json");
+            File jarDirectory = FileFunctions.getJarDirectory();
+            System.out.println("Checking for custom config file in " + jarDirectory.getAbsolutePath());
+            File[] jarDirectoryFiles = jarDirectory.listFiles(configExtFilter);
+
+            if (jarDirectoryFiles != null && jarDirectoryFiles.length > 0)
+            {
+                ArrayList<File> matchingFiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(jarDirectoryFiles)));
+                if (!matchingFiles.isEmpty()) {
+                    System.out.println("Trying to load custom config file from rom directory " + matchingFiles.get(0).getName());
+
+                    try (FileReader reader = new FileReader(matchingFiles.get(0))) {
+                        Gson gson = new Gson();
+                        CustomConfig config = gson.fromJson(reader, CustomConfig.class);
+                        config.init();
+                        romHandler.setCustomConfig(config);
+                    } catch (IOException e) {
+                        romHandler.setCustomConfig(new CustomConfig());
+                        System.out.println("Failed to load custom json file");
+                        JOptionPane.showMessageDialog(this,
+                                String.format(bundle.getString("RandomizerGUI.customConfigLoadFailed")));
+                    }
+
+                }
+            } else {
+                romHandler.setCustomConfig(new CustomConfig());
+                System.out.println("No custom config file found in " + jarDirectory.getAbsolutePath());
+                JOptionPane.showMessageDialog(this,
+                        String.format(bundle.getString("RandomizerGUI.customConfigLoadFailed")));
+            }
+
+        } catch (Exception e) {
+            romHandler.setCustomConfig(new CustomConfig());
+            JOptionPane.showMessageDialog(this,
+                    String.format(bundle.getString("RandomizerGUI.customConfigLoadFailed")));
+            /* Do nothing if we error searching for a custom config file, they can enter one themselves */
+        }
     }
 
     private void romLoaded() {

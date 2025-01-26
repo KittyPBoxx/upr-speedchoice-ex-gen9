@@ -336,6 +336,13 @@ public class EmeraldEXConstants {
 
         // Some items (like z items or berries) are super common which means randomly selecting from the items list
         // will usually return those, By dividing items into categories we can get a better distrobution
+        List<int[]> itemTypeRanges = getItemTypeRanges();
+
+        allowedItems.configureGroups(itemTypeRanges);
+        nonBadItems.configureGroups(itemTypeRanges);
+    }
+
+    public static List<int[]> getItemTypeRanges() {
         List<int[]> itemTypeRanges = new ArrayList<>();
         itemTypeRanges.add(new int[]{ItemConstants.BALLS_START, ItemConstants.BALLS_END});
         itemTypeRanges.add(new int[]{ItemConstants.MEDICINE_START, ItemConstants.SPECIALTIES_END});
@@ -375,9 +382,7 @@ public class EmeraldEXConstants {
         itemTypeRanges.add(new int[]{ItemConstants.GEN_9_EVO_FORM_START, ItemConstants.GEN_9_EVO_FORM_END});
         itemTypeRanges.add(new int[]{ItemConstants.GEN_9_STAT_START, ItemConstants.GEN_9_STAT_END});
         itemTypeRanges.add(new int[]{ItemConstants.GEN_9_MEDICINE_START, ItemConstants.GEN_9_MEDICINE_END});
-
-        allowedItems.configureGroups(itemTypeRanges);
-        nonBadItems.configureGroups(itemTypeRanges);
+        return itemTypeRanges;
     }
 
     public static void trainerTagsE(List<Trainer> trs) {
@@ -470,6 +475,25 @@ public class EmeraldEXConstants {
         for (int num : numbers) {
             allTrainers.get(num - 1).setTag(tag);
         }
+    }
+
+    public static boolean isMegaLegendary(int species) {
+        return BannedEncounterMons.DIANCIE_MEGA.internalSpeciesValue == species ||
+               BannedEncounterMons.RAYQUAZA_MEGA.internalSpeciesValue == species ||
+               BannedEncounterMons.MEWTWO_MEGA_X.internalSpeciesValue == species ||
+               BannedEncounterMons.MEWTWO_MEGA_Y.internalSpeciesValue == species ||
+               BannedEncounterMons.KYOGRE_PRIMAL.internalSpeciesValue == species ||
+               BannedEncounterMons.GROUDON_PRIMAL.internalSpeciesValue == species;
+    }
+
+    public static boolean isMega(int species) {
+        return species >= BannedEncounterMons.VENUSAUR_MEGA.internalSpeciesValue &&
+                species <= BannedEncounterMons.GROUDON_PRIMAL.internalSpeciesValue;
+    }
+
+    public static boolean isGigantamax(int species) {
+        return species >= BannedEncounterMons.VENUSAUR_GIGANTAMAX.internalSpeciesValue &&
+                species <= BannedEncounterMons.DURALUDON_GIGANTAMAX.internalSpeciesValue;
     }
 
     // Used for frontier mons
