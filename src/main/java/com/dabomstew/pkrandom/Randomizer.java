@@ -591,8 +591,10 @@ public class Randomizer {
                 List<Pokemon> starters = new ArrayList<>();
                 for (int i = 0; i < starterCount; i++) {
                     Pokemon pkmn = romHandler.randomPokemon(true);
-                    while (starters.contains(pkmn)) {
+                    int currentTry = 0;
+                    while (starters.contains(pkmn) && !(currentTry >= 100)) {
                         pkmn = romHandler.randomPokemon(true);
+                        currentTry++;
                     }
                     log.println("Set starter " + (i + 1) + " to " + pkmn.getName());
                     starters.add(pkmn);

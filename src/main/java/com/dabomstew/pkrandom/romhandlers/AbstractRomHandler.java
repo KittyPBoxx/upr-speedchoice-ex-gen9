@@ -107,9 +107,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         }
 
         if (customConfig.getBannedMonNumbers() != null) {
-            mainPokemonList = mainPokemonList.stream().filter(p -> {
-                return !customConfig.getBannedMonNumbers().contains(p.getNumber());
-            }).collect(Collectors.toList());
+            mainPokemonList = mainPokemonList.stream().filter(p -> !customConfig.getBannedMonNumbers().contains(p.getSpeciesNumber())).collect(Collectors.toList());
         }
 
         noLegendaryList = new ArrayList<>();
@@ -2219,8 +2217,10 @@ public abstract class AbstractRomHandler implements RomHandler {
             // pick new given pokemon
             Pokemon oldgiven = trade.getGivenPokemon();
             Pokemon given = this.randomPokemon(true);
-            while (usedGivens.contains(given)) {
+            int currentTry = 0;
+            while (usedGivens.contains(given) && !(currentTry >= 100)) {
                 given = this.randomPokemon(true);
+                currentTry++;
             }
             usedGivens.add(given);
             trade.setGivenPokemon(given);
@@ -2231,8 +2231,10 @@ public abstract class AbstractRomHandler implements RomHandler {
                 trade.setRequestedPokemon(given);
             } else if (randomizeRequest) {
                 Pokemon request = this.randomPokemon(true);
-                while (usedRequests.contains(request) || request == given) {
+                currentTry = 0;
+                while ((usedRequests.contains(request) || request == given) && !(currentTry >= 100)) {
                     request = this.randomPokemon(true);
+                    currentTry++;
                 }
                 usedRequests.add(request);
                 trade.setRequestedPokemon(request);
