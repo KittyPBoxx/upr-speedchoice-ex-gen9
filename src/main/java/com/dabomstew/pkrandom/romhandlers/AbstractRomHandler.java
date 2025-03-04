@@ -1445,32 +1445,33 @@ public abstract class AbstractRomHandler implements RomHandler {
 
         List<Move> allMoves = this.getMoves();
         for (Pokemon pkmn : getPokemon()) {
-            List<MoveLearnt> oldLearnset = new ArrayList<>(pkmn.getLearnset());
+            List<MoveLearnt> learnset = pkmn.getLearnset();
 
-            // Build up a list of damaging oldLearnset and their positions
+            // Build up a list of damaging moves and their positions
             List<Integer> damagingMoveIndices = new ArrayList<>();
             List<Move> damagingMoves = new ArrayList<>();
-            for (int i = 1; i < oldLearnset.size(); i++) {
-                MoveLearnt moveLearnt = oldLearnset.get(i - 1);
+            for (int i = 0; i < learnset.size(); i++) {
+                MoveLearnt moveLearnt = learnset.get(i);
                 Move mv = allMoves.get(moveLearnt.getMove() - 1);
                 if (mv.getPower() > 1) {
                     // considered a damaging move for this purpose
                     damagingMoveIndices.add(i);
                     damagingMoves.add(mv);
+                    assert moveLearnt.getMove() == mv.getInternalId();
                 }
             }
 
             // Ties should be sorted randomly, so shuffle the list first.
             Collections.shuffle(damagingMoves, random);
 
-            // Sort the damaging oldLearnset by power
+            // Sort the damaging moves by power
             damagingMoves.sort(Comparator.comparingDouble(m -> m.getPower() * Math.max(1, m.getHitCount())));
 
-            // Reassign damaging oldLearnset in the ordered positions
+            // Reassign damaging moves in the ordered positions
             for (int i = 0; i < damagingMoves.size(); i++) {
+                Move move = damagingMoves.get(i);
                 Integer damagingMoveIndex = damagingMoveIndices.get(i);
-                MoveLearnt moveLearnt = oldLearnset.get(damagingMoveIndex);
-                pkmn.getLearnset().get(damagingMoveIndex).setMove(moveLearnt.getMove());
+                learnset.get(damagingMoveIndex).setMove(move.getInternalId());
             }
         }
 
