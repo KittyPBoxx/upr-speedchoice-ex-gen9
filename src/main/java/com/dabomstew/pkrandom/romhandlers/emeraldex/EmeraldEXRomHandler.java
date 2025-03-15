@@ -810,19 +810,18 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                             }
                         }
                     } else {
-                        // Use Day only and write it over all three
+                        // Use Day only and write it over all times
                         int dayDataOffset = readPointer(typePtr + 8);
                         if (!seenOffsets.contains(dayDataOffset)) {
                             EncounterSet area = encounterAreas.next();
                             rom[typePtr] = (byte) area.getRate();
-                            if (type.getIndex() == 3) {
-                                writeWildAreaFishing(readPointer(typePtr + 4), area);
-                                writeWildAreaFishing(readPointer(typePtr + 8), area);
-                                writeWildAreaFishing(readPointer(typePtr + 12), area);
-                            } else {
-                                writeWildArea(readPointer(typePtr + 4), type.getSlotEncounters(), area, type.getIndex() == 0);
-                                writeWildArea(readPointer(typePtr + 8), type.getSlotEncounters(), area, type.getIndex() == 0);
-                                writeWildArea(readPointer(typePtr + 12), type.getSlotEncounters(), area, type.getIndex() == 0);
+                            for (TimesOfDay time : TimesOfDay.values()) {
+                                int dataOffset = readPointer(typePtr + 4 + time.getIndex() * 4);
+                                if (type.getIndex() == 3) {
+                                    writeWildAreaFishing(dataOffset, area);
+                                } else {
+                                    writeWildArea(dataOffset, type.getSlotEncounters(), area, type.getIndex() == 0);
+                                }
                             }
                             seenOffsets.add(dayDataOffset);
                         }

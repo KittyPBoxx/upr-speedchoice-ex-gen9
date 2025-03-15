@@ -644,7 +644,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                 }
             }
         } else if (typeThemed) {
-            Map<Type, List<Pokemon>> cachedPokeLists = new TreeMap<Type, List<Pokemon>>();
+            Map<Type, List<Pokemon>> cachedPokeLists = new TreeMap<>();
             for (EncounterSet area : scrambledEncounters) {
                 List<Pokemon> possiblePokemon = null;
                 int iterLoops = 0;
@@ -657,7 +657,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                     }
                     possiblePokemon = cachedPokeLists.get(areaTheme);
                     if (!area.getBannedPokemon().isEmpty()) {
-                        possiblePokemon = new ArrayList<Pokemon>(possiblePokemon);
+                        possiblePokemon = new ArrayList<>(possiblePokemon);
                         possiblePokemon.removeAll(area.getBannedPokemon());
                     }
                     if (possiblePokemon.isEmpty()) {
