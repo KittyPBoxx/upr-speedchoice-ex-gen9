@@ -317,6 +317,10 @@ public class EmeraldExWarpRandomizer {
 
         } else if (!unreachableNodes.isEmpty()) {
 
+            if (reachableNodes.isEmpty()) {
+                throw new ImpossibleMapException("Ran out of reachable nodes to map");
+            }
+
             //System.out.println("Mapping DEAD ENDS");
             Warp sourceWarp = reachableNodes.get(state.getRandom().nextInt(reachableNodes.size()));
             Warp targetWarp;

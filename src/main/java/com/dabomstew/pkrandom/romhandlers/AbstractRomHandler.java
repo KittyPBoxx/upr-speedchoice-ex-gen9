@@ -1552,18 +1552,20 @@ public abstract class AbstractRomHandler implements RomHandler {
             nonlegsLeft.removeAll(banned);
             for (Pokemon old : currentStaticPokemon) {
                 Pokemon newPK;
-                if (old.isLegendary()) {
+                if (old.isLegendary() && !legendariesLeft.isEmpty()) {
                     newPK = legendariesLeft.remove(this.random.nextInt(legendariesLeft.size()));
                     if (legendariesLeft.isEmpty()) {
                         legendariesLeft.addAll(onlyLegendaryList);
                         legendariesLeft.removeAll(banned);
                     }
-                } else {
+                } else if (!nonlegsLeft.isEmpty()) {
                     newPK = nonlegsLeft.remove(this.random.nextInt(nonlegsLeft.size()));
                     if (nonlegsLeft.isEmpty()) {
                         nonlegsLeft.addAll(noLegendaryList);
                         nonlegsLeft.removeAll(banned);
                     }
+                } else {
+                    newPK = mainPokemonList.get(this.random.nextInt(mainPokemonList.size()));
                 }
                 replacements.add(newPK);
             }
