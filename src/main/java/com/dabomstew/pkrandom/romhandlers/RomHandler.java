@@ -140,7 +140,7 @@ public interface RomHandler {
     // return a random type valid in this game.
     // straightforward except for gen1 where dark&steel are excluded.
 
-    Type randomType();
+    Type randomType(boolean onlyUsePokemonTypes);
 
     // randomise Pokemon types, with a switch on whether evolutions
     // should follow the same types or not.

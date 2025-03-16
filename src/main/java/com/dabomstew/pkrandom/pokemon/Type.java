@@ -23,21 +23,52 @@ package com.dabomstew.pkrandom.pokemon;
 /*--  along with this program. If not, see <http://www.gnu.org/licenses/>.  --*/
 /*----------------------------------------------------------------------------*/
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import com.dabomstew.pkrandom.RomFunctions;
+import java.util.stream.Collectors;
 
 public enum Type {
 
-    NONE, NORMAL, FIGHTING, FLYING, GRASS, WATER, FIRE, ROCK, GROUND, PSYCHIC, BUG, DRAGON, ELECTRIC, GHOST, POISON, ICE, STEEL, MYSTERY, DARK, FAIRY, STELLAR;
+    NONE(true),
+    NORMAL(true),
+    FIGHTING(true),
+    FLYING(true),
+    GRASS(true),
+    WATER(true),
+    FIRE(true),
+    ROCK(true),
+    GROUND(true),
+    PSYCHIC(true),
+    BUG(true),
+    DRAGON(true),
+    ELECTRIC(true),
+    GHOST(true),
+    POISON(true),
+    ICE(true),
+    STEEL(true),
+    MYSTERY(false),
+    DARK(true),
+    FAIRY(true),
+    STELLAR(false);
 
     private static final List<Type> VALUES = List.of(values());
     private static final int SIZE = VALUES.size();
+    private final boolean monsExistWithType;
 
-    public static Type randomType(Random random) {
+    Type(boolean monsExistWithType) {
+        this.monsExistWithType = monsExistWithType;
+    }
+
+    public static Type randomType(Random random, boolean onlyUsePokemonTypes) {
+
+        if (onlyUsePokemonTypes)
+        {
+            List<Type> validTypes = VALUES.stream()
+                                          .filter(type -> type.monsExistWithType)
+                                          .collect(Collectors.toList());
+            return validTypes.get(random.nextInt(validTypes.size()));
+        }
+
         return VALUES.get(random.nextInt(SIZE));
     }
 

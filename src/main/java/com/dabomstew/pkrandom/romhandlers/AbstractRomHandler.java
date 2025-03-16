@@ -381,9 +381,8 @@ public abstract class AbstractRomHandler implements RomHandler {
     }
 
     @Override
-    public Type randomType() {
-        Type t = Type.randomType(this.random);
-        return t;
+    public Type randomType(boolean onlyUsePokemonTypes) {
+        return Type.randomType(this.random, onlyUsePokemonTypes);
     }
 
     @Override
@@ -397,34 +396,32 @@ public abstract class AbstractRomHandler implements RomHandler {
                     // A Basic/EFC pokemon has a 35% chance of a second type if
                     // it has an evolution that copies type/stats, a 50% chance
                     // otherwise
-                    pk.setPrimaryType(randomType());
+                    pk.setPrimaryType(randomType(true));
                     pk.setSecondaryType(null);
                     if (pk.getEvolutionsFrom().size() == 1 && pk.getEvolutionsFrom().get(0).isCarryStats()) {
                         if (AbstractRomHandler.this.random.nextDouble() < 0.35) {
                             do {
-                                pk.setSecondaryType(randomType());
+                                pk.setSecondaryType(randomType(true));
                             } while (pk.getSecondaryType() == pk.getPrimaryType());
                         }
                     } else {
                         if (AbstractRomHandler.this.random.nextDouble() < 0.5) {
                             do {
-                                pk.setSecondaryType(randomType());
+                                pk.setSecondaryType(randomType(true));
                             } while (pk.getSecondaryType() == pk.getPrimaryType());
                         }
                     }
                 }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    evTo.setPrimaryType(evFrom.getPrimaryType());
-                    evTo.setSecondaryType(evFrom.getSecondaryType());
+            }, (evFrom, evTo, toMonIsFinalEvo) -> {
+                evTo.setPrimaryType(evFrom.getPrimaryType());
+                evTo.setSecondaryType(evFrom.getSecondaryType());
 
-                    if (evTo.getSecondaryType() == null) {
-                        double chance = toMonIsFinalEvo ? 0.25 : 0.15;
-                        if (AbstractRomHandler.this.random.nextDouble() < chance) {
-                            do {
-                                evTo.setSecondaryType(randomType());
-                            } while (evTo.getSecondaryType() == evTo.getPrimaryType());
-                        }
+                if (evTo.getSecondaryType() == null) {
+                    double chance = toMonIsFinalEvo ? 0.25 : 0.15;
+                    if (AbstractRomHandler.this.random.nextDouble() < chance) {
+                        do {
+                            evTo.setSecondaryType(randomType(true));
+                        } while (evTo.getSecondaryType() == evTo.getPrimaryType());
                     }
                 }
             });
@@ -432,11 +429,11 @@ public abstract class AbstractRomHandler implements RomHandler {
             // Entirely random types
             for (Pokemon pkmn : allPokes) {
                 if (pkmn != null) {
-                    pkmn.setPrimaryType(randomType());
+                    pkmn.setPrimaryType(randomType(true));
                     pkmn.setSecondaryType(null);
                     if (this.random.nextDouble() < 0.5) {
                         do {
-                            pkmn.setSecondaryType(randomType());
+                            pkmn.setSecondaryType(randomType(true));
                         } while (pkmn.getSecondaryType() == pkmn.getPrimaryType());
                     }
                 }
@@ -649,7 +646,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                 List<Pokemon> possiblePokemon = null;
                 int iterLoops = 0;
                 while (possiblePokemon == null && iterLoops < 10000) {
-                    Type areaTheme = randomType();
+                    Type areaTheme = randomType(true);
                     if (!cachedPokeLists.containsKey(areaTheme)) {
                         List<Pokemon> pType = pokemonOfType(areaTheme, noLegendaries);
                         pType.removeAll(banned);
@@ -791,7 +788,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                 List<Pokemon> possiblePokemon = null;
                 int iterLoops = 0;
                 while (possiblePokemon == null && iterLoops < 10000) {
-                    Type areaTheme = randomType();
+                    Type areaTheme = randomType(true);
                     if (!cachedPokeLists.containsKey(areaTheme)) {
                         List<Pokemon> pType = pokemonOfType(areaTheme, noLegendaries);
                         pType.removeAll(banned);
@@ -1244,7 +1241,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         List<Move> moves = this.getMoves();
         for (Move mv : moves) {
             if (mv != null && mv.getInternalId() != 165 && mv.getType() != null) {
-                mv.setType(randomType());
+                mv.setType(randomType(false));
             }
         }
     }
@@ -2734,7 +2731,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             }
             return null;
         } else {
-            return randomType();
+            return randomType(true);
         }
     }
 
