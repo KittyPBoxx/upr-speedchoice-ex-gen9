@@ -2982,7 +2982,7 @@ public abstract class AbstractRomHandler implements RomHandler {
 
         pickFrom = pickFrom.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
-        if (usePowerLevels) {
+        if (usePowerLevels && current != null) {
             // start with within 10% and add 5% either direction till we find
             // something
             int currentBST = current.bstForPowerLevels();
