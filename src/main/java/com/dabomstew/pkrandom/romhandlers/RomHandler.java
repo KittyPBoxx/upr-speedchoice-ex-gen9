@@ -181,7 +181,7 @@ public interface RomHandler {
     void setTrainers(List<Trainer> trainerData);
 
     void randomizeTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                               int levelModifier);
+                               int levelModifier, boolean fillBossTeams);
 
     void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
                                boolean noEarlyWonderGuard, int levelModifier);

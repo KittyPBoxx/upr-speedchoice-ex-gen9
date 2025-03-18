@@ -181,6 +181,8 @@ public class Settings {
 
     private boolean randomizeFrontier;
 
+    private boolean fillBossTeams;
+
     public enum TMsMod {
         UNCHANGED, RANDOM
     }
@@ -1013,6 +1015,15 @@ public class Settings {
 
     public boolean isRandomizeFrontier() {
         return randomizeFrontier;
+    }
+
+    public boolean isFillBossTeams() {
+        return fillBossTeams;
+    }
+
+    public Settings setFillBossTeams(boolean value) {
+        this.fillBossTeams = value;
+        return this;
     }
 
     public TMsMod getTmsMod() {

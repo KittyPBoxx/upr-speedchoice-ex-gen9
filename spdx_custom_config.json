@@ -184,7 +184,8 @@
       "MOVE_GUILLOTINE",
       "MOVE_FISSURE",
       "MOVE_SHEER_COLD",
-      "MOVE_HYPERSPACE_FURY"
+      "MOVE_HYPERSPACE_FURY",
+      "MOVE_AURA_WHEEL"
     ],
     "bannedGameBreakingMoves":
     [

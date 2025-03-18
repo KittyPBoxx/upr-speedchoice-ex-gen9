@@ -166,7 +166,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     @Override
     public byte[] patchRomIfNeeded(byte[] rom) throws IOException {
         if (rom.length == 16 * 1024 * 1024) {
-            return FileFunctions.applyPatch(rom, "SPDX-0.5.2a.xdelta");
+            return FileFunctions.applyPatch(rom, "SPDX-0.5.3a.xdelta");
         }
 
         return rom;

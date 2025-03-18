@@ -33,7 +33,8 @@ public class GlobalConstants {
             12,// Guillotine
             90,// Fissure
             329, // Sheer Cold
-            621 // Hyperspace Fury, fails is anything other than hoopa uses it
+            621, // Hyperspace Fury, fails is anything other than hoopa uses it
+            711 // Aura Wheel, as it only works properly with morpeko
     );
     
     /* @formatter:on */

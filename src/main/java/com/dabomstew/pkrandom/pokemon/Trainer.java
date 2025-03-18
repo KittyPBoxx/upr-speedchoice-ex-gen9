@@ -25,6 +25,7 @@ package com.dabomstew.pkrandom.pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Trainer implements Comparable<Trainer> {
     private int offset;
@@ -141,5 +142,9 @@ public class Trainer implements Comparable<Trainer> {
     @Override
     public int compareTo(Trainer o) {
         return offset - o.offset;
+    }
+
+    public void removeEmptyPokemon() {
+        pokemon = pokemon.stream().filter(p -> p.getPokemon() != null).collect(Collectors.toList());
     }
 }

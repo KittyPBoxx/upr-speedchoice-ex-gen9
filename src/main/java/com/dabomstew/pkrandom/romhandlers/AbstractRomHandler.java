@@ -959,7 +959,7 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void randomizeTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                      int levelModifier) {
+                                      int levelModifier, boolean fillBossTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
 
@@ -977,6 +977,9 @@ public abstract class AbstractRomHandler implements RomHandler {
         for (Trainer t : scrambledTrainers) {
             if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
                 continue; // skip
+            }
+            if (!fillBossTeams) {
+                t.removeEmptyPokemon();
             }
             for (TrainerPokemon tp : t.getPokemon()) {
                 boolean wgAllowed = (!noEarlyWonderGuard) || tp.getLevel() >= 20;
