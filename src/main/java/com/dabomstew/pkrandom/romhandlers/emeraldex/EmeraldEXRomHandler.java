@@ -735,8 +735,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     private boolean hasBattleTrappingAbility(Pokemon pokemon) {
-        return pokemon != null && (GlobalConstants.battleTrappingAbilities.contains(pokemon.getAbility1())
-                || GlobalConstants.battleTrappingAbilities.contains(pokemon.getAbility2()));
+        return pokemon != null && (battleTrappingAbilities().contains(pokemon.getAbility1())
+                || battleTrappingAbilities().contains(pokemon.getAbility2()));
     }
 
     private EncounterSet readWildArea(int dataOffset, int rate, int numOfEntries, String setName) {
@@ -1121,7 +1121,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                     int moveNumber = mv.getNumber();
                     if (getBannedRandomMoves().contains(moveNumber)) {
                         unusableMoves.add(mv);
-                    } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
+                    } else if (getBannedForDamagingMoves().contains(moveNumber)
                             || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                         unusableDamagingMoves.add(mv);
                     }
@@ -1425,7 +1425,12 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             }
 
             // split evos don't carry stats
-            if (pk.getEvolutionsFrom().size() > 1) {
+            if (pk.getEvolutionsFrom()
+                   .stream()
+                   .filter(e -> e.getType() != EvolutionType.EVO_NONE)
+                   .map(p -> p.getTo().getSpeciesNumber())
+                   .distinct()
+                   .count()  > 1) {
                 for (Evolution e : pk.getEvolutionsFrom()) {
                     e.setCarryStats(false);
                 }
@@ -1776,7 +1781,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         mapNames = new String[bankCount][];
         int mbpsOffset = romEntry.getValue("MapHeaders");
         int mapLabels = romEntry.getValue("MapLabels");
-        Map<Integer, String> mapLabelsM = new HashMap<Integer, String>();
+        Map<Integer, String> mapLabelsM = new HashMap<>();
         for (int bank = 0; bank < bankCount; bank++) {
             int bankOffset = readPointer(mbpsOffset + bank * 4);
             mapNames[bank] = new String[bankMapCounts[bank]];

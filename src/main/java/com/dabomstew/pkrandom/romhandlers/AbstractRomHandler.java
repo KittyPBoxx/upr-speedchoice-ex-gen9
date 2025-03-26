@@ -458,11 +458,11 @@ public abstract class AbstractRomHandler implements RomHandler {
         }
 
         if (banTrappingAbilities) {
-            bannedAbilities.addAll(GlobalConstants.battleTrappingAbilities);
+            bannedAbilities.addAll(battleTrappingAbilities());
         }
 
         if (banNegativeAbilities) {
-            bannedAbilities.addAll(GlobalConstants.negativeAbilities);
+            bannedAbilities.addAll(negativeAbilities());
         }
 
         final int maxAbility = this.highestAbilityIndex();
@@ -471,38 +471,34 @@ public abstract class AbstractRomHandler implements RomHandler {
             // copy abilities straight up evolution lines
             // still keep WG as an exception, though
 
-            copyUpEvolutionsHelper(new BasePokemonAction() {
-                public void applyTo(Pokemon pk) {
-                    if (pk.getAbility1() != GlobalConstants.WONDER_GUARD_INDEX
-                            && pk.getAbility2() != GlobalConstants.WONDER_GUARD_INDEX
-                            && pk.getAbility3() != GlobalConstants.WONDER_GUARD_INDEX) {
-                        // Pick first ability
-                        pk.setAbility1(pickRandomAbility(maxAbility, bannedAbilities));
+            copyUpEvolutionsHelper(pk -> {
+                if (pk.getAbility1() != GlobalConstants.WONDER_GUARD_INDEX
+                        && pk.getAbility2() != GlobalConstants.WONDER_GUARD_INDEX
+                        && pk.getAbility3() != GlobalConstants.WONDER_GUARD_INDEX) {
+                    // Pick first ability
+                    pk.setAbility1(pickRandomAbility(maxAbility, bannedAbilities));
 
-                        // Second ability?
-                        if (AbstractRomHandler.this.random.nextDouble() < 0.5) {
-                            // Yes, second ability
-                            pk.setAbility2(pickRandomAbility(maxAbility, bannedAbilities, pk.getAbility1()));
-                        } else {
-                            // Nope
-                            pk.setAbility2(0);
-                        }
+                    // Second ability?
+                    if (AbstractRomHandler.this.random.nextDouble() < 0.5) {
+                        // Yes, second ability
+                        pk.setAbility2(pickRandomAbility(maxAbility, bannedAbilities, pk.getAbility1()));
+                    } else {
+                        // Nope
+                        pk.setAbility2(0);
+                    }
 
-                        // Third ability?
-                        if (hasDWAbilities) {
-                            pk.setAbility3(pickRandomAbility(maxAbility, bannedAbilities, pk.getAbility1(), pk.getAbility2()));
-                        }
+                    // Third ability?
+                    if (hasDWAbilities) {
+                        pk.setAbility3(pickRandomAbility(maxAbility, bannedAbilities, pk.getAbility1(), pk.getAbility2()));
                     }
                 }
-            }, new EvolvedPokemonAction() {
-                public void applyTo(Pokemon evFrom, Pokemon evTo, boolean toMonIsFinalEvo) {
-                    if (evTo.getAbility1() != GlobalConstants.WONDER_GUARD_INDEX
-                            && evTo.getAbility2() != GlobalConstants.WONDER_GUARD_INDEX
-                            && evTo.getAbility3() != GlobalConstants.WONDER_GUARD_INDEX) {
-                        evTo.setAbility1(evFrom.getAbility1());
-                        evTo.setAbility2(evFrom.getAbility2());
-                        evTo.setAbility3(evFrom.getAbility3());
-                    }
+            }, (evFrom, evTo, toMonIsFinalEvo) -> {
+                if (evTo.getAbility1() != GlobalConstants.WONDER_GUARD_INDEX
+                        && evTo.getAbility2() != GlobalConstants.WONDER_GUARD_INDEX
+                        && evTo.getAbility3() != GlobalConstants.WONDER_GUARD_INDEX) {
+                    evTo.setAbility1(evFrom.getAbility1());
+                    evTo.setAbility2(evFrom.getAbility2());
+                    evTo.setAbility3(evFrom.getAbility3());
                 }
             });
         } else {
@@ -1295,7 +1291,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                     validTypeMoves.get(moveType).add(mv);
                 }
 
-                if (!GlobalConstants.bannedForDamagingMove.contains(mv.getNumber())) {
+                if (!getBannedForDamagingMoves().contains(mv.getNumber())) {
                     if (mv.getPower() >= 2 * GlobalConstants.MIN_DAMAGING_MOVE_POWER
                             || (mv.getPower() >= GlobalConstants.MIN_DAMAGING_MOVE_POWER && mv.getHitratio() >= 90)) {
                         validDamagingMoves.add(mv);
@@ -1621,7 +1617,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             int moveNumber = mv.getNumber();
             if (getBannedRandomMoves().contains(moveNumber) || hms.contains(moveNumber) || banned.contains(moveNumber)) {
                 unusableMoves.add(mv);
-            } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
+            } else if (getBannedForDamagingMoves().contains(moveNumber)
                     || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                 unusableDamagingMoves.add(mv);
             }
@@ -1725,7 +1721,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (getBannedRandomMoves().contains(moveNumber) || tms.contains(moveNumber) || hms.contains(moveNumber)
                     || banned.contains(moveNumber)) {
                 unusableMoves.add(mv);
-            } else if (GlobalConstants.bannedForDamagingMove.contains(moveNumber)
+            } else if (getBannedForDamagingMoves().contains(moveNumber)
                     || mv.getPower() < GlobalConstants.MIN_DAMAGING_MOVE_POWER) {
                 unusableDamagingMoves.add(mv);
             }
@@ -3191,7 +3187,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         return customConfig.getBannedRandomMoves() != null ? customConfig.getBannedRandomMoves() : GlobalConstants.bannedRandomMoves;
     }
 
-    protected List<Integer> getBannedForDamagingMove() {
+    protected List<Integer> getBannedForDamagingMoves() {
         return customConfig.getBannedForDamagingMoves() != null ? customConfig.getBannedForDamagingMoves() : GlobalConstants.bannedForDamagingMove;
     }
 

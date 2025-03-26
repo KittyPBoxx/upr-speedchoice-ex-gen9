@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.dabomstew.pkrandom.pokemon.Evolution;
+import com.dabomstew.pkrandom.pokemon.EvolutionType;
 import com.dabomstew.pkrandom.pokemon.MoveLearnt;
 import com.dabomstew.pkrandom.pokemon.Pokemon;
 import com.dabomstew.pkrandom.romhandlers.RomHandler;
@@ -42,7 +43,12 @@ public class RomFunctions {
         Set<Pokemon> dontCopyPokes = new TreeSet<>();
         for (Pokemon pkmn : allPokes) {
             if (pkmn != null) {
-                if (pkmn.getEvolutionsTo().size() != 1) {
+                if (pkmn.getEvolutionsTo()
+                        .stream()
+                        .filter(e -> e.getType() != EvolutionType.EVO_NONE)
+                        .map(p -> p.getTo().getSpeciesNumber())
+                        .distinct()
+                        .count() != 1) {
                     dontCopyPokes.add(pkmn);
                 } else {
                     Evolution onlyEvo = pkmn.getEvolutionsTo().get(0);
@@ -60,7 +66,12 @@ public class RomFunctions {
         Set<Pokemon> middleEvolutions = new TreeSet<>();
         for (Pokemon pkmn : allPokes) {
             if (pkmn != null) {
-                if (pkmn.getEvolutionsTo().size() == 1 && !pkmn.getEvolutionsFrom().isEmpty()) {
+                if (pkmn.getEvolutionsTo()
+                        .stream()
+                        .filter(e -> e.getType() != EvolutionType.EVO_NONE)
+                        .map(p -> p.getTo().getSpeciesNumber())
+                        .distinct()
+                        .count() == 1 && !pkmn.getEvolutionsFrom().isEmpty()) {
                     Evolution onlyEvo = pkmn.getEvolutionsTo().get(0);
                     if (onlyEvo.isCarryStats()) {
                         middleEvolutions.add(pkmn);
