@@ -44,7 +44,21 @@ public enum EvolutionType {
     EVO_CRITICAL_HITS(35, false),
     EVO_SCRIPT_TRIGGER_DMG(36, false),
     EVO_DARK_SCROLL(37, false),
-    EVO_WATER_SCROLL(38, false);
+    EVO_WATER_SCROLL(38, false),
+    EVO_ITEM_NIGHT(39, false),
+    EVO_ITEM_DAY(40, false),
+    EVO_ITEM_HOLD(41, false),
+    EVO_LEVEL_FOG(42, false),
+    EVO_MOVE_TWO_SEGMENT(43, false),
+    EVO_MOVE_THREE_SEGMENT(44, false),
+    EVO_LEVEL_FAMILY_OF_THREE(45, false),
+    EVO_LEVEL_FAMILY_OF_FOUR(46, false),
+    EVO_USE_MOVE_TWENTY_TIMES(47, false),
+    EVO_RECOIL_DAMAGE_MALE(48, false),
+    EVO_RECOIL_DAMAGE_FEMALE(49, false),
+    EVO_ITEM_COUNT_999(50, false),
+    EVO_DEFEAT_THREE_WITH_ITEM(51, false),
+    EVO_OVERWORLD_STEPS(52, false);
     /* @formatter:on */
 
     private final int evolutionValue;
