@@ -1697,12 +1697,15 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.tpForceFullyEvolvedCB.setSelected(false);
             this.tpLevelModifierCB.setEnabled(false);
             this.tpLevelModifierCB.setSelected(false);
+            this.tpFillBossTeams.setEnabled(false);
+            this.tpFillBossTeams.setSelected(false);
         } else {
             this.tpPowerLevelsCB.setEnabled(true);
             this.tpNoLegendariesCB.setEnabled(true);
             this.tpNoEarlyShedinjaCB.setEnabled(true);
             this.tpForceFullyEvolvedCB.setEnabled(true);
             this.tpLevelModifierCB.setEnabled(true);
+            this.tpFillBossTeams.setEnabled(true);
         }
 
         if (this.tpForceFullyEvolvedCB.isSelected()) {
@@ -1898,8 +1901,6 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.fiRandomItemPrices.setEnabled(true);
 
         this.tpRandomFrontier.setEnabled(true);
-
-        this.tpFillBossTeams.setEnabled(true);
 
         if (this.fiRandomizeMartsCB.isSelected() && this.fiRandomizeMartsCB.isEnabled()) {
             this.fiAllMartsHaveBallAndRepel.setEnabled(true);

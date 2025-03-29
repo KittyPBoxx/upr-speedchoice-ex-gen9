@@ -323,7 +323,9 @@ public class Randomizer {
         List<Trainer> trainers = romHandler.getTrainers();
         for (Trainer t : trainers) {
             for (TrainerPokemon tpk : t.getPokemon()) {
-                checkValue = addToCV(checkValue, tpk.getLevel(), tpk.getPokemon().getNumber());
+                if (tpk.getPokemon() != null) {
+                    checkValue = addToCV(checkValue, tpk.getLevel(), tpk.getPokemon().getNumber());
+                }
             }
         }
 
@@ -712,6 +714,9 @@ public class Randomizer {
                 log.print(" - ");
                 boolean first = true;
                 for (TrainerPokemon tpk : t.getPokemon()) {
+                    if (tpk.getPokemon() == null) {
+                        continue;
+                    }
                     if (!first) {
                         log.print(", ");
                     }

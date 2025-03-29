@@ -980,6 +980,11 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             // Write out Pokemon data!
             for (int poke = 0; poke < newPokeCount; poke++) {
                 TrainerPokemon tp = pokes.next();
+
+                if (tp.getPokemon() == null) {
+                    continue;
+                }
+
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonIvOffset, tp.getLevel());
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonLevelOffset, tp.getLevel());
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonSpeciesOffset, tp.getPokemon().getSpeciesNumber());
@@ -1164,6 +1169,11 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         // Write out Pokemon data!
         for (int poke = 0; poke < numPokes; poke++) {
             TrainerPokemon tp = pokes.next();
+
+            if (tp.getPokemon() == null) {
+                continue;
+            }
+
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonIvOffset, tp.getLevel());
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonLevelOffset, tp.getLevel());
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonSpeciesOffset, tp.getPokemon().getSpeciesNumber());

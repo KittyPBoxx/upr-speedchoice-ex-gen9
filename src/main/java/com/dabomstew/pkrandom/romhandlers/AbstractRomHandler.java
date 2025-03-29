@@ -978,6 +978,9 @@ public abstract class AbstractRomHandler implements RomHandler {
                 t.removeEmptyPokemon();
             }
             for (TrainerPokemon tp : t.getPokemon()) {
+                if (tp.getPokemon() == null) {
+                    continue;
+                }
                 boolean wgAllowed = (!noEarlyWonderGuard) || tp.getLevel() >= 20;
                 tp.setPokemon(pickReplacement(tp.getPokemon(), usePowerLevels, null, noLegendaries, wgAllowed));
                 tp.setResetMoves(true);
@@ -1061,6 +1064,9 @@ public abstract class AbstractRomHandler implements RomHandler {
             // Themed groups just have a theme, no special criteria
             for (Trainer t : trainersInGroup) {
                 for (TrainerPokemon tp : t.getPokemon()) {
+                    if (tp.getPokemon() == null) {
+                        continue;
+                    }
                     boolean wgAllowed = (!noEarlyWonderGuard) || tp.getLevel() >= 20;
                     tp.setPokemon(pickReplacement(tp.getPokemon(), usePowerLevels, typeForGroup, noLegendaries, wgAllowed));
                     tp.setResetMoves(true);
@@ -1093,6 +1099,9 @@ public abstract class AbstractRomHandler implements RomHandler {
                     usedUberTypes.add(typeForTrainer);
                 }
                 for (TrainerPokemon tp : t.getPokemon()) {
+                    if (tp.getPokemon() == null) {
+                        continue;
+                    }
                     boolean shedAllowed = (!noEarlyWonderGuard) || tp.getLevel() >= 20;
                     tp.setPokemon(pickReplacement(tp.getPokemon(), usePowerLevels, typeForTrainer, noLegendaries, shedAllowed));
                     tp.setResetMoves(true);
@@ -1122,7 +1131,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         List<Trainer> currentTrainers = this.getTrainers();
         for (Trainer t : currentTrainers) {
             for (TrainerPokemon tp : t.getPokemon()) {
-                if (tp.getLevel() >= minLevel) {
+                if (tp.getLevel() >= minLevel && t.getPokemon() != null) {
                     Pokemon newPokemon = fullyEvolve(tp.getPokemon());
                     if (newPokemon != tp.getPokemon()) {
                         tp.setPokemon(newPokemon);

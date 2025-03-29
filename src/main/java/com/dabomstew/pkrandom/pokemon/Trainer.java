@@ -106,6 +106,9 @@ public class Trainer implements Comparable<Trainer> {
         sb.append(" => ");
         boolean first = true;
         for (TrainerPokemon p : pokemon) {
+            if (p.getPokemon() == null) {
+                continue;
+            }
             if (!first) {
                 sb.append(',');
             }
