@@ -1131,7 +1131,7 @@ public abstract class AbstractRomHandler implements RomHandler {
         List<Trainer> currentTrainers = this.getTrainers();
         for (Trainer t : currentTrainers) {
             for (TrainerPokemon tp : t.getPokemon()) {
-                if (tp.getLevel() >= minLevel && t.getPokemon() != null) {
+                if (tp.getLevel() >= minLevel && tp.getPokemon() != null) {
                     Pokemon newPokemon = fullyEvolve(tp.getPokemon());
                     if (newPokemon != tp.getPokemon()) {
                         tp.setPokemon(newPokemon);
