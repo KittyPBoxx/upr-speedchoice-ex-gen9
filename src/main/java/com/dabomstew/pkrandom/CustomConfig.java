@@ -49,7 +49,7 @@ public class CustomConfig {
         this.bannedPlayerMonNumbers =  config.getMonsBannedForPlayer().stream().map(i -> mons.get(i)).collect(Collectors.toList());
         bannedPlayerMonNumbers.addAll(this.bannedMonNumbers);
 
-        this.legendaries = config.getMonsBannedForEveryone().stream().map(i -> mons.get(i)).collect(Collectors.toList());
+        this.legendaries = config.getLegendaries().stream().map(i -> mons.get(i)).collect(Collectors.toList());
 
         this.gameBreakingMoves = config.getBannedGameBreakingMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
         this.bannedRandomMoves = config.getBannedMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
@@ -221,6 +221,14 @@ public class CustomConfig {
 
         public void setBannedDamagingMoves(List<String> bannedDamagingMoves) {
             this.bannedDamagingMoves = bannedDamagingMoves;
+        }
+
+        public List<String> getLegendaries() {
+            return legendaries;
+        }
+
+        public void setLegendaries(List<String> legendaries) {
+            this.legendaries = legendaries;
         }
     }
 }
