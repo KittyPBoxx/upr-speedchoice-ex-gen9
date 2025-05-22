@@ -1117,6 +1117,55 @@ public abstract class AbstractRomHandler implements RomHandler {
     }
 
     @Override
+    public void typeMatchTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
+                                      int levelModifier, boolean fillBossTeams) {
+        checkPokemonRestrictions();
+        List<Trainer> currentTrainers = this.getTrainers();
+
+        // New: randomize the order trainers are randomized in.
+        // Leads to less predictable results for various modifiers.
+        // Need to keep the original ordering around for saving though.
+        List<Trainer> scrambledTrainers = new ArrayList<>(currentTrainers);
+        Collections.shuffle(scrambledTrainers, this.random);
+
+        cachedReplacementLists = new TreeMap<>();
+        cachedAllList = noLegendaries ? new ArrayList<>(noLegendaryList) : new ArrayList<>(mainPokemonList);
+
+        // Fully random is easy enough - randomize then worry about rival
+        // carrying starter at the end
+        for (Trainer t : scrambledTrainers) {
+            if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
+                continue; // skip
+            }
+            if (!fillBossTeams) {
+                t.removeEmptyPokemon();
+            }
+            for (TrainerPokemon tp : t.getPokemon()) {
+                if (tp.getPokemon() == null) {
+                    continue;
+                }
+                boolean wgAllowed = (!noEarlyWonderGuard) || tp.getLevel() >= 20;
+
+                Type randomType = tp.getPokemon().getPrimaryType();
+                Type secondaryType = tp.getPokemon().getSecondaryType();
+                // If it has a secondary type, 50% chance to use that instead
+                if (secondaryType != null && secondaryType != Type.NONE && secondaryType != Type.MYSTERY && secondaryType != Type.STELLAR && this.random.nextInt(2) == 0) {
+                    randomType = secondaryType;
+                }
+
+                tp.setPokemon(pickReplacement(tp.getPokemon(), usePowerLevels, randomType, noLegendaries, wgAllowed));
+                tp.setResetMoves(true);
+                if (levelModifier != 0) {
+                    tp.setLevel(Math.min(100, (int) Math.round(tp.getLevel() * (1 + levelModifier / 100.0))));
+                }
+            }
+        }
+
+        // Save it all up
+        this.setTrainers(currentTrainers);
+    }
+
+    @Override
     public void rivalCarriesStarter() {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
