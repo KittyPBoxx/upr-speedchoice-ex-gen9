@@ -3034,6 +3034,11 @@ public abstract class AbstractRomHandler implements RomHandler {
             pickFrom = cachedReplacementLists.get(type);
         }
 
+        //If there's no valid pokemon of the chosen type just go back to having them all
+        if (pickFrom.size() == 0) {
+            pickFrom = cachedAllList;
+        }
+
         pickFrom = pickFrom.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
         if (usePowerLevels && current != null) {
