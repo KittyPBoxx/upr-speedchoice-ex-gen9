@@ -284,6 +284,11 @@ public class Randomizer {
                     settings.isTrainersMatchTypingDistribution(), settings.isTrainersBlockLegendaries(),
                     settings.isTrainersBlockEarlyWonderGuard(),
                     settings.isTrainersLevelModified() ? settings.getTrainersLevelModifier() : 0);
+        } else if (settings.getTrainersMod() == Settings.TrainersMod.TYPE_MATCHED) {
+            romHandler.typeMatchTrainerPokes(settings.isTrainersUsePokemonOfSimilarStrength(),
+                    settings.isTrainersBlockLegendaries(), settings.isTrainersBlockEarlyWonderGuard(),
+                    settings.isTrainersLevelModified() ? settings.getTrainersLevelModifier() : 0,
+                    settings.isFillBossTeams());
         }
 
         if (settings.isTrainersLevelModified() && settings.getTrainersLevelModifier() != 0) {
