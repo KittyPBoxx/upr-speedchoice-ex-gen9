@@ -25,6 +25,7 @@ package com.dabomstew.pkrandom.pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Trainer implements Comparable<Trainer> {
@@ -149,5 +150,15 @@ public class Trainer implements Comparable<Trainer> {
 
     public void removeEmptyPokemon() {
         pokemon = pokemon.stream().filter(p -> p.getPokemon() != null).collect(Collectors.toList());
+    }
+
+    public void fillPokemon() {
+
+        Optional<TrainerPokemon> firstMon = pokemon.stream().filter(p -> p.getPokemon() != null).findFirst();
+        firstMon.ifPresent(trainerPokemon -> pokemon.forEach(p -> {
+            if (p.getPokemon() == null) {
+                p.setPokemon(trainerPokemon.getPokemon());
+            }
+        }));
     }
 }

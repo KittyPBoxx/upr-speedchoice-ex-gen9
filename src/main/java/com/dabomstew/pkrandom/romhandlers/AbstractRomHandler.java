@@ -977,6 +977,10 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (!fillBossTeams) {
                 t.removeEmptyPokemon();
             }
+            else
+            {
+                t.fillPokemon();
+            }
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
                     continue;
