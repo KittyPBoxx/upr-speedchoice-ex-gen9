@@ -138,7 +138,7 @@ public class Settings {
     private int movesetsGoodDamagingPercent = 0;
 
     public enum TrainersMod {
-        UNCHANGED, RANDOM, TYPE_THEMED
+        UNCHANGED, RANDOM, TYPE_THEMED, TYPE_MATCHED
     }
 
     private TrainersMod trainersMod = TrainersMod.UNCHANGED;
