@@ -184,7 +184,7 @@ public interface RomHandler {
                                int levelModifier, boolean fillBossTeams);
 
     void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
-                               boolean noEarlyWonderGuard, int levelModifier);
+                               boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams);
 
     void typeMatchTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
                                 int levelModifier, boolean fillBossTeams);

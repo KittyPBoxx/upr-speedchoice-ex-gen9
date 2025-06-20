@@ -1000,7 +1000,7 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
-                                      boolean noEarlyWonderGuard, int levelModifier) {
+                                      boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
         cachedReplacementLists = new TreeMap<>();
@@ -1093,6 +1093,14 @@ public abstract class AbstractRomHandler implements RomHandler {
                 continue; // skip
             }
 
+            if (!fillBossTeams) {
+                t.removeEmptyPokemon();
+            }
+            else
+            {
+                t.fillPokemon();
+            }
+
             if (!assignedTrainers.contains(t)) {
                 Type typeForTrainer = pickType(weightByFrequency, noLegendaries);
                 // Ubers: can't have the same type as each other
@@ -1143,6 +1151,10 @@ public abstract class AbstractRomHandler implements RomHandler {
             }
             if (!fillBossTeams) {
                 t.removeEmptyPokemon();
+            }
+            else
+            {
+                t.fillPokemon();
             }
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
