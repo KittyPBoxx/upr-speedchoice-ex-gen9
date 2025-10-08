@@ -985,7 +985,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                     continue;
                 }
 
-                writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonIvOffset, tp.getLevel());
+                writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonIvOffset, tp.getAILevel());
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonLevelOffset, tp.getLevel());
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonSpeciesOffset, tp.getPokemon().getSpeciesNumber());
                 writeWord(pointerToPokes + (poke * trainerMonSize) + trainerMonHeldItemOffset, tp.getHeldItem());
@@ -1174,7 +1174,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                 continue;
             }
 
-            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonIvOffset, tp.getLevel());
+            writeWord(baseOffset + (poke * trainerMonSize) + trainerMonIvOffset, tp.getAILevel());
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonLevelOffset, tp.getLevel());
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonSpeciesOffset, tp.getPokemon().getSpeciesNumber());
             writeWord(baseOffset + (poke * trainerMonSize) + trainerMonHeldItemOffset, tp.getHeldItem());
