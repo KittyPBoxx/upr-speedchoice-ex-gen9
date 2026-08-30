@@ -868,6 +868,11 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
+    public List<Pokemon> bannedForStaticPokemon() {
+        return bannedForPlayer;
+    }
+
+    @Override
     public List<Trainer> getTrainers() {
         int baseOffset = romEntry.getValue("TrainerData");
         int amount = romEntry.getValue("TrainerCount");
