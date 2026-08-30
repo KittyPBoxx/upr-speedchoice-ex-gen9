@@ -196,6 +196,8 @@ public interface RomHandler {
 
     void forceFullyEvolvedTrainerPokes(int minLevel);
 
+    void forceTrainerStabMoves();
+
     // Randomizer: moves
 
     void randomizeMovePowers();

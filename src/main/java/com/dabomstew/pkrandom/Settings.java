@@ -185,6 +185,8 @@ public class Settings {
 
     private boolean fillRivalTeams;
 
+    private boolean trainersForceStabMoves;
+
     public enum TMsMod {
         UNCHANGED, RANDOM
     }
@@ -1034,6 +1036,15 @@ public class Settings {
 
     public Settings setFillRivalTeams(boolean value) {
         this.fillRivalTeams = value;
+        return this;
+    }
+
+    public boolean isTrainersForceStabMoves() {
+        return trainersForceStabMoves;
+    }
+
+    public Settings setTrainersForceStabMoves(boolean value) {
+        this.trainersForceStabMoves = value;
         return this;
     }
 

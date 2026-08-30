@@ -306,6 +306,11 @@ public class Randomizer {
             romHandler.forceFullyEvolvedTrainerPokes(settings.getTrainersForceFullyEvolvedLevel());
         }
 
+        // Must run last of the trainer passes - everything above can still change a mon's species.
+        if (settings.isTrainersForceStabMoves()) {
+            romHandler.forceTrainerStabMoves();
+        }
+
         // Trainer names & class names randomization
         // done before trainer log to add proper names
 
