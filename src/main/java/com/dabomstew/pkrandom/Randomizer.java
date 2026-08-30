@@ -596,13 +596,16 @@ public class Randomizer {
             } else if (settings.getStartersMod() == Settings.StartersMod.COMPLETELY_RANDOM) {
                 // Randomise
                 log.println("--Random Starters--");
+                boolean banLegendaries = settings.isBanLegendaryStarters();
                 int starterCount = 3;
                 List<Pokemon> starters = new ArrayList<>();
                 for (int i = 0; i < starterCount; i++) {
-                    Pokemon pkmn = romHandler.randomPokemon(true);
+                    Pokemon pkmn = banLegendaries ? romHandler.randomNonLegendaryPokemon(true)
+                            : romHandler.randomPokemon(true);
                     int currentTry = 0;
                     while (starters.contains(pkmn) && !(currentTry >= 100)) {
-                        pkmn = romHandler.randomPokemon(true);
+                        pkmn = banLegendaries ? romHandler.randomNonLegendaryPokemon(true)
+                                : romHandler.randomPokemon(true);
                         currentTry++;
                     }
                     log.println("Set starter " + (i + 1) + " to " + pkmn.getName());
