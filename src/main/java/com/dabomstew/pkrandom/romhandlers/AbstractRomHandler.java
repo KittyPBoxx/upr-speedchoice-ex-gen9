@@ -953,9 +953,26 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     }
 
+    private void applyTeamFill(Trainer t, boolean fillBossTeams, boolean fillRivalTeams) {
+        String tag = t.getTag();
+        boolean fill;
+        if (tag != null && tag.startsWith("RIVAL")) {
+            int dash = tag.indexOf('-');
+            int battle = dash < 0 ? 0 : Integer.parseInt(tag.substring("RIVAL".length(), dash));
+            fill = fillRivalTeams && battle >= 2;
+        } else {
+            fill = fillBossTeams;
+        }
+        if (fill) {
+            t.fillPokemon();
+        } else {
+            t.removeEmptyPokemon();
+        }
+    }
+
     @Override
     public void randomizeTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                      int levelModifier, boolean fillBossTeams) {
+                                      int levelModifier, boolean fillBossTeams, boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
 
@@ -974,13 +991,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
                 continue; // skip
             }
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
                     continue;
@@ -1000,7 +1011,8 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
-                                      boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams) {
+                                      boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams,
+                                      boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
         cachedReplacementLists = new TreeMap<>();
@@ -1093,13 +1105,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                 continue; // skip
             }
 
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
 
             if (!assignedTrainers.contains(t)) {
                 Type typeForTrainer = pickType(weightByFrequency, noLegendaries);
@@ -1130,7 +1136,7 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void typeMatchTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                      int levelModifier, boolean fillBossTeams) {
+                                      int levelModifier, boolean fillBossTeams, boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
 
@@ -1149,13 +1155,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
                 continue; // skip
             }
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
                     continue;
