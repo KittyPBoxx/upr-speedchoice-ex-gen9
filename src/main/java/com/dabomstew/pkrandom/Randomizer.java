@@ -815,7 +815,9 @@ public class Randomizer {
             } else if (settings.getFieldItemsMod() == Settings.FieldItemsMod.RANDOM) {
                 ItemBans bans = new ItemBans()
                         .setBanBadItems(settings.isBanBadRandomFieldItems())
-                        .setBanSlateportItems(settings.isBanSlateportItems());
+                        .setBanSlateportItems(settings.isBanSlateportItems())
+                        .setBanEvItems(settings.isBanEvItems())
+                        .setBanBattleItems(settings.isBanBattleItems());
 
                 romHandler.randomizeFieldItems(bans);
 

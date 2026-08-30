@@ -2218,6 +2218,12 @@ public abstract class AbstractRomHandler implements RomHandler {
         if (bans.isBanSlateportItems()) {
             addIfPresent(banned, customConfig.getBannedSlateportItems());
         }
+        if (bans.isBanEvItems()) {
+            addIfPresent(banned, customConfig.getBannedEvItems());
+        }
+        if (bans.isBanBattleItems()) {
+            addIfPresent(banned, customConfig.getBannedBattleItems());
+        }
         if (banned.isEmpty()) {
             return possibleItems;
         }

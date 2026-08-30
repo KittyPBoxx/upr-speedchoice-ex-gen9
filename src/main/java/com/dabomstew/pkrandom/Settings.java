@@ -233,6 +233,8 @@ public class Settings {
     private FieldItemsMod fieldItemsMod = FieldItemsMod.UNCHANGED;
     private boolean banBadRandomFieldItems;
     private boolean banSlateportItems;
+    private boolean banEvItems;
+    private boolean banBattleItems;
     private boolean randomizeGivenItems;
     private boolean randomizePickupTables;
     private boolean randomizeBerryTrees;
@@ -1250,6 +1252,24 @@ public class Settings {
 
     public Settings setBanSlateportItems(boolean banSlateportItems) {
         this.banSlateportItems = banSlateportItems;
+        return this;
+    }
+
+    public boolean isBanEvItems() {
+        return banEvItems;
+    }
+
+    public Settings setBanEvItems(boolean banEvItems) {
+        this.banEvItems = banEvItems;
+        return this;
+    }
+
+    public boolean isBanBattleItems() {
+        return banBattleItems;
+    }
+
+    public Settings setBanBattleItems(boolean banBattleItems) {
+        this.banBattleItems = banBattleItems;
         return this;
     }
 
