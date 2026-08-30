@@ -4,6 +4,7 @@ import com.dabomstew.pkrandom.pokemon.ItemList;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.dabomstew.pkrandom.constants.EmeraldEXConstants.getItemTypeRanges;
@@ -30,6 +31,7 @@ public class CustomConfig {
     private List<Integer> battleTrappingAbilities = null;
     private List<Integer> negativeAbilities = null;
     private List<Integer> legendaries = null;
+    private List<Integer> bannedSlateportItems = null;
 
     public void init() {
         List<int[]> itemTypeRanges = getItemTypeRanges();
@@ -43,6 +45,8 @@ public class CustomConfig {
         config.getBannedBadItems().stream().map(i -> items.get(i)).forEach(i -> nonBadItems.banSingles(i));
         nonBadItems.configureGroups(itemTypeRanges);
         this.nonBadItems = nonBadItems;
+
+        this.bannedSlateportItems = resolveItems(config.getBannedSlateportItems());
 
         this.bannedMonNumbers = config.getMonsBannedForEveryone().stream().map(i -> mons.get(i)).collect(Collectors.toList());
 
@@ -139,9 +143,21 @@ public class CustomConfig {
         return legendaries;
     }
 
+    private List<Integer> resolveItems(List<String> names) {
+        if (names == null) {
+            return null;
+        }
+        return names.stream().map(i -> items.get(i)).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    public List<Integer> getBannedSlateportItems() {
+        return bannedSlateportItems;
+    }
+
     static class Config {
         private List<String> bannedItems;
         private List<String> bannedBadItems;
+        private List<String> bannedSlateportItems;
         private List<String> monsBannedForPlayer;
         private List<String> monsBannedForEveryone;
         private List<String> bannedNegativeAbilities;
@@ -165,6 +181,14 @@ public class CustomConfig {
 
         public void setBannedBadItems(List<String> bannedBadItems) {
             this.bannedBadItems = bannedBadItems;
+        }
+
+        public List<String> getBannedSlateportItems() {
+            return bannedSlateportItems;
+        }
+
+        public void setBannedSlateportItems(List<String> bannedSlateportItems) {
+            this.bannedSlateportItems = bannedSlateportItems;
         }
 
         public List<String> getMonsBannedForPlayer() {

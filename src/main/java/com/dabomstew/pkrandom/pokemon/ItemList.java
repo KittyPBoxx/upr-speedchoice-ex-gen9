@@ -115,6 +115,13 @@ public class ItemList {
         this.groups = groups;
     }
 
+    // Call after banning items, or the random pickers spin forever on a fully banned group.
+    public void pruneEmptyGroups() {
+        if (groups != null) {
+            configureGroups(new ArrayList<>(groups));
+        }
+    }
+
     public void configureGroups(List<int[]> groups)
     {
         this.groups = groups.stream().filter(g -> {

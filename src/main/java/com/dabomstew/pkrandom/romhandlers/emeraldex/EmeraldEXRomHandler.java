@@ -1971,9 +1971,9 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
-    public void randomizeGivenItems(boolean banBadItems) {
+    public void randomizeGivenItems(ItemBans bans) {
 
-        ItemList possibleItems = banBadItems ? this.getNonBadItems() : this.getAllowedItems();
+        ItemList possibleItems = getOverworldItemPool(bans);
         List<Integer> newItems = new ArrayList<>();
 
         List<GivenItem> givenItems = romEntry.getGivenItems();
@@ -1999,9 +1999,9 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
-    public void randomizeBerryTrees(boolean banBadItems) {
+    public void randomizeBerryTrees(ItemBans bans) {
 
-        ItemList possibleItems = banBadItems ? this.getNonBadItems() : this.getAllowedItems();
+        ItemList possibleItems = getOverworldItemPool(bans);
         List<Integer> newItems = new ArrayList<>();
 
         int berryTreeArrayOffset = romEntry.getValue("BerryTrees");
@@ -2104,9 +2104,9 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     @Override
-    public void randomizePickupTime(boolean banBadItems) {
+    public void randomizePickupTime(ItemBans bans) {
 
-        ItemList possibleItems = banBadItems ? this.getNonBadItems() : this.getAllowedItems();
+        ItemList possibleItems = getOverworldItemPool(bans);
         List<Integer> newItems = new ArrayList<>();
 
         int pickupArrayOffset = romEntry.getValue("PickUpTables");

@@ -2208,9 +2208,37 @@ public abstract class AbstractRomHandler implements RomHandler {
         this.setFieldTMs(newTMs);
     }
 
+    protected ItemList getOverworldItemPool(ItemBans bans) {
+        ItemList possibleItems = bans.isBanBadItems() ? this.getNonBadItems() : this.getAllowedItems();
+        if (customConfig == null) {
+            return possibleItems;
+        }
+
+        List<Integer> banned = new ArrayList<>();
+        if (bans.isBanSlateportItems()) {
+            addIfPresent(banned, customConfig.getBannedSlateportItems());
+        }
+        if (banned.isEmpty()) {
+            return possibleItems;
+        }
+
+        ItemList filtered = possibleItems.copy();
+        for (int item : banned) {
+            filtered.banSingles(item);
+        }
+        filtered.pruneEmptyGroups();
+        return filtered;
+    }
+
+    private static void addIfPresent(List<Integer> target, List<Integer> source) {
+        if (source != null) {
+            target.addAll(source);
+        }
+    }
+
     @Override
-    public void randomizeFieldItems(boolean banBadItems) {
-        ItemList possibleItems = banBadItems ? this.getNonBadItems() : this.getAllowedItems();
+    public void randomizeFieldItems(ItemBans bans) {
+        ItemList possibleItems = getOverworldItemPool(bans);
         List<ItemLocation> currentItems = this.getRegularFieldItems();
         List<FieldTM> currentTMs = this.getCurrentFieldTMs();
         List<Integer> requiredTMs = this.getRequiredFieldTMs();

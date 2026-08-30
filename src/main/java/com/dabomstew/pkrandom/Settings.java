@@ -232,6 +232,7 @@ public class Settings {
 
     private FieldItemsMod fieldItemsMod = FieldItemsMod.UNCHANGED;
     private boolean banBadRandomFieldItems;
+    private boolean banSlateportItems;
     private boolean randomizeGivenItems;
     private boolean randomizePickupTables;
     private boolean randomizeBerryTrees;
@@ -1240,6 +1241,15 @@ public class Settings {
 
     public Settings setBanBadRandomFieldItems(boolean banBadRandomFieldItems) {
         this.banBadRandomFieldItems = banBadRandomFieldItems;
+        return this;
+    }
+
+    public boolean isBanSlateportItems() {
+        return banSlateportItems;
+    }
+
+    public Settings setBanSlateportItems(boolean banSlateportItems) {
+        this.banSlateportItems = banSlateportItems;
         return this;
     }
 
