@@ -224,6 +224,15 @@ public class Randomizer {
         // Movesets
         boolean noBrokenMoves = settings.doBlockBrokenMoves();
         boolean forceFourLv1s = romHandler.supportsFourStartingMoves() && settings.isStartWithFourMoves();
+
+        // Must run before the moves are randomized so the new levels and slots are in place.
+        if (settings.isMovesetsFixNoLevelUpMoves()
+                && (settings.getMovesetsMod() == Settings.MovesetsMod.RANDOM_PREFER_SAME_TYPE
+                    || settings.getMovesetsMod() == Settings.MovesetsMod.COMPLETELY_RANDOM)) {
+            romHandler.fixNoLevelUpMoves();
+        }
+
+
         double msGoodDamagingProb = settings.isMovesetsForceGoodDamaging()
                 ? settings.getMovesetsGoodDamagingPercent() / 100.0
                 : 0;

@@ -134,6 +134,7 @@ public class Settings {
     private MovesetsMod movesetsMod = MovesetsMod.UNCHANGED;
     private boolean startWithFourMoves;
     private boolean reorderDamagingMoves;
+    private boolean movesetsFixNoLevelUpMoves;
     private boolean movesetsForceGoodDamaging;
     private int movesetsGoodDamagingPercent = 0;
 
@@ -782,6 +783,15 @@ public class Settings {
 
     public Settings setReorderDamagingMoves(boolean reorderDamagingMoves) {
         this.reorderDamagingMoves = reorderDamagingMoves;
+        return this;
+    }
+
+    public boolean isMovesetsFixNoLevelUpMoves() {
+        return movesetsFixNoLevelUpMoves;
+    }
+
+    public Settings setMovesetsFixNoLevelUpMoves(boolean movesetsFixNoLevelUpMoves) {
+        this.movesetsFixNoLevelUpMoves = movesetsFixNoLevelUpMoves;
         return this;
     }
 
