@@ -808,6 +808,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.mdRandomCategoryCB.setEnabled(false);
         this.mdRandomCategoryCB.setSelected(false);
         this.mdRandomCategoryCB.setVisible(true);
+        this.mdLimitSetupPPCB.setEnabled(false);
+        this.mdLimitSetupPPCB.setSelected(false);
 
         this.pmsRandomTotalRB.setEnabled(false);
         this.pmsRandomTypeRB.setEnabled(false);
@@ -1310,6 +1312,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.mdRandomTypeCB.setEnabled(true);
             this.mdRandomCategoryCB.setEnabled(romHandler.hasPhysicalSpecialSplit());
             this.mdRandomCategoryCB.setVisible(romHandler.hasPhysicalSpecialSplit());
+            this.mdLimitSetupPPCB.setEnabled(true);
 
             this.pmsRandomTotalRB.setEnabled(true);
             this.pmsRandomTypeRB.setEnabled(true);
@@ -2118,6 +2121,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.mdRandomPowerCB.setSelected(settings.isRandomizeMovePowers());
         this.mdRandomPPCB.setSelected(settings.isRandomizeMovePPs());
         this.mdRandomTypeCB.setSelected(settings.isRandomizeMoveTypes());
+        this.mdLimitSetupPPCB.setSelected(settings.isLimitSetupMovePP());
 
         this.pmsRandomTotalRB.setSelected(settings.getMovesetsMod() == Settings.MovesetsMod.COMPLETELY_RANDOM);
         this.pmsRandomTypeRB.setSelected(settings.getMovesetsMod() == Settings.MovesetsMod.RANDOM_PREFER_SAME_TYPE);
@@ -2323,6 +2327,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
         settings.setRandomizeMovePowers(mdRandomPowerCB.isSelected());
         settings.setRandomizeMovePPs(mdRandomPPCB.isSelected());
         settings.setRandomizeMoveTypes(mdRandomTypeCB.isSelected());
+        settings.setLimitSetupMovePP(mdLimitSetupPPCB.isSelected());
 
         settings.setMovesetsMod(pmsUnchangedRB.isSelected(), pmsRandomTypeRB.isSelected(),
                 pmsRandomTotalRB.isSelected(), pmsMetronomeOnlyRB.isSelected());
@@ -3337,6 +3342,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
         mdRandomPPCB = new javax.swing.JCheckBox();
         mdRandomTypeCB = new javax.swing.JCheckBox();
         mdRandomCategoryCB = new javax.swing.JCheckBox();
+        mdLimitSetupPPCB = new javax.swing.JCheckBox();
         goUpdateMovesCheckBox = new javax.swing.JCheckBox();
         goUpdateMovesLegacyCheckBox = new javax.swing.JCheckBox();
         trainersInnerPanel = new javax.swing.JPanel();
@@ -4401,6 +4407,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
         mdRandomCategoryCB.setText(bundle.getString("RandomizerGUI.mdRandomCategoryCB.text")); // NOI18N
         mdRandomCategoryCB.setToolTipText(bundle.getString("RandomizerGUI.mdRandomCategoryCB.toolTipText")); // NOI18N
 
+        mdLimitSetupPPCB.setText(bundle.getString("RandomizerGUI.mdLimitSetupPPCB.text")); // NOI18N
+        mdLimitSetupPPCB.setToolTipText(bundle.getString("RandomizerGUI.mdLimitSetupPPCB.toolTipText")); // NOI18N
+
         goUpdateMovesCheckBox.setText(bundle.getString("RandomizerGUI.goUpdateMovesCheckBox.text")); // NOI18N
         goUpdateMovesCheckBox.setToolTipText(bundle.getString("RandomizerGUI.goUpdateMovesCheckBox.toolTipText")); // NOI18N
         goUpdateMovesCheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -4422,7 +4431,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
                     .addComponent(mdRandomPowerCB)
                     .addComponent(mdRandomAccuracyCB)
                     .addComponent(mdRandomPPCB)
-                    .addComponent(mdRandomTypeCB))
+                    .addComponent(mdRandomTypeCB)
+                    .addComponent(mdLimitSetupPPCB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
                 .addGroup(moveDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mdRandomCategoryCB)
@@ -4448,6 +4458,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
                     .addComponent(mdRandomTypeCB)
                     .addComponent(goUpdateMovesCheckBox)
                     .addComponent(goUpdateMovesLegacyCheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mdLimitSetupPPCB)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -5578,6 +5590,7 @@ public class RandomizerGUI extends javax.swing.JFrame {
     private javax.swing.JButton loadQSButton;
     private javax.swing.JMenuItem manualUpdateMenuItem;
     private javax.swing.JCheckBox mdRandomAccuracyCB;
+    private javax.swing.JCheckBox mdLimitSetupPPCB;
     private javax.swing.JCheckBox mdRandomCategoryCB;
     private javax.swing.JCheckBox mdRandomPPCB;
     private javax.swing.JCheckBox mdRandomPowerCB;

@@ -27,6 +27,7 @@ public class CustomConfig {
     private List<Integer> gameBreakingMoves = null;
     private List<Integer> bannedRandomMoves = null;
     private List<Integer> bannedForDamagingMoves = null;
+    private List<Integer> nerfedSetupMoves = null;
     private List<Integer> battleTrappingAbilities = null;
     private List<Integer> negativeAbilities = null;
     private List<Integer> legendaries = null;
@@ -54,6 +55,8 @@ public class CustomConfig {
         this.gameBreakingMoves = config.getBannedGameBreakingMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
         this.bannedRandomMoves = config.getBannedMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
         this.bannedForDamagingMoves = config.getBannedDamagingMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
+        this.nerfedSetupMoves = config.getNerfedSetupMoves() == null ? null
+                : config.getNerfedSetupMoves().stream().map(i -> moves.get(i)).collect(Collectors.toList());
 
         this.battleTrappingAbilities = config.getBannedTrappingAbilities().stream().map(i -> abilities.get(i)).collect(Collectors.toList());
         this.negativeAbilities = config.getBannedNegativeAbilities().stream().map(i -> abilities.get(i)).collect(Collectors.toList());
@@ -127,6 +130,10 @@ public class CustomConfig {
         return this.bannedForDamagingMoves;
     }
 
+    public List<Integer> getNerfedSetupMoves() {
+        return this.nerfedSetupMoves;
+    }
+
     public List<Integer> getBattleTrappingAbilities() {
         return battleTrappingAbilities;
     }
@@ -149,6 +156,7 @@ public class CustomConfig {
         private List<String> bannedMoves;
         private List<String> bannedDamagingMoves;
         private List<String> bannedGameBreakingMoves;
+        private List<String> nerfedSetupMoves;
         private List<String> legendaries;
 
         public List<String> getBannedItems() {
@@ -221,6 +229,14 @@ public class CustomConfig {
 
         public void setBannedDamagingMoves(List<String> bannedDamagingMoves) {
             this.bannedDamagingMoves = bannedDamagingMoves;
+        }
+
+        public List<String> getNerfedSetupMoves() {
+            return nerfedSetupMoves;
+        }
+
+        public void setNerfedSetupMoves(List<String> nerfedSetupMoves) {
+            this.nerfedSetupMoves = nerfedSetupMoves;
         }
 
         public List<String> getLegendaries() {

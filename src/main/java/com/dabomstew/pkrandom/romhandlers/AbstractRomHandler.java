@@ -1261,6 +1261,19 @@ public abstract class AbstractRomHandler implements RomHandler {
     }
 
     @Override
+    public void limitSetupMovePP() {
+        List<Integer> nerfedMoves = customConfig == null ? null : customConfig.getNerfedSetupMoves();
+        if (nerfedMoves == null) {
+            return;
+        }
+        for (Move mv : this.getMoves()) {
+            if (mv != null && nerfedMoves.contains(mv.getInternalId())) {
+                mv.setPp(1);
+            }
+        }
+    }
+
+    @Override
     public void randomizeMoveAccuracies() {
         List<Move> moves = this.getMoves();
         for (Move mv : moves) {

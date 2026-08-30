@@ -124,6 +124,7 @@ public class Settings {
     private boolean randomizeMovePPs;
     private boolean randomizeMoveTypes;
     private boolean randomizeMoveCategory;
+    private boolean limitSetupMovePP;
     private boolean updateMoves;
     private boolean updateMovesLegacy;
 
@@ -724,6 +725,15 @@ public class Settings {
 
     public Settings setRandomizeMoveAccuracies(boolean randomizeMoveAccuracies) {
         this.randomizeMoveAccuracies = randomizeMoveAccuracies;
+        return this;
+    }
+
+    public boolean isLimitSetupMovePP() {
+        return limitSetupMovePP;
+    }
+
+    public Settings setLimitSetupMovePP(boolean limitSetupMovePP) {
+        this.limitSetupMovePP = limitSetupMovePP;
         return this;
     }
 
