@@ -203,8 +203,36 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     }
 
     private void constructPokemonList() {
-        pokemonList = Arrays.asList(pokes);
+        List<Pokemon> allPokemon = new ArrayList<>(Arrays.asList(pokes));
+        allPokemon.addAll(collectRandomizableFormes());
+        pokemonList = allPokemon;
         numRealPokemon = pokemonList.size() - 1;
+    }
+
+    // Regional forms share their base form's dex slot, so only the base was getting randomized and
+    // the form kept vanilla data. Forms sharing the base's move list are skipped to avoid overwriting.
+    private List<Pokemon> collectRandomizableFormes() {
+        List<Pokemon> formes = new ArrayList<>();
+        for (int i = 1; i <= romEntry.getValue("PokemonCount"); i++) {
+            Pokemon forme = pokesInternal[i];
+            if (forme == null || forme.getNumber() == 0) {
+                continue;
+            }
+            Pokemon base = pokes[forme.getNumber()];
+            if (base == null || base == forme) {
+                continue;
+            }
+            if (learnsetPointer(i) != learnsetPointer(base.getSpeciesNumber())) {
+                formes.add(forme);
+            }
+        }
+        return formes;
+    }
+
+    private int learnsetPointer(int speciesNumber) {
+        return readPointer(romEntry.getValue("SpeciesInfo")
+                + EmeraldEXConstants.learnsetPtrOffset
+                + speciesNumber * romEntry.getValue("SpeciesInfoEntrySize"));
     }
 
     private void loadPokemonStatsAndMoves() {
@@ -1488,7 +1516,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
         // no move evos, so no need to check for those
         log("--Removing Trade Evolutions--");
         Set<Evolution> extraEvolutions = new HashSet<>();
-        for (Pokemon pkmn : pokes) {
+        for (Pokemon pkmn : getPokemon()) {
             if (pkmn != null) {
                 extraEvolutions.clear();
                 for (Evolution evo : pkmn.getEvolutionsFrom()) {
