@@ -34,6 +34,7 @@ import com.dabomstew.pkrandom.pokemon.*;
 
 import java.io.PrintStream;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class AbstractRomHandler implements RomHandler {
@@ -1384,15 +1385,22 @@ public abstract class AbstractRomHandler implements RomHandler {
             Set<Integer> learnt = new TreeSet<>();
             List<MoveLearnt> moves = getMoveLearnts(forceFourStartingMoves, pkmn);
 
+            // Level 0 means "learnt on evolution", not level 1. Skip that leading run so the
+            // guaranteed damaging move lands on a real lv1 slot instead of overwriting one.
+            int firstNonEvo = 0;
+            while (firstNonEvo < moves.size() && moves.get(firstNonEvo).getLevel() == 0) {
+                firstNonEvo++;
+            }
+
             // Find last lv1 move
             // lv1index ends up as the index of the first non-lv1 move
-            int lv1index = 0;
+            int lv1index = firstNonEvo;
             while (lv1index < moves.size() && moves.get(lv1index).getLevel() == 1) {
                 lv1index++;
             }
 
             // last lv1 move is 1 before lv1index
-            if (lv1index != 0) {
+            if (lv1index != firstNonEvo) {
                 lv1index--;
             }
 
@@ -1497,17 +1505,27 @@ public abstract class AbstractRomHandler implements RomHandler {
         if (forceFourStartingMoves) {
 
             // To make this work we just padded every learnest in the rom with blank moves
-            if (moves.size() > 3) {
-                moves.get(0).setLevel(1);
-                moves.get(1).setLevel(1);
-                moves.get(2).setLevel(1);
-                moves.get(3).setLevel(1);
-            } else {
-                moves.forEach(m -> m.setLevel(1));
-            }
+            int needed = 4 - (int) moves.stream().filter(m -> m.getLevel() == 1).count();
 
+            // Pull up later moves first; only fall back to evolution moves (level 0) when there
+            // still aren't four, so this doesn't eat them from Pokemon that never needed it.
+            needed = promoteToLevelOne(moves, needed, m -> m.getLevel() > 1);
+            promoteToLevelOne(moves, needed, m -> m.getLevel() == 0);
         }
         return moves;
+    }
+
+    private static int promoteToLevelOne(List<MoveLearnt> moves, int needed, Predicate<MoveLearnt> eligible) {
+        for (MoveLearnt ml : moves) {
+            if (needed <= 0) {
+                break;
+            }
+            if (eligible.test(ml)) {
+                ml.setLevel(1);
+                needed--;
+            }
+        }
+        return needed;
     }
 
     @Override
