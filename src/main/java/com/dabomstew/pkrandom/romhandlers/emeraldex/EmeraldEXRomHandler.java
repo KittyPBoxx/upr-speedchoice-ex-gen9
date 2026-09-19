@@ -457,7 +457,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             int move = readWord(learnsetOffset + (i * levelupMoveSize));
             int level = readWord(learnsetOffset + (i * levelupMoveSize) + 2);
 
-            if (move == 0xFFFF) {
+            if (move == EmeraldEXConstants.levelUpMoveEnd) {
                 break;
             }
 
@@ -1052,6 +1052,52 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     @Override
     public List<Pokemon> getPokemon() {
         return pokemonList.stream().filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    // Learnsets are normally rewritten in place, so a Pokemon cannot gain slots it does not
+    // already own. Move it to free space instead, big enough for the level-up curve to fit.
+    @Override
+    protected void expandLearnset(Pokemon pkmn, int minimumSlots) {
+
+        List<MoveLearnt> learnset = pkmn.getLearnset();
+        if (learnset.size() >= minimumSlots) {
+            return;
+        }
+
+        int speciesInfo = romEntry.getValue("SpeciesInfo");
+        int speciesInfoEntrySize = romEntry.getValue("SpeciesInfoEntrySize");
+        int learnsetPtr = speciesInfo + EmeraldEXConstants.learnsetPtrOffset;
+        int oldOffset = readPointer(learnsetPtr + pkmn.getSpeciesNumber() * speciesInfoEntrySize);
+
+        int entrySize = 4;
+        int newDataSize = (minimumSlots + 1) * entrySize; // slots + terminator
+        int fso = romEntry.getValue("FreeSpace");
+        int newOffset = RomFunctions.freeSpaceFinder(rom, EmeraldEXConstants.freeSpaceByte, newDataSize, fso, true);
+        if (newOffset < fso) {
+            throw new RandomizerIOException("ROM is full");
+        }
+
+        int terminatorOffset = newOffset + minimumSlots * entrySize;
+        writeWord(terminatorOffset, EmeraldEXConstants.levelUpMoveEnd);
+        writeWord(terminatorOffset + 2, 0);
+
+        int originalSlots = learnset.size();
+        int fillerMove = learnset.get(originalSlots - 1).getMove();
+        for (int i = 0; i < minimumSlots; i++) {
+            int slotOffset = newOffset + i * entrySize;
+            if (i < originalSlots) {
+                learnset.get(i).setOffset(slotOffset);
+            } else {
+                learnset.add(new MoveLearnt(fillerMove, 1, slotOffset));
+            }
+        }
+
+        // Forms sharing this learnset have to follow the pointer
+        for (int i = 1; i <= romEntry.getValue("PokemonCount"); i++) {
+            if (readPointer(learnsetPtr + i * speciesInfoEntrySize) == oldOffset) {
+                writePointer(learnsetPtr + i * speciesInfoEntrySize, newOffset);
+            }
+        }
     }
 
     @Override

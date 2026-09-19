@@ -1542,6 +1542,46 @@ public abstract class AbstractRomHandler implements RomHandler {
     }
 
     @Override
+    public void fixNoLevelUpMoves() {
+
+        // Four moves at level 1, then one move every 4 levels, starting from level 8
+        // At least 18 moves, ending at level 60. If there are more slots on the original mon,
+        // it will continue learning every 4 levels until filled
+        final int minSlots = 18;
+        final int lv1Moves = 4;
+        final int firstLevel = 8;
+        final int levelStep = 4;
+
+        for (Pokemon pkmn : getPokemon()) {
+
+            if (pkmn == null || !isFinalEvolution(pkmn) || !learnsTooFewMovesAfterLevelOne(pkmn)) {
+                continue;
+            }
+
+            expandLearnset(pkmn, minSlots);
+
+            List<MoveLearnt> learnset = pkmn.getLearnset();
+            for (int i = 0; i < learnset.size(); i++) {
+                learnset.get(i).setLevel(i < lv1Moves ? 1 : firstLevel + (i - lv1Moves) * levelStep);
+            }
+        }
+    }
+
+    private boolean isFinalEvolution(Pokemon pkmn) {
+        return pkmn.getEvolutionsFrom().stream().noneMatch(e -> e.getType() != EvolutionType.EVO_NONE);
+    }
+
+    private boolean learnsTooFewMovesAfterLevelOne(Pokemon pkmn) {
+        final int maxMovesAfterLevelOne = 4;
+        List<MoveLearnt> learnset = pkmn.getLearnset();
+        return !learnset.isEmpty()
+                && learnset.stream().filter(ml -> ml.getLevel() > 1).count() <= maxMovesAfterLevelOne;
+    }
+
+    protected void expandLearnset(Pokemon pkmn, int minimumSlots) {
+    }
+
+    @Override
     public void orderDamagingMovesByDamage() {
 
         List<Move> allMoves = this.getMoves();

@@ -225,6 +225,8 @@ public interface RomHandler {
     void randomizeMovesLearnt(boolean typeThemed, boolean noBroken, boolean forceFourStartingMoves,
             double goodDamagingProbability);
 
+    void fixNoLevelUpMoves();
+
     void orderDamagingMovesByDamage();
 
     void metronomeOnlyMode();

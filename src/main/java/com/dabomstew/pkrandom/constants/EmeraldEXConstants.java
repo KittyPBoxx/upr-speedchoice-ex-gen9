@@ -46,6 +46,7 @@ public class EmeraldEXConstants {
     public static final int bsAbility3Offset = 28;
 
     public static final int learnsetPtrOffset = 0x90;
+    public static final int levelUpMoveEnd = 0xFFFF;
     public static final int evolutionsPtrOffset = 0x9C;
 
     public static final int textTerminator = 0xFF;
