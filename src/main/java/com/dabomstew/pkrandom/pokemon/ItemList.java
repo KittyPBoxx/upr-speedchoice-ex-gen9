@@ -57,12 +57,17 @@ public class ItemList {
         }
     }
 
+    // Group ranges are inclusive of both ends, matching the *_START/*_END item constants.
+    private static int randomInGroup(Random random, int[] groupRange) {
+        return groupRange[0] + random.nextInt(groupRange[1] - groupRange[0] + 1);
+    }
+
     public int randomItem(Random random) {
         int group = random.nextInt(groups.size());
         int[] groupRange = groups.get(group);
         int chosen = 0;
         while (!items[chosen]) {
-            chosen = groupRange[0] + random.nextInt(groupRange[1] - groupRange[0]);
+            chosen = randomInGroup(random, groupRange);
         }
         return chosen;
     }
@@ -72,7 +77,7 @@ public class ItemList {
         int[] groupRange = groups.get(group);
         int chosen = 0;
         while (!items[chosen] || tms[chosen]) {
-            chosen = groupRange[0] + random.nextInt(groupRange[1] - groupRange[0]);
+            chosen = randomInGroup(random, groupRange);
         }
         return chosen;
     }
@@ -118,7 +123,7 @@ public class ItemList {
     public void configureGroups(List<int[]> groups)
     {
         this.groups = groups.stream().filter(g -> {
-            for (int itemIndex : IntStream.range(g[0], g[1]).toArray()) {
+            for (int itemIndex : IntStream.rangeClosed(g[0], g[1]).toArray()) {
                 if (items[itemIndex]) {
                     return true;
                 }
