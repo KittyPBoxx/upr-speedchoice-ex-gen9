@@ -87,6 +87,7 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
     private List<ItemLocationInner> itemOffs;
     private String[][] mapNames;
     private boolean isRomHack;
+    private int[] formGroupBySpecies;
     private int[] internalToPokedex;
     private int[] pokedexToInternal;
     private int pokedexCount;
@@ -1425,6 +1426,8 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
             }
         }
 
+        loadFormGroups();
+
         int speciesInfoOffset = romEntry.getValue("SpeciesInfo");
         int speciesInfoEntrySize = romEntry.getValue("SpeciesInfoEntrySize");
         int offsetInSpeciesInfo = EmeraldEXConstants.evolutionsPtrOffset;
@@ -1462,16 +1465,47 @@ public class EmeraldEXRomHandler extends AbstractGBRomHandler {
                 }
             }
 
-            // split evos don't carry stats
+            // Allow inheritence if the evos are the pokemon's different forms
             if (pk.getEvolutionsFrom()
                    .stream()
                    .filter(e -> e.getType() != EvolutionType.EVO_NONE)
-                   .map(p -> p.getTo().getSpeciesNumber())
+                   .map(this::evoTargetKey)
                    .distinct()
-                   .count()  > 1) {
+                   .count() > 1) {
                 for (Evolution e : pk.getEvolutionsFrom()) {
                     e.setCarryStats(false);
                 }
+            }
+        }
+    }
+
+    private int evoTargetKey(Evolution evo) {
+        return formGroupBySpecies[evo.getTo().getSpeciesNumber()];
+    }
+
+    /**
+     * Groups each species with the other forms of the same Pokemon
+     * Like Maushold's two families, Lycanroc's three, and so on.
+     */
+    private void loadFormGroups() {
+        int speciesInfoOffset = romEntry.getValue("SpeciesInfo");
+        int speciesInfoEntrySize = romEntry.getValue("SpeciesInfoEntrySize");
+        int offsetInSpeciesInfo = EmeraldEXConstants.evolutionsPtrOffset + 4;
+        int numInternalPokes = romEntry.getValue("PokemonCount");
+
+        formGroupBySpecies = new int[numInternalPokes + 1];
+        for (int i = 1; i <= numInternalPokes; i++) {
+            formGroupBySpecies[i] = i;
+        }
+
+        for (int i = 1; i <= numInternalPokes; i++) {
+            int tableOffset = readPointer((speciesInfoOffset + offsetInSpeciesInfo) + i * speciesInfoEntrySize);
+            if (tableOffset < 0 || tableOffset + 1 >= rom.length) {
+                continue;
+            }
+            int baseForm = readWord(tableOffset);
+            if (baseForm >= 1 && baseForm <= numInternalPokes) {
+                formGroupBySpecies[i] = baseForm;
             }
         }
     }
