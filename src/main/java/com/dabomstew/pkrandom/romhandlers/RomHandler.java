@@ -182,19 +182,22 @@ public interface RomHandler {
     void setTrainers(List<Trainer> trainerData);
 
     void randomizeTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                               int levelModifier, boolean fillBossTeams);
+                               int levelModifier, boolean fillBossTeams, boolean fillRivalTeams);
 
     void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
-                               boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams);
+                               boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams,
+                               boolean fillRivalTeams);
 
     void typeMatchTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                int levelModifier, boolean fillBossTeams);
+                                int levelModifier, boolean fillBossTeams, boolean fillRivalTeams);
 
     void writeTrainerLevelModifier(int trainersLevelModifier);
 
     void rivalCarriesStarter();
 
     void forceFullyEvolvedTrainerPokes(int minLevel);
+
+    void forceTrainerStabMoves();
 
     // Randomizer: moves
 

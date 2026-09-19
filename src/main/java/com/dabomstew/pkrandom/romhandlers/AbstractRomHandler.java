@@ -954,9 +954,26 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     }
 
+    private void applyTeamFill(Trainer t, boolean fillBossTeams, boolean fillRivalTeams) {
+        String tag = t.getTag();
+        boolean fill;
+        if (tag != null && tag.startsWith("RIVAL")) {
+            int dash = tag.indexOf('-');
+            int battle = dash < 0 ? 0 : Integer.parseInt(tag.substring("RIVAL".length(), dash));
+            fill = fillRivalTeams && battle >= 2;
+        } else {
+            fill = fillBossTeams;
+        }
+        if (fill) {
+            t.fillPokemon();
+        } else {
+            t.removeEmptyPokemon();
+        }
+    }
+
     @Override
     public void randomizeTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                      int levelModifier, boolean fillBossTeams) {
+                                      int levelModifier, boolean fillBossTeams, boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
 
@@ -975,13 +992,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
                 continue; // skip
             }
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
                     continue;
@@ -1001,7 +1012,8 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void typeThemeTrainerPokes(boolean usePowerLevels, boolean weightByFrequency, boolean noLegendaries,
-                                      boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams) {
+                                      boolean noEarlyWonderGuard, int levelModifier, boolean fillBossTeams,
+                                      boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
         cachedReplacementLists = new TreeMap<>();
@@ -1094,13 +1106,7 @@ public abstract class AbstractRomHandler implements RomHandler {
                 continue; // skip
             }
 
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
 
             if (!assignedTrainers.contains(t)) {
                 Type typeForTrainer = pickType(weightByFrequency, noLegendaries);
@@ -1131,7 +1137,7 @@ public abstract class AbstractRomHandler implements RomHandler {
 
     @Override
     public void typeMatchTrainerPokes(boolean usePowerLevels, boolean noLegendaries, boolean noEarlyWonderGuard,
-                                      int levelModifier, boolean fillBossTeams) {
+                                      int levelModifier, boolean fillBossTeams, boolean fillRivalTeams) {
         checkPokemonRestrictions();
         List<Trainer> currentTrainers = this.getTrainers();
 
@@ -1150,13 +1156,7 @@ public abstract class AbstractRomHandler implements RomHandler {
             if (t.getTag() != null && t.getTag().equals("IRIVAL")) {
                 continue; // skip
             }
-            if (!fillBossTeams) {
-                t.removeEmptyPokemon();
-            }
-            else
-            {
-                t.fillPokemon();
-            }
+            applyTeamFill(t, fillBossTeams, fillRivalTeams);
             for (TrainerPokemon tp : t.getPokemon()) {
                 if (tp.getPokemon() == null) {
                     continue;
@@ -1207,6 +1207,125 @@ public abstract class AbstractRomHandler implements RomHandler {
             }
         }
         this.setTrainers(currentTrainers);
+    }
+
+    @Override
+    public void forceTrainerStabMoves() {
+        Set<Integer> allBanned = new HashSet<>(this.getGameBreakingMoves());
+        allBanned.addAll(this.getHMMoves());
+        allBanned.addAll(this.getMovesBannedFromLevelup());
+
+        Map<Type, List<Move>> goodMovesByType = new EnumMap<>(Type.class);
+        Map<Integer, Type> attackingMoveTypes = new HashMap<>();
+        for (Move mv : this.getMoves()) {
+            if (mv == null || !mv.isValid() || mv.getType() == null || mv.getPower() <= 0) {
+                continue;
+            }
+            attackingMoveTypes.put(mv.getNumber(), mv.getType());
+            if (isGoodDamagingMove(mv)
+                    && !allBanned.contains(mv.getNumber())
+                    && !getBannedRandomMoves().contains(mv.getNumber())
+                    && !getBannedForDamagingMoves().contains(mv.getNumber())) {
+                goodMovesByType.computeIfAbsent(mv.getType(), t -> new ArrayList<>()).add(mv);
+            }
+        }
+
+        List<Trainer> currentTrainers = this.getTrainers();
+        for (Trainer t : currentTrainers) {
+            for (TrainerPokemon tp : t.getPokemon()) {
+                if (tp.getPokemon() != null) {
+                    giveStabMoves(tp, goodMovesByType, attackingMoveTypes);
+                }
+            }
+        }
+        this.setTrainers(currentTrainers);
+    }
+
+    private void giveStabMoves(TrainerPokemon tp, Map<Type, List<Move>> goodMovesByType,
+                               Map<Integer, Type> attackingMoveTypes) {
+        List<Type> stabTypes = new ArrayList<>();
+        addStabType(stabTypes, tp.getPokemon().getPrimaryType());
+        addStabType(stabTypes, tp.getPokemon().getSecondaryType());
+        if (stabTypes.isEmpty()) {
+            return;
+        }
+
+        int[] moves = { tp.getMove1(), tp.getMove2(), tp.getMove3(), tp.getMove4() };
+        boolean[] keep = new boolean[moves.length];
+
+        List<Type> missingTypes = new ArrayList<>();
+        for (Type stab : stabTypes) {
+            int covered = -1;
+            for (int i = 0; i < moves.length; i++) {
+                if (!keep[i] && attackingMoveTypes.get(moves[i]) == stab) {
+                    covered = i;
+                    break;
+                }
+            }
+            if (covered >= 0) {
+                keep[covered] = true;
+            } else {
+                missingTypes.add(stab);
+            }
+        }
+
+        for (Type stab : missingTypes) {
+            List<Move> candidates = new ArrayList<>();
+            for (Move mv : goodMovesByType.getOrDefault(stab, Collections.emptyList())) {
+                if (!contains(moves, mv.getNumber())) {
+                    candidates.add(mv);
+                }
+            }
+            int slot = pickSlotToOverwrite(moves, keep);
+            if (candidates.isEmpty() || slot < 0) {
+                continue;
+            }
+            moves[slot] = candidates.get(this.random.nextInt(candidates.size())).getNumber();
+            keep[slot] = true;
+        }
+
+        tp.setMove1(moves[0]);
+        tp.setMove2(moves[1]);
+        tp.setMove3(moves[2]);
+        tp.setMove4(moves[3]);
+        tp.setResetMoves(false);
+    }
+
+    // Same rule randomizeMovesLearnt uses for its "good damaging" moves.
+    private boolean isGoodDamagingMove(Move mv) {
+        return mv.getPower() >= 2 * GlobalConstants.MIN_DAMAGING_MOVE_POWER
+                || (mv.getPower() >= GlobalConstants.MIN_DAMAGING_MOVE_POWER && mv.getHitratio() >= 90);
+    }
+
+    private void addStabType(List<Type> stabTypes, Type type) {
+        if (type != null && type != Type.NONE && type != Type.MYSTERY && type != Type.STELLAR
+                && !stabTypes.contains(type)) {
+            stabTypes.add(type);
+        }
+    }
+
+    // Empty slots first, then the earliest-learnt move, so the newest (usually strongest) ones survive.
+    private int pickSlotToOverwrite(int[] moves, boolean[] keep) {
+        for (int i = 0; i < moves.length; i++) {
+            if (!keep[i] && moves[i] == 0) {
+                return i;
+            }
+        }
+        for (int i = 0; i < moves.length; i++) {
+            if (!keep[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean contains(int[] moves, int moveNumber) {
+        for (int move : moves) {
+            if (move == moveNumber) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // MOVE DATA

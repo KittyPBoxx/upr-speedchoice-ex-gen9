@@ -292,18 +292,18 @@ public class Randomizer {
             romHandler.randomizeTrainerPokes(settings.isTrainersUsePokemonOfSimilarStrength(),
                     settings.isTrainersBlockLegendaries(), settings.isTrainersBlockEarlyWonderGuard(),
                     settings.isTrainersLevelModified() ? settings.getTrainersLevelModifier() : 0,
-                    settings.isFillBossTeams());
+                    settings.isFillBossTeams(), settings.isFillRivalTeams());
         } else if (settings.getTrainersMod() == Settings.TrainersMod.TYPE_THEMED) {
             romHandler.typeThemeTrainerPokes(settings.isTrainersUsePokemonOfSimilarStrength(),
                     settings.isTrainersMatchTypingDistribution(), settings.isTrainersBlockLegendaries(),
                     settings.isTrainersBlockEarlyWonderGuard(),
                     settings.isTrainersLevelModified() ? settings.getTrainersLevelModifier() : 0,
-                    settings.isFillBossTeams());
+                    settings.isFillBossTeams(), settings.isFillRivalTeams());
         } else if (settings.getTrainersMod() == Settings.TrainersMod.TYPE_MATCHED) {
             romHandler.typeMatchTrainerPokes(settings.isTrainersUsePokemonOfSimilarStrength(),
                     settings.isTrainersBlockLegendaries(), settings.isTrainersBlockEarlyWonderGuard(),
                     settings.isTrainersLevelModified() ? settings.getTrainersLevelModifier() : 0,
-                    settings.isFillBossTeams());
+                    settings.isFillBossTeams(), settings.isFillRivalTeams());
         }
 
         if (settings.isTrainersLevelModified() && settings.getTrainersLevelModifier() != 0) {
@@ -318,6 +318,11 @@ public class Randomizer {
 
         if (settings.isTrainersForceFullyEvolved()) {
             romHandler.forceFullyEvolvedTrainerPokes(settings.getTrainersForceFullyEvolvedLevel());
+        }
+
+        // Must run last of the trainer passes - everything above can still change a mon's species.
+        if (settings.isTrainersForceStabMoves()) {
+            romHandler.forceTrainerStabMoves();
         }
 
         // Trainer names & class names randomization

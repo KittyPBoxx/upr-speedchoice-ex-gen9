@@ -1034,6 +1034,14 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.tpFillBossTeams.setSelected(false);
         this.tpFillBossTeams.setVisible(true);
 
+        this.tpFillRivalTeams.setEnabled(false);
+        this.tpFillRivalTeams.setSelected(false);
+        this.tpFillRivalTeams.setVisible(true);
+
+        this.tpForceStabMoves.setEnabled(false);
+        this.tpForceStabMoves.setSelected(false);
+        this.tpForceStabMoves.setVisible(true);
+
         this.peUnchangedRB.setSelected(true);
         this.peUnchangedRB.setEnabled(false);
         this.peRandomRB.setEnabled(false);
@@ -1461,6 +1469,12 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.tpFillBossTeams.setEnabled(false);
             this.tpFillBossTeams.setSelected(false);
 
+            this.tpFillRivalTeams.setEnabled(false);
+            this.tpFillRivalTeams.setSelected(false);
+
+            this.tpForceStabMoves.setEnabled(false);
+            this.tpForceStabMoves.setSelected(false);
+
             this.peUnchangedRB.setEnabled(true);
             this.peUnchangedRB.setSelected(true);
             this.peRandomRB.setEnabled(true);
@@ -1723,6 +1737,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.tpLevelModifierCB.setSelected(false);
             this.tpFillBossTeams.setEnabled(false);
             this.tpFillBossTeams.setSelected(false);
+            this.tpFillRivalTeams.setEnabled(false);
+            this.tpFillRivalTeams.setSelected(false);
         } else {
             this.tpPowerLevelsCB.setEnabled(true);
             this.tpNoLegendariesCB.setEnabled(true);
@@ -1730,6 +1746,14 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.tpForceFullyEvolvedCB.setEnabled(true);
             this.tpLevelModifierCB.setEnabled(true);
             this.tpFillBossTeams.setEnabled(true);
+            this.tpFillRivalTeams.setEnabled(true);
+        }
+
+        if (this.pmsRandomTotalRB.isSelected()) {
+            this.tpForceStabMoves.setEnabled(true);
+        } else {
+            this.tpForceStabMoves.setEnabled(false);
+            this.tpForceStabMoves.setSelected(false);
         }
 
         if (this.tpForceFullyEvolvedCB.isSelected()) {
@@ -2262,6 +2286,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.fiRandomItemPrices.setSelected(settings.isRandomItemPrices());
         this.tpRandomFrontier.setSelected(settings.isRandomizeFrontier());
         this.tpFillBossTeams.setSelected(settings.isFillBossTeams());
+        this.tpFillRivalTeams.setSelected(settings.isFillRivalTeams());
+        this.tpForceStabMoves.setSelected(settings.isTrainersForceStabMoves());
 
         if (settings.getTypeChartMod() == Settings.TypeChartMod.UNCHANGED) {
             tcUnchangedRB.setSelected(true);
@@ -2443,6 +2469,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         settings.setRandomItemPrices(fiRandomItemPrices.isSelected());
         settings.setRandomizeFrontier(tpRandomFrontier.isSelected());
         settings.setFillBossTeams(tpFillBossTeams.isSelected());
+        settings.setFillRivalTeams(tpFillRivalTeams.isSelected());
+        settings.setTrainersForceStabMoves(tpForceStabMoves.isSelected());
 
         settings.setCurrentRestrictions(currentRestrictions);
 
@@ -3471,6 +3499,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
         fiRandomItemPrices = new javax.swing.JCheckBox();
         tpRandomFrontier = new javax.swing.JCheckBox();
         tpFillBossTeams = new javax.swing.JCheckBox();
+        tpFillRivalTeams = new javax.swing.JCheckBox();
+        tpForceStabMoves = new javax.swing.JCheckBox();
         miscTweaksInnerPanel = new javax.swing.JPanel();
         warpsInnerPanel = new javax.swing.JPanel();
         miscTweaksPanel = new javax.swing.JPanel();
@@ -4650,7 +4680,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
                                 .addComponent(tpNoLegendariesCB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(tpNoEarlyShedinjaCB)
                             .addComponent(tpRandomFrontier)
-                            .addComponent(tpFillBossTeams))
+                            .addComponent(tpFillBossTeams)
+                            .addComponent(tpFillRivalTeams)
+                            .addComponent(tpForceStabMoves))
                         .addGap(18, 18, 18)
                         .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tnRandomizeCB)
@@ -4664,36 +4696,45 @@ public class RandomizerGUI extends javax.swing.JFrame {
         trainersPokemonPanelLayout.setVerticalGroup(
             trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(trainersPokemonPanelLayout.createSequentialGroup()
-                .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tpUnchangedRB)
-                    .addComponent(tpRivalCarriesStarterCB)
-                    .addComponent(tnRandomizeCB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tpRandomRB)
-                    .addComponent(tpPowerLevelsCB)
-                    .addComponent(tcnRandomizeCB))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tpTypeThemedRB)
-                        .addComponent(tpTypeWeightingCB)
-                        .addComponent(tpForceFullyEvolvedCB))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tpTypeMatchRB)
-                            .addComponent(tpNoLegendariesCB)
-                            .addComponent(tpForceFullyEvolvedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(trainersPokemonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(trainersPokemonPanelLayout.createSequentialGroup()
+                        .addComponent(tpUnchangedRB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpRandomRB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpTypeThemedRB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpTypeMatchRB))
+                    .addGroup(trainersPokemonPanelLayout.createSequentialGroup()
+                        .addComponent(tpRivalCarriesStarterCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpPowerLevelsCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpTypeWeightingCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpNoLegendariesCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tpNoEarlyShedinjaCB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tpRandomFrontier)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tpFillBossTeams)))
-                .addComponent(tpLevelModifierCB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tpLevelModifierSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tpFillBossTeams)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpFillRivalTeams)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpForceStabMoves))
+                    .addGroup(trainersPokemonPanelLayout.createSequentialGroup()
+                        .addComponent(tnRandomizeCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tcnRandomizeCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpForceFullyEvolvedCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpForceFullyEvolvedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(tpLevelModifierCB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tpLevelModifierSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -5328,6 +5369,12 @@ public class RandomizerGUI extends javax.swing.JFrame {
         tpFillBossTeams.setText(bundle.getString("RandomizerGUI.tpFillBossTeams.text"));
         tpFillBossTeams.setToolTipText(bundle.getString("RandomizerGUI.tpFillBossTeams.toolTipText"));
 
+        tpFillRivalTeams.setText(bundle.getString("RandomizerGUI.tpFillRivalTeams.text"));
+        tpFillRivalTeams.setToolTipText(bundle.getString("RandomizerGUI.tpFillRivalTeams.toolTipText"));
+
+        tpForceStabMoves.setText(bundle.getString("RandomizerGUI.tpForceStabMoves.text"));
+        tpForceStabMoves.setToolTipText(bundle.getString("RandomizerGUI.tpForceStabMoves.toolTipText"));
+
         javax.swing.GroupLayout fieldItemsPanelLayout = new javax.swing.GroupLayout(fieldItemsPanel);
         fieldItemsPanel.setLayout(fieldItemsPanelLayout);
 
@@ -5637,6 +5684,8 @@ public class RandomizerGUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox fiRandomItemPrices;
     private javax.swing.JCheckBox tpRandomFrontier;
     private javax.swing.JCheckBox tpFillBossTeams;
+    private javax.swing.JCheckBox tpFillRivalTeams;
+    private javax.swing.JCheckBox tpForceStabMoves;
     private javax.swing.ButtonGroup fieldItemsButtonGroup;
     private javax.swing.JPanel fieldItemsInnerPanel;
     private javax.swing.JPanel fieldItemsPanel;
