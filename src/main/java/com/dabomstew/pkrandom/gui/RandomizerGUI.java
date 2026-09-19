@@ -1658,21 +1658,17 @@ public class RandomizerGUI extends javax.swing.JFrame {
             this.spHeldItemsBanBadCB.setSelected(false);
         }
         
-        if(this.spRandom0EvosRB.isSelected() && this.spBanLegendaryStartersCB.isSelected()) {
-        	this.spOnlyLegendaryStartersCB.setEnabled(false);
-        	this.spOnlyLegendaryStartersCB.setSelected(false);
-        } else if(this.spRandom0EvosRB.isSelected() && this.spOnlyLegendaryStartersCB.isSelected()){
-        	this.spBanLegendaryStartersCB.setEnabled(false);
+        boolean canBanLegendaryStarters = this.spRandom0EvosRB.isSelected() || this.spRandomRB.isSelected();
+        boolean canOnlyLegendaryStarters = this.spRandom0EvosRB.isSelected();
+        if(!canBanLegendaryStarters) {
         	this.spBanLegendaryStartersCB.setSelected(false);
-        } else if(this.spRandom0EvosRB.isSelected()) {
-        	this.spBanLegendaryStartersCB.setEnabled(true);
-        	this.spOnlyLegendaryStartersCB.setEnabled(true);
-        } else {
-        	this.spBanLegendaryStartersCB.setEnabled(false);
-        	this.spBanLegendaryStartersCB.setSelected(false);
-        	this.spOnlyLegendaryStartersCB.setEnabled(false);
+        }
+        if(!canOnlyLegendaryStarters) {
         	this.spOnlyLegendaryStartersCB.setSelected(false);
         }
+        // the two are mutually exclusive
+        this.spBanLegendaryStartersCB.setEnabled(canBanLegendaryStarters && !this.spOnlyLegendaryStartersCB.isSelected());
+        this.spOnlyLegendaryStartersCB.setEnabled(canOnlyLegendaryStarters && !this.spBanLegendaryStartersCB.isSelected());
         
         if (this.paRandomizeRB.isSelected()) {
             this.paWonderGuardCB.setEnabled(true);
