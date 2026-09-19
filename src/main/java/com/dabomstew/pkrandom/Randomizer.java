@@ -39,6 +39,7 @@ import com.dabomstew.pkrandom.pokemon.Encounter;
 import com.dabomstew.pkrandom.pokemon.EncounterSet;
 import com.dabomstew.pkrandom.pokemon.FieldTM;
 import com.dabomstew.pkrandom.pokemon.IngameTrade;
+import com.dabomstew.pkrandom.pokemon.ItemBans;
 import com.dabomstew.pkrandom.pokemon.ItemLocation;
 import com.dabomstew.pkrandom.pokemon.Move;
 import com.dabomstew.pkrandom.pokemon.MoveLearnt;
@@ -828,18 +829,24 @@ public class Randomizer {
             if (settings.getFieldItemsMod() == Settings.FieldItemsMod.SHUFFLE) {
                 romHandler.shuffleFieldItems();
             } else if (settings.getFieldItemsMod() == Settings.FieldItemsMod.RANDOM) {
-                romHandler.randomizeFieldItems(settings.isBanBadRandomFieldItems());
+                ItemBans bans = new ItemBans()
+                        .setBanBadItems(settings.isBanBadRandomFieldItems())
+                        .setBanSlateportItems(settings.isBanSlateportItems())
+                        .setBanEvItems(settings.isBanEvItems())
+                        .setBanBattleItems(settings.isBanBattleItems());
+
+                romHandler.randomizeFieldItems(bans);
 
                 if (settings.isRandomizeGivenItems()) {
-                    romHandler.randomizeGivenItems(settings.isBanBadRandomFieldItems());
+                    romHandler.randomizeGivenItems(bans);
                 }
 
                 if (settings.isRandomizeBerryTrees()) {
-                    romHandler.randomizeBerryTrees(settings.isBanBadRandomFieldItems());
+                    romHandler.randomizeBerryTrees(bans);
                 }
 
                 if (settings.isRandomizePickupTables()) {
-                    romHandler.randomizePickupTime(settings.isBanBadRandomFieldItems());
+                    romHandler.randomizePickupTime(bans);
                 }
 
                 if (settings.isRandomItemPrices()) {

@@ -990,6 +990,18 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.fiBanBadCB.setSelected(false);
         this.fiBanBadCB.setVisible(true);
 
+        this.fiBanSlateportItemsCB.setEnabled(false);
+        this.fiBanSlateportItemsCB.setSelected(false);
+        this.fiBanSlateportItemsCB.setVisible(true);
+
+        this.fiBanEvItemsCB.setEnabled(false);
+        this.fiBanEvItemsCB.setSelected(false);
+        this.fiBanEvItemsCB.setVisible(true);
+
+        this.fiBanBattleItemsCB.setEnabled(false);
+        this.fiBanBattleItemsCB.setSelected(false);
+        this.fiBanBattleItemsCB.setVisible(true);
+
         this.fiRandomizeGivenItemsCB.setEnabled(false);
         this.fiRandomizeGivenItemsCB.setSelected(false);
         this.fiRandomizeGivenItemsCB.setVisible(true);
@@ -1415,6 +1427,15 @@ public class RandomizerGUI extends javax.swing.JFrame {
 
             this.fiBanBadCB.setEnabled(false);
             this.fiBanBadCB.setSelected(false);
+
+            this.fiBanSlateportItemsCB.setEnabled(false);
+            this.fiBanSlateportItemsCB.setSelected(false);
+
+            this.fiBanEvItemsCB.setEnabled(false);
+            this.fiBanEvItemsCB.setSelected(false);
+
+            this.fiBanBattleItemsCB.setEnabled(false);
+            this.fiBanBattleItemsCB.setSelected(false);
 
             this.fiRandomizeGivenItemsCB.setEnabled(false);
             this.fiRandomizeGivenItemsCB.setSelected(false);
@@ -1887,6 +1908,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
 
         if (this.fiRandomRB.isSelected() && this.fiRandomRB.isVisible() && this.fiRandomRB.isEnabled()) {
             this.fiBanBadCB.setEnabled(true);
+            this.fiBanSlateportItemsCB.setEnabled(true);
+            this.fiBanEvItemsCB.setEnabled(true);
+            this.fiBanBattleItemsCB.setEnabled(true);
             this.fiRandomizeGivenItemsCB.setEnabled(true);
             this.fiRandomizePickupTablesCB.setEnabled(true);
             this.fiRandomizeBerryTreesCB.setEnabled(true);
@@ -1894,6 +1918,15 @@ public class RandomizerGUI extends javax.swing.JFrame {
         } else {
             this.fiBanBadCB.setEnabled(false);
             this.fiBanBadCB.setSelected(false);
+
+            this.fiBanSlateportItemsCB.setEnabled(false);
+            this.fiBanSlateportItemsCB.setSelected(false);
+
+            this.fiBanEvItemsCB.setEnabled(false);
+            this.fiBanEvItemsCB.setSelected(false);
+
+            this.fiBanBattleItemsCB.setEnabled(false);
+            this.fiBanBattleItemsCB.setSelected(false);
 
             this.fiRandomizeGivenItemsCB.setEnabled(false);
             this.fiRandomizeGivenItemsCB.setSelected(false);
@@ -2218,6 +2251,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
         this.fiShuffleRB.setSelected(settings.getFieldItemsMod() == Settings.FieldItemsMod.SHUFFLE);
         this.fiUnchangedRB.setSelected(settings.getFieldItemsMod() == Settings.FieldItemsMod.UNCHANGED);
         this.fiBanBadCB.setSelected(settings.isBanBadRandomFieldItems());
+        this.fiBanSlateportItemsCB.setSelected(settings.isBanSlateportItems());
+        this.fiBanEvItemsCB.setSelected(settings.isBanEvItems());
+        this.fiBanBattleItemsCB.setSelected(settings.isBanBattleItems());
         this.fiRandomizeGivenItemsCB.setSelected(settings.isRandomizeGivenItems());
         this.fiRandomizePickupTablesCB.setSelected(settings.isRandomizePickupTables());
         this.fiRandomizeBerryTreesCB.setSelected(settings.isRandomizeBerryTrees());
@@ -2396,6 +2432,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
 
         settings.setFieldItemsMod(fiUnchangedRB.isSelected(), fiShuffleRB.isSelected(), fiRandomRB.isSelected());
         settings.setBanBadRandomFieldItems(fiBanBadCB.isSelected());
+        settings.setBanSlateportItems(fiBanSlateportItemsCB.isSelected());
+        settings.setBanEvItems(fiBanEvItemsCB.isSelected());
+        settings.setBanBattleItems(fiBanBattleItemsCB.isSelected());
         settings.setRandomizeGivenItems(fiRandomizeGivenItemsCB.isSelected());
         settings.setRandomizePickupTables(fiRandomizePickupTablesCB.isSelected());
         settings.setRandomizeBerryTrees(fiRandomizeBerryTreesCB.isSelected());
@@ -3421,6 +3460,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
         fiShuffleRB = new javax.swing.JRadioButton();
         fiRandomRB = new javax.swing.JRadioButton();
         fiBanBadCB = new javax.swing.JCheckBox();
+        fiBanSlateportItemsCB = new javax.swing.JCheckBox();
+        fiBanEvItemsCB = new javax.swing.JCheckBox();
+        fiBanBattleItemsCB = new javax.swing.JCheckBox();
         fiRandomizeGivenItemsCB = new javax.swing.JCheckBox();
         fiRandomizePickupTablesCB = new javax.swing.JCheckBox();
         fiRandomizeBerryTreesCB = new javax.swing.JCheckBox();
@@ -5252,6 +5294,15 @@ public class RandomizerGUI extends javax.swing.JFrame {
         fiBanBadCB.setText(bundle.getString("RandomizerGUI.fiBanBadCB.text")); // NOI18N
         fiBanBadCB.setToolTipText(bundle.getString("RandomizerGUI.fiBanBadCB.toolTipText")); // NOI18N
 
+        fiBanSlateportItemsCB.setText(bundle.getString("RandomizerGUI.fiBanSlateportItemsCB.text"));
+        fiBanSlateportItemsCB.setToolTipText(bundle.getString("RandomizerGUI.fiBanSlateportItemsCB.toolTipText"));
+
+        fiBanEvItemsCB.setText(bundle.getString("RandomizerGUI.fiBanEvItemsCB.text"));
+        fiBanEvItemsCB.setToolTipText(bundle.getString("RandomizerGUI.fiBanEvItemsCB.toolTipText"));
+
+        fiBanBattleItemsCB.setText(bundle.getString("RandomizerGUI.fiBanBattleItemsCB.text"));
+        fiBanBattleItemsCB.setToolTipText(bundle.getString("RandomizerGUI.fiBanBattleItemsCB.toolTipText"));
+
         fiRandomizeGivenItemsCB.setText(bundle.getString("RandomizerGUI.fiRandomizeGivenItemsCB.text"));
         fiRandomizeGivenItemsCB.setToolTipText(bundle.getString("RandomizerGUI.fiRandomizeGivenItemsCB.toolTipText"));
 
@@ -5298,7 +5349,10 @@ public class RandomizerGUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(fieldItemsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fiAllMartsHaveBallAndRepel)
-                                    .addComponent(fiRandomItemPrices))
+                                    .addComponent(fiRandomItemPrices)
+                                    .addComponent(fiBanSlateportItemsCB)
+                                    .addComponent(fiBanEvItemsCB)
+                                    .addComponent(fiBanBattleItemsCB))
                                 .addContainerGap(13, Short.MAX_VALUE))
         );
         fieldItemsPanelLayout.setVerticalGroup(
@@ -5325,7 +5379,13 @@ public class RandomizerGUI extends javax.swing.JFrame {
                                         .addGroup(fieldItemsPanelLayout.createSequentialGroup()
                                                 .addComponent(fiAllMartsHaveBallAndRepel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(fiRandomItemPrices)))
+                                                .addComponent(fiRandomItemPrices)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(fiBanSlateportItemsCB)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(fiBanEvItemsCB)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(fiBanBattleItemsCB)))
                                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -5563,6 +5623,9 @@ public class RandomizerGUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox brokenMovesCB;
     private javax.swing.JMenuItem customNamesEditorMenuItem;
     private javax.swing.JCheckBox fiBanBadCB;
+    private javax.swing.JCheckBox fiBanSlateportItemsCB;
+    private javax.swing.JCheckBox fiBanEvItemsCB;
+    private javax.swing.JCheckBox fiBanBattleItemsCB;
     private javax.swing.JCheckBox fiRandomizeGivenItemsCB;
     private javax.swing.JCheckBox fiRandomizePickupTablesCB;
     private javax.swing.JCheckBox fiRandomizeBerryTreesCB;

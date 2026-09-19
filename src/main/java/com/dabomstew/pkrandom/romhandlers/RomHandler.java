@@ -38,6 +38,7 @@ import com.dabomstew.pkrandom.pokemon.EncounterSet;
 import com.dabomstew.pkrandom.pokemon.FieldTM;
 import com.dabomstew.pkrandom.pokemon.GenRestrictions;
 import com.dabomstew.pkrandom.pokemon.IngameTrade;
+import com.dabomstew.pkrandom.pokemon.ItemBans;
 import com.dabomstew.pkrandom.pokemon.ItemList;
 import com.dabomstew.pkrandom.pokemon.ItemLocation;
 import com.dabomstew.pkrandom.pokemon.Move;
@@ -373,13 +374,13 @@ public interface RomHandler {
 
     void shuffleFieldItems();
 
-    void randomizeFieldItems(boolean banBadItems);
+    void randomizeFieldItems(ItemBans bans);
 
-    void randomizeGivenItems(boolean banBadRandomFieldItems);
+    void randomizeGivenItems(ItemBans bans);
 
-    void randomizeBerryTrees(boolean banBadRandomFieldItems);
+    void randomizeBerryTrees(ItemBans bans);
 
-    void randomizePickupTime(boolean randomizePickupTables);
+    void randomizePickupTime(ItemBans bans);
 
     void randomizeMarts(boolean banBadRandomFieldItems, boolean allMartsHaveBallAndRepel);
 
