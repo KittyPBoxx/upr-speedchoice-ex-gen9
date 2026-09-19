@@ -201,6 +201,8 @@ public interface RomHandler {
 
     void randomizeMovePPs();
 
+    void limitSetupMovePP();
+
     void randomizeMoveAccuracies();
 
     void randomizeMoveTypes();

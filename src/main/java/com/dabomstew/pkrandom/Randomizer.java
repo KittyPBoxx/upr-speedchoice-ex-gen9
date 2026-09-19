@@ -86,6 +86,10 @@ public class Randomizer {
             romHandler.randomizeMovePPs();
         }
 
+        if (settings.isLimitSetupMovePP()) {
+            romHandler.limitSetupMovePP();
+        }
+
         if (settings.isRandomizeMoveTypes()) {
             romHandler.randomizeMoveTypes();
         }
